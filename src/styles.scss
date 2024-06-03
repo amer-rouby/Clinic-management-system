@@ -1,0 +1,131 @@
+/* Import PrimeNG theme and styles */
+@import "../node_modules/primeng/resources/themes/saga-blue/theme.css";
+@import "../node_modules/primeng/resources/primeng.min.css";
+
+/* Global styles */
+html,
+body {
+    max-height: 100vh;
+    box-sizing: border-box;
+    margin: 0;
+    padding-top: 15px;
+    margin-top: 23px !important;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-color: rgb(235, 241, 246) !important;
+}
+.card-link {
+    margin: 0 5px !important;
+}
+// /* Course card styles */
+// .course-card {
+//     font-size: 18px;
+//     border: 1px solid #000;
+//     border-radius: 5px;
+//     padding: 10px;
+//     margin-bottom: 15px;
+
+//     &:hover {
+//         transform: translateY(-5px);
+//     }
+// }
+
+// .even-course .course-card {
+//     background-color: #000;
+// }
+
+// .odd-course .course-card {
+//     background-color: rgb(43, 43, 43);
+// }
+
+// .first-course .course-card {
+//     font-weight: bold;
+//     color: coral !important;
+// }
+
+// .last-course .course-card {
+//     font-weight: bold;
+//     color: red !important;
+// }
+
+// /* Person details styles */
+// .isMarried {
+//     color: red;
+// }
+
+// .title-name-person {
+//     font-size: 17px;
+// }
+
+// /* Date styles */
+// .date {
+//     font-weight: bold;
+//     color: rgb(192, 41, 41);
+// }
+
+// /* Card styles */
+// .card {
+//     color: #fff;
+// }
+
+// .card-subtitle {
+//     color: #fff !important;
+//     font-size: 17px !important;
+//     font-weight: bold;
+// }
+
+// .beginner {
+//     font-size: 17px !important;
+//     font-weight: bold;
+// }
+
+// .advanced {
+//     font-size: 18px !important;
+//     font-weight: normal;
+// }
+
+// .myStyleMethod {
+//     font-weight: bold;
+// }
+
+// .viwo-card {
+//     background-color: aqua !important;
+// }
+
+/* Badge styles */
+// .badge {
+//     padding: 10px;
+//     font-size: 16px;
+//     font-weight: 500;
+// }
+
+// /* Container styles */
+// .container {
+//     max-width: 1000px;
+//     margin: 0 auto;
+//     padding: 20px;
+// }
+
+// /* Completed todo styles */
+// .completed {
+//     text-decoration: line-through;
+//     color: gray;
+// }
+
+
+/* Header styles */
+.nav-link {
+    font-size: 17px !important;
+    font-weight: bold !important;
+}
+
+/* Active link styles */
+.spacer {
+    flex: 1 1 auto;
+}
+
+.mat-toolbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}

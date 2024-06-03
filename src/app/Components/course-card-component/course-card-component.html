@@ -1,0 +1,59 @@
+<mat-card class="course-card mt-4" [ngClass]="course.category === categoryType.beginners ? 'beginner' : 'advanced'">
+    <mat-card-content [ngClass]="[ getCssClass('myStyleMethod') ]">
+        <h5 class="card-title">{{ course.firstName + " " + course.lastName }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted" [ngClass]="[ getCssClass('beginner') ]">Card Subtitle</h6>
+        <p class="card-text mb-2">{{ index + 1 }}/{{ count }} : {{ course.description | titlecase }}</p>
+        <ng-container [ngSwitch]="course.category">
+            <ng-container *ngSwitchCase="categoryType.intermediate">
+                <button mat-raised-button color="primary" class="badge m-2" (click)="openDialog()">Intermediate</button>
+            </ng-container>
+            <ng-container *ngSwitchCase="categoryType.advanced">
+                <button mat-raised-button color="accent" class="badge m-2" (click)="openDialog()">Advanced</button>
+            </ng-container>
+            <ng-container *ngSwitchCase="categoryType.beginners">
+                <button mat-raised-button color="warn" class="badge m-2" (click)="openDialog()">Beginner</button>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+                <button mat-raised-button color="warn" class="badge m-2" (click)="openDialog()">Other</button>
+            </ng-container>
+        </ng-container>
+        <button mat-raised-button color="primary" class="card-link " (click)="viwoCourse()">Open View</button>
+        <toast-basic-demo (click)="deleteCourse(course.id)" />
+    </mat-card-content>
+</mat-card>
+
+
+
+
+<!-- <div class="card course-card  mt-4 " [ngClass]="course.category === categoryType.beginners ?'beginner' :'advanced'">
+    @if(showInput){
+    <div>
+        <p class="title-name-person mt-4 mx-4 fw-bold">{{ course.firstName + " " + course.lastName}}</p>
+        <input type="text" class="form-control mt-1" [value]="course.firstName" #inputRef
+            (keyup)="onKeyup(inputRef.value)" />
+    </div>
+    }
+
+    <div class="card-body" [ngClass]="[ getCssClass('myStyleMethod')]">
+        <h5 class="card-title">{{ course.firstName + " " + course.lastName }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted " [ngClass]="[ getCssClass('beginner')]">Card Subtitle</h6>
+        <p class="card-text mb-2">{{index + 1}}/{{count}} : {{course.description | titlecase}}</p>
+        @switch (course.category) {
+        @case (categoryType.intermediate) {
+        <button class="badge bg-info m-2" (click)="openDialog()">Intermediate</button>
+        }
+        @case (categoryType.advanced) {
+        <button class="badge bg-success m-2" (click)="openDialog()">Advanced</button>
+        }
+        @case (categoryType.beginners) {
+        <button class="badge  bg-warning m-2" (click)="openDialog()">Beginner</button>
+        }
+        @default {
+        <button class="badge bg-danger  m-2" (click)="openDialog()">Other</button>
+        }
+        }
+        <button class="btn btn-primary card-link" (click)="viwoCourse()">Open View</button>
+        <button class="btn btn-primary card-link" (click)="updateName()">{{titleButton}}</button>
+        <toast-basic-demo (click)="deleteCourse(course.id)" />
+    </div>
+</div> -->

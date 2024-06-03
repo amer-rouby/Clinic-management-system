@@ -1,0 +1,22 @@
+<div class="container card-details">
+    <div class="card course-card">
+        <div *ngIf="courseData; else noCourse">
+            <div class="card-header">
+                <h5 class="card-title">{{ courseData.firstName + " " + courseData.lastName }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ courseData.subtitle }}</h6>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ courseData.description | titlecase }}</p>
+                <div><span>Salary: {{courseData.salary}}</span> / <span>Is Married: {{courseData.isMarried}}</span>
+                </div>
+                <button class="btn btn-success" routerLink="/courses-list">View Courses</button>
+            </div>
+        </div>
+        <ng-template #noCourse>
+            <div class="text-center fw-bold p-3">
+                No Course found!
+            </div>
+        </ng-template>
+    </div>
+</div>
+  

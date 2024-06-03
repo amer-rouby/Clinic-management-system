@@ -1,0 +1,85 @@
+<div class="container">
+    <form [formGroup]="todoForm" (ngSubmit)="addTodo()">
+        <div class="input-group my-4 mb-3 full-width">
+            <mat-form-field appearance="fill" class="full-width mr-2">
+                <mat-label>Add title</mat-label>
+                <input matInput [(ngModel)]="newTodo.title" placeholder="Add title" formControlName="title">
+                <mat-error *ngIf="todoForm.get('title')?.errors?.['required']">Title is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width mr-2">
+                <mat-label>Add a phone number</mat-label>
+                <input matInput [(ngModel)]="newTodo.phoneNumber" placeholder="Add a phone number"
+                    formControlName="phoneNumber">
+                <mat-error *ngIf="todoForm.get('phoneNumber')?.errors?.['required']">Phone number is
+                    required</mat-error>
+                <mat-error *ngIf="todoForm.get('phoneNumber')?.errors?.['pattern']">Invalid phone number</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width mr-2">
+                <mat-label>Add a description</mat-label>
+                <input matInput [(ngModel)]="newTodo.description" placeholder="Add a description"
+                    formControlName="description">
+                <mat-error *ngIf="todoForm.get('description')?.errors?.['required']">Description is required</mat-error>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit">{{Add_And_Edite_Name_Button}}</button>
+        </div>
+    </form>
+
+    <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="checkbox">
+            <mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="selectAll($event)" [checked]="isAllSelected()"></mat-checkbox>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let newTodo">
+                <mat-checkbox (click)="$event.stopPropagation()" [checked]="isSelected(newTodo)"
+                    (change)="toggleSelection(newTodo)"></mat-checkbox>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Title Column -->
+        <ng-container matColumnDef="title">
+            <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
+            <mat-cell *matCellDef="let newTodo">{{ newTodo.title }}</mat-cell>
+        </ng-container>
+
+        <!-- Phone Number Column -->
+        <ng-container matColumnDef="phoneNumber">
+            <mat-header-cell *matHeaderCellDef>Phone Number</mat-header-cell>
+            <mat-cell *matCellDef="let newTodo">{{ newTodo.phoneNumber }}</mat-cell>
+        </ng-container>
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+            <mat-cell *matCellDef="let newTodo">{{ newTodo.description }}</mat-cell>
+        </ng-container>
+
+        <!-- Update Button Column -->
+        <ng-container matColumnDef="updateButton">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let newTodo">
+                <button mat-mini-fab color="primary" [disabled]="!newTodo.completed" (click)="editTodo(newTodo)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+        <!-- Delete Button Column -->
+        <ng-container matColumnDef="deleteButton">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let newTodo">
+                <button mat-mini-fab color="warn" [disabled]="!newTodo.completed" (click)="confirmDelete(newTodo.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [length]="todos.length" [pageSize]="itemsPerPage" [pageSizeOptions]="[5, 10, 20]"
+        (page)="onPageChange($event)">
+    </mat-paginator>
+</div>

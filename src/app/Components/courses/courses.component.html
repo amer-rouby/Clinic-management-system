@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="row justify-content-center">
+        @for(course of courses; track trackCourse;){
+            @if(course.isMarried || !courses.length){
+                <app-course-card-component class="col-md-6" [courses]="courses" [index]="$index" [count]="$count"
+                    [course]="course" [class.first-course]="$first" [class.last-course]="$last" [class.odd-course]="$odd"
+                    [class.even-course]="$even" (ViowCourseEvent)="onCourseClicked($event)">
+                </app-course-card-component>
+            }@else {
+                <h3 class="mt-5 isMarried">{{course.firstName + " "+ course.lastName}} : This Is Not Married</h3>
+            }
+        }@empty {
+            <h2 class="text-center color-red">No Courses Found!</h2>
+        }
+    </div>
+</div>

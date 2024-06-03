@@ -1,0 +1,21 @@
+@switch (course.category) {
+    @case (categoryType.intermediate) {
+        <button class="badge bg-warning m-2" (click)="openDialog()">Intermediate</button>
+    }
+    @case (categoryType.advanced) {
+        <button class="badge bg-info  m-2" (click)="openDialog()">Advanced</button>
+    }
+    @case (categoryType.beginners) {
+        <button class="badge bg-success  m-2" (click)="openDialog()">Beginner</button>
+    }
+    @default {
+        <button class="badge bg-danger  m-2" (click)="openDialog()">Other</button>
+    }
+}
+
+<div [ngSwitch]="course.category" class="d-inline">
+    <button *ngSwitchCase="categoryType.intermediate" class="badge bg-info m-2" (click)="openDialog()">Intermediate</button>
+    <button *ngSwitchCase="categoryType.advanced" class="badge bg-success m-2" (click)="openDialog()">Advanced</button>
+    <button *ngSwitchCase="categoryType.beginners" class="badge bg-warning m-2" (click)="openDialog()">Beginner</button>
+    <button *ngSwitchDefault class="badge bg-danger m-2" (click)="openDialog()">Other</button>
+</div>

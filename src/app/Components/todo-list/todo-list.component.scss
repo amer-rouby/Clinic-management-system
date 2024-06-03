@@ -1,0 +1,20 @@
+.full-width {
+    width: 100%;
+    margin-right: 10px !important;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: row;
+}
+
+mat-form-field.full-width {
+    flex: 1;
+}
+
+.input-group button {
+    display: inline-block;
+    /* margin-left: 10px !important; */
+    padding: 15px !important;
+    min-height: 55px;
+}
