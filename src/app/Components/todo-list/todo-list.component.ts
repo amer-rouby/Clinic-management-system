@@ -19,8 +19,6 @@ import { Todo } from '../App-Data/types';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
-import {Sort, MatSortModule} from '@angular/material/sort';
-
 @Component({
     selector: 'app-todo-list',
     standalone: true,
@@ -30,7 +28,7 @@ import {Sort, MatSortModule} from '@angular/material/sort';
          FormsModule, MatInputModule,
         MatButtonModule, MatCheckboxModule, MatIconModule,
         MatTableModule, MatPaginatorModule, ReactiveFormsModule,
-        MatFormFieldModule, MatDatepickerModule,CommonModule, MatSortModule
+        MatFormFieldModule, MatDatepickerModule,CommonModule
     ],
     styleUrls: ['./todo-list.component.scss']
 })
@@ -55,37 +53,11 @@ export class TodoComponent implements OnInit {
             description: ['', Validators.required],
             date: ['', Validators.required],
         });
-        this.sortedData = this.todos.slice()
-    }
-
-    sortedData: Todo[];
-    sortData(sort: Sort): any {
-        function compare(a: any, b: any, isAsc: boolean): number {
-            return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-        }
-        const data = this.todos.slice();
-        if (!sort.active || sort.direction === '') {
-            this.sortedData = data;
-            return;
-        }
-        this.sortedData = data.sort((a: any, b: any) => {
-            const isAsc = sort.direction === 'asc';
-            switch (sort.active) {
-                case 'title':
-                    return compare(a.title, b.title, isAsc);
-                case 'date':
-                    return compare(a.date, b.date, isAsc);
-                case 'phoneNumber':
-                    return compare(a.phoneNumber, b.phoneNumber, isAsc);
-                case 'description':
-                    return compare(a.description, b.description, isAsc);
-                default:
-                    return 0;
-            }
-        });
 
     }
-    
+
+
+
     ngOnInit() {
         this.loadTodos();
         this.dataSource.paginator = this.paginator;
