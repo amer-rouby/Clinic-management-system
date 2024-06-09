@@ -1,0 +1,29 @@
+
+
+<div class="container card-details">
+    <mat-card class="course-card">
+        @if(courseData){
+            <div>
+                <mat-card-header>
+                    <mat-card-title>{{ courseData.firstName + " " + courseData.lastName }}</mat-card-title>
+                    <mat-card-subtitle>{{ courseData.subtitle }}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <img [src]="courseData.imgUrl" alt="Course Image" class="course-image">
+                    <p>{{ courseData.description | titlecase }}</p>
+                    <div>
+                        <span>Course price: {{courseData.coursePrice}}$</span> / <span>Is Experience in the field: {{courseData.experienceInTheField}}</span>
+                    </div>
+                    <button mat-raised-button color="primary" routerLink="/courses-list">View Courses</button>
+                </mat-card-content>
+            </div>
+        }@else {
+            <ng-template>
+                <div class="text-center fw-bold p-3">
+                    No Course found!
+                </div>
+            </ng-template>
+        }
+    </mat-card>
+</div>
+

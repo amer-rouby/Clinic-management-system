@@ -1,17 +1,19 @@
 export interface Course {
-    id:number,
+    id: number,
     firstName: string,
     lastName: string,
-    salary: number,
-    isMarried: boolean,
+    coursePrice: number,
     description: string,
-    category: any
+    category: any,
+    imgUrl: string,
+    experienceInTheField: string,
 }
 
 export interface Todo {
     id: number;
     title: string;
     completed: boolean;
-    phoneNumber?: string;
-    description?: string;
+    phoneNumber: string;
+    description: string;
+    date: Date;
 }
