@@ -8,7 +8,7 @@ import { CourseDetailsComponent } from './Components/AppCourses/course-details/c
 export const routes: Routes = [
     { path: 'home', component: TodoComponent },
     { path: 'courses-list', component: CoursesComponent },
-    { path: 'courses-details/:id/:course', component: CourseDetailsComponent },
+    { path: 'courses-details/:id', component: CourseDetailsComponent },
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: '**', component: PageNotFoundComponent },
 ];

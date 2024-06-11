@@ -1,53 +1,54 @@
 .card-details {
-  margin: 30px !important;
-  overflow: hidden;
+    margin-top: 100px !important;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
 }
 
 .course-card {
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    &:hover {
+        transform: translateY(-5px);
+    }
+    .card-header {
+        color: #f8f9fa !important;
+        border-bottom: 1px solid #dee2e6;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
 
-  &:hover {
-    transform: translateY(-5px);
-  }
+    .card-body {
+        background-color: #ffffff;
+        padding: 1.5rem;
+    }
 
-  .card-header {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-  }
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
 
-  .card-body {
-    background-color: #ffffff;
-    padding: 1.5rem;
-  }
+    .card-subtitle {
+        font-size: 1rem;
+        color: #6c757d;
+    }
 
-  .card-title {
-    font-size: 1.25rem;
-    font-weight: bold;
-  }
+    .card-text {
+        margin-top: 0.5rem;
+        font-size: 1rem;
+        color: #495057;
+    }
 
-  .card-subtitle {
-    font-size: 1rem;
-    color: #6c757d;
-  }
-
-  .card-text {
-    margin-top: 0.5rem;
-    font-size: 1rem;
-    color: #495057;
-  }
-
-  .btn {
-    margin-top: 1rem;
-  }
+    .btn {
+        margin-top: 1rem;
+    }
 }
 
 .course-image {
     width: 200px;
-    height: 200px; 
-    object-fit: cover; 
-    border-radius: 8px; 
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
 }

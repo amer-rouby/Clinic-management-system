@@ -1,8 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+
+import { coursesData } from '../../App-Data/coursesData';
+import { Course } from '../../App-Data/types';
+
 @Component({
     selector: 'app-course-details',
     standalone: true,
@@ -11,21 +16,12 @@ import { MatButtonModule } from '@angular/material/button';
     styleUrls: ['./course-details.scss']
 })
 export class CourseDetailsComponent implements OnInit {
-    courseData: any = null;
-
+    courses: any = coursesData;
+    courseData!: Course;
     constructor(private activatedRoute: ActivatedRoute) { }
 
     ngOnInit(): void {
-        // const courseId = this.activatedRoute.snapshot.paramMap.get("id");
-        const courseDataString = this.activatedRoute.snapshot.paramMap.get("course");
-
-        if (courseDataString) {
-            try {
-                this.courseData = JSON.parse(atob(courseDataString));
-            } catch (error) {
-                this.courseData = null;
-            }
-        }
+        const courseId = this.activatedRoute.snapshot.paramMap.get("id");
+        this.courseData = this.courses[Number(courseId) - 1]
     }
 }
-

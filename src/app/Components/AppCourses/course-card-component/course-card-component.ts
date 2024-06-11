@@ -22,7 +22,7 @@ import { ConfirmDialogComponent } from '../../../materail-ui/delete-confirm-dial
         MatInputModule,
     ],
     templateUrl: './course-card-component.html',
-    styleUrls: ['../../../../styles.scss', "./course-card.scss"]
+    styleUrls: ["./course-card.scss"]
 })
 export class CourseCardComponent {
     @Input() course: any;
@@ -32,24 +32,18 @@ export class CourseCardComponent {
     @Output() ViowCourseEvent = new EventEmitter<any>();
 
     categoryType = CategoryType;
-    showInput: boolean = false;
-    titleButton: string = "Update Name";
 
     constructor(public dialog: MatDialog, private router: Router) { }
 
-    viwoCourse(): void {
-        const courseString = btoa(JSON.stringify(this.course));
-        this.router.navigate(['courses-details', this.course.id, courseString]);
+    viwoCourse(course:any): void {
+        console.log(course.id);
+        this.router.navigate(['courses-details', course.id]);
     }
 
     openDialog() {
         this.dialog.open(PopupCourseCardComponent, {
             minWidth: '200px',
         });
-    }
-
-    getCssClass(isClass: string, ...isClasses: any): string {
-        return [isClass, ...isClasses].join(' ');
     }
 
     deleteCourse(id: number) {
@@ -59,11 +53,11 @@ export class CourseCardComponent {
 
     confirmDelete(courseId: number) {
         const dialogRef = this.dialog.open(ConfirmDialogComponent);
-    
+
         dialogRef.afterClosed().subscribe(result => {
-          if (result) {
-            this.deleteCourse(courseId);
-          }
+            if (result) {
+                this.deleteCourse(courseId);
+            }
         });
-      }
+    }
 }
