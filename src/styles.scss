@@ -1,28 +1,51 @@
-/* Import PrimeNG theme and styles */
-@import "../node_modules/primeng/resources/themes/saga-blue/theme.css";
-@import "../node_modules/primeng/resources/primeng.min.css";
+@use '@angular/material' as mat;
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define your custom palettes
+$primary: mat.define-palette(mat.$indigo-palette);
+$accent: mat.define-palette(mat.$pink-palette);
+$warn: mat.define-palette(mat.$red-palette);
+
+// Define your custom theme
+$my-custom-theme: mat.define-light-theme((
+  color: (
+    primary: $primary,
+    accent: $accent,
+    warn: $warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0
+));
+
+// Include theme styles for core and each component used in your app
+@include mat.all-component-themes($my-custom-theme);
 
 /* Global styles */
-html,
-body {
+html, body {
     max-height: 100vh;
     box-sizing: border-box;
     margin: 0;
     margin-top: 30px !important;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     background-color: rgb(235, 241, 246) !important;
-    
 }
+
 .card-link {
     margin: 0 5px !important;
 }
+
 .course-card {
     padding: 1em;
     margin-bottom: 10px;
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
+}
+
 /* Header styles */
 .nav-link {
     font-size: 17px !important;

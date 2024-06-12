@@ -36,7 +36,6 @@ export class CourseCardComponent {
     constructor(public dialog: MatDialog, private router: Router) { }
 
     viwoCourse(course:any): void {
-        console.log(course.id);
         this.router.navigate(['courses-details', course.id]);
     }
 
