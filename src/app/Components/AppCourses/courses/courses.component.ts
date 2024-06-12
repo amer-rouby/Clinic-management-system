@@ -8,6 +8,7 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { PageNotFoundComponent } from '../../page-no-found/page-no-found.component';
 @Component({
     selector: 'app-courses',
     standalone: true,
@@ -17,7 +18,8 @@ import { MatIconModule } from '@angular/material/icon';
         MatCardModule,
         MatInputModule,
         FormsModule,
-        MatIconModule
+        MatIconModule,
+        PageNotFoundComponent
     ],
     templateUrl: './courses.component.html',
 })

@@ -1,10 +1,10 @@
 <mat-card class="course-card" [ngClass]="course.category === categoryType.beginners ? 'beginner' : 'advanced'">
-    <mat-card-content [ngClass]="[ getCssClass('myStyleMethod') ]">
+    <mat-card-content>
         <div class="card-header">
             <img [src]="course.imgUrl" alt="Course Image" class="course-image">
             <div>
                 <h5 class="card-title">{{ course.firstName + " " + course.lastName }}</h5>
-                <h6 class="card-subtitle mb-2 text-muted" [ngClass]="[ getCssClass('beginner') ]">Card Subtitle</h6>
+                <h6 class="card-subtitle mb-2 text-muted">Card Subtitle</h6>
             </div>
         </div>
         <p class="card-text mb-2">{{ course.description | titlecase }}</p>
@@ -32,7 +32,7 @@
                 }
             }
         </ng-container>
-        <button mat-raised-button color="primary" class="card-link" (click)="viwoCourse()">Open View</button>
+        <button mat-raised-button color="primary" class="card-link" (click)="viwoCourse(course)">View Course</button>
         <button mat-raised-button color="warn" class="card-link" (click)="confirmDelete(course.id)">Delete Course</button>
     </mat-card-content>
 </mat-card>

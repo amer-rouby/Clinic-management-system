@@ -2,27 +2,29 @@
     <div class="row justify-content-center">
         <div class="col-md-12 m-0">
             <mat-form-field>
-              <mat-icon matPrefix>search</mat-icon>
-              <input matInput placeholder="Search by description" [(ngModel)]="searchTerm" (input)="applyFilter()">
+                <mat-icon matPrefix>search</mat-icon>
+                <input matInput placeholder="Search by description" [(ngModel)]="searchTerm" (input)="applyFilter()">
             </mat-form-field>
-          </div>
+        </div>
     </div>
     <div class="row justify-content-center">
         @for(course of pagedCourses; track course.id){
-            <ng-container>
-                <div class="col-md-6">
-                    <app-course-card-component [courses]="courses" [course]="course"
-                        (ViowCourseEvent)="onCourseClicked($event)">
-                    </app-course-card-component>
-                </div>
-            </ng-container>
+        <ng-container>
+            <div class="col-md-6">
+                <app-course-card-component [courses]="courses" [course]="course"
+                    (ViowCourseEvent)="onCourseClicked($event)">
+                </app-course-card-component>
+            </div>
+        </ng-container>
         }@empty {
-            <h2 class="text-center color-red">No Courses Found!</h2>
-            }
+        <app-page-not-found />
+        }
     </div>
-    <div class="row justify-content-center">
-        <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[4, 6, 10]" [length]="filteredCourses.length"
-            (page)="onPageChange($event)">
-        </mat-paginator>
-    </div>
+    @if(pagedCourses.length){
+        <div class="row justify-content-center">
+            <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[4, 6, 10]" [length]="filteredCourses.length"
+                (page)="onPageChange($event)">
+            </mat-paginator>
+        </div>
+    }
 </div>

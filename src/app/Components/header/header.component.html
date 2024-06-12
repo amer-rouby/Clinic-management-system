@@ -1,8 +1,82 @@
-<mat-toolbar color="primary" class="mat-elevation-z4">
+<style>
+.custom-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+}
+
+.app-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white;
+}
+
+.spacer {
+    flex: 1;
+}
+
+.nav-button {
+    margin: 0 8px;
+    font-size: 1em;
+    color: white;
+}
+
+.theme-selector {
+    display: flex;
+    align-items: center;
+}
+
+.theme-selector mat-form-field {
+    margin-left: 16px;
+    width: 150px;
+}
+
+.theme-selector mat-form-field .mat-form-field-wrapper {
+    color: white;
+}
+
+.theme-selector mat-form-field .mat-form-field-label {
+    color: white !important;
+}
+
+.theme-selector mat-form-field .mat-form-field-flex {
+    border-radius: 4px;
+}
+
+.theme-selector mat-form-field .mat-select-arrow {
+    color: white;
+}
+
+.theme-selector .mat-option-text {
+    color: white;
+}
+
+.theme-selector .mat-select-value-text {
+    color: white;
+}
+.nav-button.active {
+  background-color: #2d42ce; /* أو أي لون تريده للنمط النشط */
+  color: white;
+}
+
+</style>
+<mat-toolbar [color]="themeService.themeColor$ | async" class="mat-elevation-z4 custom-toolbar">
     <mat-toolbar-row>
-        <span>My Application</span>
+        <span class="app-title">My Application</span>
         <span class="spacer"></span>
-        <button mat-button routerLink="home" routerLinkActive="active">Home</button>
-        <button mat-button routerLink="courses-list" routerLinkActive="active">Courses List</button>
+        <button mat-button routerLink="home" routerLinkActive="active" class="nav-button">Home</button>
+        <button mat-button routerLink="courses-list" routerLinkActive="active" class="nav-button">Courses List</button>
+        <!-- <div class="theme-selector">
+            <mat-form-field appearance="outline">
+                <mat-label>Themes Color</mat-label>
+                <mat-select [(ngModel)]="selectedTheme" (selectionChange)="changeThemeColor($event.value)">
+                    <mat-option value="primary">Primary</mat-option>
+                    <mat-option value="accent">Accent</mat-option>
+                    <mat-option value="warn">Warn</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div> -->
     </mat-toolbar-row>
 </mat-toolbar>
+
