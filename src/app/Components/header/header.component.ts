@@ -8,7 +8,7 @@ import { ThemeService } from './themeService';
 import { FormsModule } from '@angular/forms'; // Import FormsModule if you're using [(ngModel)]
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-
+import {MatIconModule} from '@angular/material/icon';
 @Component({
     selector: 'app-header',
     standalone: true,
@@ -19,17 +19,28 @@ import { MatSelectModule } from '@angular/material/select';
         MatButtonModule,
         MatFormFieldModule,
         FormsModule,
-        MatSelectModule
+        MatSelectModule,
+        MatIconModule
     ],
     templateUrl: './header.component.html',
+    styleUrl: "./header.scss"
 })
 export class HeaderComponent {
-    selectedTheme!: string; // Declare selectedTheme property
+    selectedTheme!: any; // Declare selectedTheme property
 
     constructor(public themeService: ThemeService) { }
   
     changeThemeColor(color: string): void {
       this.selectedTheme = color; // Assign the selected color to selectedTheme
       this.themeService.setThemeColor(color);
+    }
+    showThemesColor:boolean = false;
+    showThemes(): void {
+        if (!this.showThemesColor) {
+            this.showThemesColor = true;
+        } else {
+            this.showThemesColor = false;
+        }
+
     }
 }

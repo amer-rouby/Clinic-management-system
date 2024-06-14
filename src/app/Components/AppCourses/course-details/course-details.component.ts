@@ -21,7 +21,7 @@ export class CourseDetailsComponent implements OnInit {
     courses: any = coursesData;
     courseData!: Course;
     @Input() id: string = "";
-    // constructor(private activatedRoute: ActivatedRoute) { }
+    constructor(private activatedRoute: ActivatedRoute) { }
 
     ngOnInit(): void {
         
@@ -35,11 +35,18 @@ export class CourseDetailsComponent implements OnInit {
         //     this.courseData = this.getCourse(courseId)
         // })
 
-        // ثالث طريقه
-        if (this.id) {
-            var corseId = Number(this.id)
-            this.courseData = this.getCourse(corseId)
-        }
+        //@Input() ثالث طريقه
+        // if (this.id) {
+        //     var corseId = Number(this.id)
+            
+            
+        //     this.courseData = this.getCourse(corseId)
+        // }
+        //query Param Map رابع طريقه
+        this.activatedRoute.queryParamMap.subscribe((res: ParamMap) => {
+            const courseId = Number(res.get("id"))
+            this.courseData = this.getCourse(courseId)
+        })
     }
 
     private getCourse(courseId: number): Course {

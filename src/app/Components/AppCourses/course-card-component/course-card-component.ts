@@ -36,7 +36,8 @@ export class CourseCardComponent {
     constructor(public dialog: MatDialog, private router: Router) { }
 
     viwoCourse(course:any): void {
-        this.router.navigate(['courses-details', course.id]);
+        // this.router.navigate(['course-list', course.id]);
+        this.router.navigate(['course'], {queryParams:{id: course.id, name: course.firstName}});
     }
 
     openDialog() {
