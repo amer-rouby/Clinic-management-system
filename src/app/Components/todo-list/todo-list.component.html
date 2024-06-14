@@ -38,7 +38,7 @@
                 }
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
-            <button mat-raised-button color="primary" type="submit">{{Add_And_Edite_Name_Button}}</button>
+            <button mat-raised-button color="primary" type="submit">{{Add_And_Edite_Button}}</button>
         </div>
     </form>
     <!-- Table -->
@@ -57,8 +57,8 @@
             </mat-cell>
         </ng-container>
         <!-- Title Column -->
-        <ng-container  matColumnDef="title">
-            <mat-header-cell  *matHeaderCellDef>Title</mat-header-cell>
+        <ng-container   matColumnDef="title">
+            <mat-header-cell   *matHeaderCellDef>Title</mat-header-cell>
             <mat-cell *matCellDef="let newTodo">{{ newTodo.title }}</mat-cell>
         </ng-container>
         <!-- Phone Number Column -->

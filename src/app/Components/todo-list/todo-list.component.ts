@@ -40,13 +40,13 @@ export class TodoComponent implements OnInit {
     itemsPerPage: number = 5;
     selectedTodos: Todo[] = [];
     editingTodo: Todo | null = null;
-    Add_And_Edite_Name_Button: string = "ADD";
+    Add_And_Edite_Button: string = "ADD";
     dataSource = new MatTableDataSource<Todo>(this.todos);
     displayedColumns: string[] = ['checkbox', 'title', 'phoneNumber', 'date', 'description', 'updateButton', 'deleteButton'];
     
     @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
-    constructor(private fb: FormBuilder, public dialog: MatDialog) {
+    constructor(public fb: FormBuilder, public dialog: MatDialog) {
         this.todoForm = this.fb.group({
             title: ['', Validators.required],
             phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
@@ -77,7 +77,7 @@ export class TodoComponent implements OnInit {
         if (this.todoForm.valid) {
             if (this.editingTodo) {
                 this.updateTodo();
-                this.Add_And_Edite_Name_Button = "ADD";
+                this.Add_And_Edite_Button = "ADD";
                 this.todoForm.reset();
             } else {
                 const newTodoAdd: Todo = { ...this.newTodo, id: Date.now(), ...this.todoForm.value };
@@ -90,7 +90,7 @@ export class TodoComponent implements OnInit {
     }
 
     editTodo(todo: Todo) {
-        this.Add_And_Edite_Name_Button = "UPDATE";
+        this.Add_And_Edite_Button = "UPDATE";
         this.editingTodo = todo;
         this.todoForm.setValue({
             title: todo.title,
