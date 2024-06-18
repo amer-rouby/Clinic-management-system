@@ -6,12 +6,13 @@ import {MatButtonModule} from '@angular/material/button';
 import { TodoComponent } from '../Components/todo-list/todo-list.component';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../Components/header/header.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @Component({
     selector: 'first-component',
     standalone: true,
-    imports: [RouterOutlet, HeaderComponent, TodoComponent, MatButtonModule, MatDividerModule, MatIconModule],
+    imports: [RouterOutlet, HeaderComponent, TodoComponent, MatButtonModule, MatDividerModule, MatIconModule, HttpClientModule],
     templateUrl: './app.component.html',
 })
 

@@ -2,7 +2,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 16px;
 }
 
 .app-title {
@@ -10,11 +9,7 @@
     font-weight: bold;
     color: white;
 }
-.mat-icon  {
-    margin-left: 15px;
-    font-weight: bold;
-    font-size: 1.5em;
-}
+
 .spacer {
     flex: 1;
 }
@@ -22,16 +17,19 @@
 .nav-button {
     margin: 0 8px;
     font-size: 1em;
-    // color: white;
 }
-.theme-selector{
-    width: 100px;
+
+.theme-selector {
+    width: 200px;
     height: 20px;
 }
-// .theme-selector-list{
-// position: absolute;
-// top: 20px;
-// left: 50px;
-// padding: 5px;
-// background-color: black;
-// }
+
+mat-icon {
+    font-size: 1.8rem;
+}
+
+.menu-icon {
+    display: flex;
+    justify-items: center;
+    justify-content: space-between;
+}

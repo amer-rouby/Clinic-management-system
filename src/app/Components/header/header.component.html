@@ -2,23 +2,41 @@
     <mat-toolbar-row>
         <div class="app-title">
             My Application
-        </div>
-        <div class="theme-selector">
-            <!-- <mat-icon (click)="showThemes()" aria-hidden="false" aria-label="Example theme icon" fontIcon="palette"></mat-icon> -->
-            <!-- <mat-icon (click)="showThemes()" aria-hidden="false" aria-label="Example theme icon">style</mat-icon> -->
-            <mat-icon  (click)="showThemes()" aria-hidden="false" aria-label="Example theme icon">brush</mat-icon>
-            @if(showThemesColor){
+            <button mat-icon-button routerLink="home" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
+                <mat-icon>home</mat-icon>
+            </button>
+            <div class="theme-selector d-inline">
+                <!-- <mat-icon (click)="showThemes()" aria-hidden="false" aria-label="Example theme icon" fontIcon="palette"></mat-icon> -->
+                <!-- <mat-icon (click)="showThemes()" aria-hidden="false" aria-label="Example theme icon">style</mat-icon> -->
+                <mat-icon (click)="showThemes()" aria-hidden="false" aria-label="Example theme icon">brush</mat-icon>
+                @if(showThemesColor){
                 <button mat-button (click)="changeThemeColor('primary')"
                     [class.selected]="selectedTheme === 'primary'">Primary</button>
                 <button mat-button (click)="changeThemeColor('accent')"
                     [class.selected]="selectedTheme === 'accent'">Accent</button>
                 <!-- <button mat-button (click)="changeThemeColor('warn')"
                     [class.selected]="selectedTheme === 'warn'">Warn</button> -->
-            }
+                }
+            </div> 
         </div>
         <span class="spacer"></span>
-        <button mat-button routerLink="home" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" class="nav-button">Home</button>
-        <button mat-button [routerLinkActiveOptions]="{exact: true}" routerLink="course-list" routerLinkActive="active" class="nav-button">Courses List</button>
+        <!-- <button mat-button routerLink="home" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" class="nav-button">Home</button>
+        <button mat-button [routerLinkActiveOptions]="{exact: true}" routerLink="course-list" routerLinkActive="active" class="nav-button">Courses List</button> -->
+        
+
+        <div class="menu-icon">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </div>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="home" [routerLinkActiveOptions]="{exact: true}"
+                routerLinkActive="active"><mat-icon style="color: rgb(163, 1, 1);">home</mat-icon>Home</button>
+            <button mat-menu-item routerLink="course-list" [routerLinkActiveOptions]="{exact: true}"
+                routerLinkActive="active"><mat-icon style="color: rgb(163, 1, 1);">list</mat-icon>Courses List</button>
+                <button mat-menu-item routerLink="acount" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
+                    <mat-icon style="color: rgb(163, 1, 1);">account_circle</mat-icon>Acount
+                </button>
+        </mat-menu>
     </mat-toolbar-row>
 </mat-toolbar>
-

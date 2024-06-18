@@ -36,11 +36,15 @@ export class TodoComponent implements OnInit {
     todoForm: FormGroup;
     todos: Todo[] = [];
     newTodo: Todo = { id: 0, title: "", date: new Date(), completed: false, phoneNumber: '', description: '' };
+    
     currentPage: number = 0;
     itemsPerPage: number = 5;
+
     selectedTodos: Todo[] = [];
     editingTodo: Todo | null = null;
+
     Add_And_Edite_Button: string = "ADD";
+
     dataSource = new MatTableDataSource<Todo>(this.todos);
     displayedColumns: string[] = ['checkbox', 'title', 'phoneNumber', 'date', 'description', 'updateButton', 'deleteButton'];
     
@@ -55,8 +59,6 @@ export class TodoComponent implements OnInit {
         });
 
     }
-
-
 
     ngOnInit() {
         this.loadTodos();

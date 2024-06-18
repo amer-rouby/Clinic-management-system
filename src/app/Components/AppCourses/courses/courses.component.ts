@@ -1,24 +1,24 @@
-import { CourseCardComponent } from '../course-card-component/course-card-component';
+
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Course } from '../../App-Data/types'; // Assuming you have a Course type defined
-import { coursesData } from '../../App-Data/coursesData';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+//material
 import { MatCardModule } from '@angular/material/card';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator'; // استيراد مكون Paginator من Angular Material
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator'; 
+import { CourseCardComponent } from '../course-card-component/course-card-component';
 import { PageNotFoundComponent } from '../../page-no-found/page-no-found.component';
+//data type
+import { Course } from '../../App-Data/types';
+//services
+import { CourseService } from '../../../services/course.service';
 @Component({
     selector: 'app-courses',
     standalone: true,
-    imports: [MatPaginatorModule,
-        CourseCardComponent,
-        CommonModule,
-        MatCardModule,
-        MatInputModule,
-        FormsModule,
-        MatIconModule,
+    imports: [
+        MatPaginatorModule,CourseCardComponent, CommonModule,
+        MatCardModule,MatInputModule,FormsModule,MatIconModule,
         PageNotFoundComponent
     ],
     templateUrl: './courses.component.html',
@@ -35,10 +35,11 @@ export class CoursesComponent implements OnInit {
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-    constructor() { }
+    // constructor(private coursService: CoursService) { }
+    private coursService=  inject(CourseService)
 
     ngOnInit(): void {
-        this.courses = coursesData;
+        this.courses = this.coursService.getCourseList();
         this.applyFilter();
     }
 

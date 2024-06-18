@@ -4,12 +4,14 @@ import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { routes } from '../app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { CourseService } from '../services/course.service';
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideRouter(routes, withComponentInputBinding()),
         provideClientHydration(),
         provideAnimationsAsync(),
-        provideAnimationsAsync()
+        provideAnimationsAsync(),
+        CourseService
     ]
 };
