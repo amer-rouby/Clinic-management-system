@@ -1,13 +1,13 @@
 export interface Course {
-    id: number,
-    firstName: string,
-    lastName: string,
-    coursePrice: number,
-    description: string,
-    category: any,
-    imgUrl: string,
-    experienceInTheField: string,
-}
+    id?: string;
+    category: number;
+    coursePrice: number;
+    description: string;
+    experienceInTheField: string;
+    firstName: string;
+    imgUrl: string;
+    lastName: string;
+  }
 
 export interface Todo {
     id: number;

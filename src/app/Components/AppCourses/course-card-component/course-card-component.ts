@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PopupCourseCardComponent } from '../../../materail-ui/Description-dialog/popup-component';
 import { CategoryType } from '../../App-Data/coursesData';
 import { ConfirmDialogComponent } from '../../../materail-ui/delete-confirm-dialog/confirm-dialog.component';
+import { CourseService } from '../../../services/course.service';
 
 @Component({
     selector: 'app-course-card-component',
@@ -26,18 +27,18 @@ import { ConfirmDialogComponent } from '../../../materail-ui/delete-confirm-dial
 })
 export class CourseCardComponent {
     @Input() course: any;
-    @Input() courses: any;
+    @Input() pagedCourses: any;
     @Input() index!: number;
     @Input() count!: number;
-    @Output() ViowCourseEvent = new EventEmitter<any>();
-
+    @Output() loadCourses = new EventEmitter<any>();
     categoryType = CategoryType;
 
-    constructor(public dialog: MatDialog, private router: Router) { }
+    constructor(public dialog: MatDialog, private router: Router,
+        private courseService: CourseService) { }
 
-    viwoCourse(course:any): void {
-        // this.router.navigate(['course-list', course.id]);
-        this.router.navigate(['course'], {queryParams:{id: course.id, name: course.firstName}});
+    viwoCourse(course: any): void {
+        // this.router.navigate(['course-list', course.id]);        
+        this.router.navigate(['course'], { queryParams: { id: course.id, name: course.firstName } });
     }
 
     openDialog() {
@@ -46,14 +47,15 @@ export class CourseCardComponent {
         });
     }
 
-    deleteCourse(id: number) {
-        const filteredCourses = this.courses.filter((item: any) => item.id !== id);
-        this.ViowCourseEvent.emit(filteredCourses);
+    deleteCourse(id: string) {
+        if (id || id.length) {
+            this.courseService.deleteCourse(id).subscribe();
+            this.loadCourses.emit();
+        }
     }
 
-    confirmDelete(courseId: number) {
+    confirmDelete(courseId: string) {
         const dialogRef = this.dialog.open(ConfirmDialogComponent);
-
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.deleteCourse(courseId);

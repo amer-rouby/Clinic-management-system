@@ -1,55 +1,56 @@
-
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
-
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, ParamMap, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-
-import { coursesData } from '../../App-Data/coursesData';
+import { CourseService } from '../../../services/course.service';
 import { Course } from '../../App-Data/types';
 import { PageNotFoundComponent } from '../../page-no-found/page-no-found.component';
-
+import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
-    selector: 'app-course-details',
-    standalone: true,
-    imports: [CommonModule, RouterModule, MatCardModule, MatButtonModule, PageNotFoundComponent],
-    templateUrl: './course-details.component.html',
-    styleUrls: ['./course-details.scss']
+  selector: 'app-course-details',
+  standalone: true,
+  imports: [CommonModule, RouterModule,
+     MatCardModule, MatButtonModule, 
+     PageNotFoundComponent,MatProgressSpinnerModule
+    ],
+  templateUrl: './course-details.component.html',
+  styleUrls: ['./course-details.scss']
 })
 export class CourseDetailsComponent implements OnInit {
-    courses: any = coursesData;
-    courseData!: Course;
-    @Input() id: string = "";
-    constructor(private activatedRoute: ActivatedRoute) { }
+  courseData!: Course;
+  @Input() id: string = "";
+  loadingData: boolean = false;
+  constructor(private activatedRoute: ActivatedRoute, private courseService: CourseService) { }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
+    this.activatedRoute.queryParamMap.pipe(
+      switchMap((params: ParamMap) => {
+        const courseId = params.get('id');
+        return this.getCourse(courseId);
+      })
+    ).subscribe((course: Course | undefined) => {
+      if (course) {
+        this.loadingData = false;
+        this.courseData = course;
+      } else {
+        // Handle course not found
+      }
+    });
+  }
+
+  private getCourse(courseId: string | null): Observable<Course | undefined> {
+    this.loadingData = true;
+    if (!courseId) {
         
-        // اول طريقه
-        // const courseId = this.activatedRoute.snapshot.paramMap.get("id");
-        // this.courseData = this.courses[Number(courseId) - 1]
-
-       // ثاني طريقه
-        // this.activatedRoute.paramMap.subscribe((res: ParamMap) => {
-        //     const courseId = Number(res.get("id"))
-        //     this.courseData = this.getCourse(courseId)
-        // })
-
-        //@Input() ثالث طريقه
-        // if (this.id) {
-        //     var corseId = Number(this.id)
-            
-            
-        //     this.courseData = this.getCourse(corseId)
-        // }
-        //query Param Map رابع طريقه
-        this.activatedRoute.queryParamMap.subscribe((res: ParamMap) => {
-            const courseId = Number(res.get("id"))
-            this.courseData = this.getCourse(courseId)
-        })
+      return new Observable(observer => observer.next(undefined)); 
     }
-
-    private getCourse(courseId: number): Course {
-        return this.courses.find((c: Course) => c.id === courseId)
-    }
+    
+    return this.courseService.getAllCourses().pipe(
+      map(courses => courses.find((c: Course) => c.id === courseId))
+    );
+   
+  }
 }

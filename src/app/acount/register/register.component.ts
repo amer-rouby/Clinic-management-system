@@ -41,7 +41,6 @@ export class RegisterComponent {
         if (this.registerForm.valid) {
             const { username, password } = this.registerForm.value;
             localStorage.setItem('user', JSON.stringify({ username, password }));
-            console.log('Form Submitted', this.registerForm.value);
         }
     }
 }

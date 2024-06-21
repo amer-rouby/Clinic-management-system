@@ -10,31 +10,30 @@
         <p class="card-text mb-2">{{ course.description | titlecase }}</p>
         <ng-container>
             @switch (course.category) {
-                @case (categoryType.intermediate) {
-                    <ng-container>
-                        <button mat-raised-button color="primary" class="badge m-2" (click)="openDialog()">Intermediate</button>
-                    </ng-container>
-                }
-                @case (categoryType.advanced) {
-                    <ng-container >
-                        <button mat-raised-button color="accent" class="badge m-2" (click)="openDialog()">Advanced</button>
-                    </ng-container>
-                }
-                @case (categoryType.beginners) {
-                    <ng-container >
-                        <button mat-raised-button color="warn" class="badge m-2" (click)="openDialog()">Beginner</button>
-                    </ng-container>
-                }
-                @default {       
-                    <ng-container>
-                        <button mat-raised-button color="warn" class="badge m-2" (click)="openDialog()">Other</button>
-                    </ng-container>
-                }
+            @case (categoryType.intermediate) {
+            <ng-container>
+                <button mat-raised-button color="primary" class="badge m-2" (click)="openDialog()">Intermediate</button>
+            </ng-container>
+            }
+            @case (categoryType.advanced) {
+            <ng-container>
+                <button mat-raised-button color="accent" class="badge m-2" (click)="openDialog()">Advanced</button>
+            </ng-container>
+            }
+            @case (categoryType.beginners) {
+            <ng-container>
+                <button mat-raised-button color="warn" class="badge m-2" (click)="openDialog()">Beginner</button>
+            </ng-container>
+            }
+            @default {
+            <ng-container>
+                <button mat-raised-button color="warn" class="badge m-2" (click)="openDialog()">Other</button>
+            </ng-container>
+            }
             }
         </ng-container>
         <button mat-raised-button color="primary" class="card-link" (click)="viwoCourse(course)">View Course</button>
-        <button mat-raised-button color="warn" class="card-link" (click)="confirmDelete(course.id)">Delete Course</button>
+        <button mat-raised-button color="warn" class="card-link" (click)="confirmDelete(course.id)">Delete
+            Course</button>
     </mat-card-content>
 </mat-card>
-
-

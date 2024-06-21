@@ -1,17 +1,25 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 
 import { routes } from '../app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { CourseService } from '../services/course.service';
+import { environment } from '../../environment/environment';
 
 export const appConfig: ApplicationConfig = {
     providers: [
+        provideHttpClient(),
         provideRouter(routes, withComponentInputBinding()),
         provideClientHydration(),
         provideAnimationsAsync(),
         provideAnimationsAsync(),
-        CourseService
+
+        importProvidersFrom([
+            provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+            provideFirestore(() => getFirestore()),
+        ])
     ]
 };

@@ -38,7 +38,6 @@ export class LoginComponent {
             const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
 
             if (storedUser.username === username && storedUser.password === password) {
-                console.log('Login Successful');
                 this.loginError = '';
                 // Perform further actions such as redirecting to another page
             } else {

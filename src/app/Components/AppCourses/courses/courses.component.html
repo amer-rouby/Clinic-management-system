@@ -1,18 +1,42 @@
-<div class="container">
+<style>
+    .spinner-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        /* Full viewport height */
+        width: 100vw;
+        /* Full viewport width */
+        position: fixed;
+        /* Fix the spinner at the center of the screen */
+        top: 0;
+        left: 0;
+        background-color: rgba(255, 255, 255, 0.8);
+        /* Optional: semi-transparent background */
+        z-index: 9999;
+        /* Ensure it is on top of other content */
+    }
+</style>
+<div class="container ">
     <div class="row justify-content-center">
-        <div class="col-md-12 m-0">
-            <mat-form-field>
+        <div class="col-md-12">
+            <mat-form-field class="col-md-4 mt-3">
                 <mat-icon matPrefix>search</mat-icon>
-                <input matInput placeholder="Search by description" [(ngModel)]="searchTerm" (input)="applyFilter()">
+                <input matInput placeholder="Search by description" [(ngModel)]="searchTerm" (input)="applyFilter(searchTerm)">
             </mat-form-field>
         </div>
     </div>
+    @if(loadingData) {
+        <div class="spinner-container">
+            <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
+        </div>
+    }
     <div class="row justify-content-center">
         @for(course of pagedCourses; track course.id){
         <ng-container>
             <div class="col-md-6">
-                <app-course-card-component [courses]="courses" [course]="course"
-                    (ViowCourseEvent)="onCourseClicked($event)">
+                <app-course-card-component [pagedCourses]="pagedCourses" [course]="course"
+                    (loadCourses)="loadCourses()">
                 </app-course-card-component>
             </div>
         </ng-container>

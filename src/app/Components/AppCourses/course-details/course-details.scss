@@ -10,9 +10,11 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s;
+
     &:hover {
         transform: translateY(-5px);
     }
+
     .card-header {
         color: #f8f9fa !important;
         border-bottom: 1px solid #dee2e6;
@@ -51,4 +53,22 @@
     height: 200px;
     object-fit: cover;
     border-radius: 8px;
+}
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* Full viewport height */
+    width: 100vw;
+    /* Full viewport width */
+    position: fixed;
+    /* Fix the spinner at the center of the screen */
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    /* Optional: semi-transparent background */
+    z-index: 9999;
+    /* Ensure it is on top of other content */
 }

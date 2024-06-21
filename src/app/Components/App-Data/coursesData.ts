@@ -8,7 +8,7 @@ export enum CategoryType {
 
 export const coursesData: Array<Course> = [
     {
-        id: 1,
+        id: "",
         firstName: "Mustafa",
         lastName: "Hany",
         coursePrice: 1000,
@@ -18,7 +18,7 @@ export const coursesData: Array<Course> = [
         imgUrl: "../../assets/images/1.jpg"
     },
     {
-        id: 2,
+        id: "",
         firstName: "Enas",
         lastName: "Ahmed",
         coursePrice: 1100,
@@ -28,7 +28,7 @@ export const coursesData: Array<Course> = [
         imgUrl: "../../assets/images/2.jpg"
     },
     {
-        id: 3,
+        id: "",
         firstName: "Mohamed",
         lastName: "Ibrahem",
         coursePrice: 1110,
@@ -38,7 +38,7 @@ export const coursesData: Array<Course> = [
         imgUrl: "../../assets/images/3.jpg"
     },
     {
-        id: 4,
+        id: "",
         firstName: "Ali",
         lastName: "Elarabi",
         coursePrice: 1200,
@@ -48,7 +48,7 @@ export const coursesData: Array<Course> = [
         imgUrl: "../../assets/images/4.jpg"
     },
     {
-        id: 5,
+        id: "",
         firstName: "Manal",
         lastName: "Mohamed",
         coursePrice: 1634,
@@ -58,7 +58,7 @@ export const coursesData: Array<Course> = [
         imgUrl: "../../assets/images/5.jpg"
     },
     {
-        id: 6,
+        id: "",
         firstName: "Khalid",
         lastName: "Ibrahem",
         coursePrice: 1720,
@@ -68,7 +68,7 @@ export const coursesData: Array<Course> = [
         imgUrl: "../../assets/images/6.jpg"
     },
     {
-        id: 7,
+        id: "",
         firstName: "Hussaien",
         lastName: "Ghaniem",
         coursePrice: 1550,
@@ -78,7 +78,7 @@ export const coursesData: Array<Course> = [
         imgUrl: "../../assets/images/7.jpg"
     },
     {
-        id: 8,
+        id: "",
         firstName: "Ramdan",
         lastName: "Kareem",
         coursePrice: 1400,
@@ -88,7 +88,7 @@ export const coursesData: Array<Course> = [
         imgUrl: "../../assets/images/8.jpg"
     },
     {
-        id: 9,
+        id: "",
         firstName: "Eid",
         lastName: "Saied",
         coursePrice: 2000,
@@ -98,7 +98,7 @@ export const coursesData: Array<Course> = [
         imgUrl: "../../assets/images/9.jpg"
     },
     {
-        id: 10,
+        id: "",
         firstName: "Salah",
         lastName: "Rady",
         coursePrice: 2000,

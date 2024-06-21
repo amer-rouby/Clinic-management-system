@@ -1,4 +1,9 @@
 <div class="container card-details  mt-5">
+    @if(loadingData) {
+        <div class="spinner-container">
+            <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
+        </div>
+    }
     <mat-card class="course-card bg-dark text-white">
         @if(courseData){
         <div>
