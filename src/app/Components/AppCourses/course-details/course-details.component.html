@@ -17,7 +17,7 @@
                 <p class="mt-3">{{ courseData.description | titlecase }}</p>
                 <div>
                     <p>Course price: {{courseData.coursePrice | currency}}</p>
-                    <p>{{courseData.experienceInTheField | titlecase}}</p>
+                    <p>Is Experience In The Field: {{courseData.experienceInTheField}} Years</p>
                 </div>
                 <button mat-raised-button color="primary" routerLink="/course-list">View Courses</button>
             </mat-card-content>

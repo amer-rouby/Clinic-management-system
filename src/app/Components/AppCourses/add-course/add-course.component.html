@@ -1,0 +1,51 @@
+<div class="add-course-form">
+    <div class="dialog-header d-flex justify-content-end">
+        <button class="close-button" mat-icon-button (click)="onClose()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <form class="p-2" (ngSubmit)="onSubmit()" #form="ngForm">
+        <div class="form-row d-flex flex-wrap">
+            <mat-form-field appearance="fill" class="form-field col-md-5 mb-1 mr-1">
+                <mat-label>First Name</mat-label>
+                <input matInput [(ngModel)]="formData.firstName" name="firstName" required>
+            </mat-form-field>
+    
+            <mat-form-field appearance="fill" class="form-field col-md-5 mb-1 ml-1">
+                <mat-label>Last Name</mat-label>
+                <input matInput [(ngModel)]="formData.lastName" name="lastName" required>
+            </mat-form-field>
+    
+            <mat-form-field appearance="fill" class="form-field col-md-12 mb-1">
+                <mat-label>Description</mat-label>
+                <input matInput [(ngModel)]="formData.description" name="description" required>
+            </mat-form-field>
+        </div>
+    
+        <div class="form-row d-flex flex-wrap">
+            <mat-form-field appearance="fill" class="form-field col-md-5 mb-1 mr-1">
+                <mat-label>Course Price</mat-label>
+                <input matInput [(ngModel)]="formData.coursePrice" name="coursePrice" required>
+            </mat-form-field>
+    
+            <mat-form-field appearance="fill" class="form-field col-md-5 mb-1 ml-1">
+                <mat-label>Experience In The Field</mat-label>
+                <input matInput [(ngModel)]="formData.experienceInTheField" name="experienceInTheField" required>
+            </mat-form-field>
+    
+            <mat-form-field appearance="fill" class="form-field col-md-5 mb-1 mr-1">
+                <mat-label>Category</mat-label>
+                <input matInput [(ngModel)]="formData.category" name="category" required>
+            </mat-form-field>
+    
+            <mat-form-field appearance="fill" class="form-field col-md-5 mb-1 ml-1">
+                <mat-label>Img Url</mat-label>
+                <input matInput [(ngModel)]="formData.imgUrl" name="imgUrl" required>
+            </mat-form-field>
+        </div>
+    
+        <div class="form-row d-flex justify-content-start mb-1 mt-2">
+            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Add Course</button>
+        </div>
+    </form>
+</div>
