@@ -1,23 +1,20 @@
-import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { Course } from '../Components/App-Data/types';
 
+import { Course } from '../Components/App-Data/types';
+import { FirebaseService } from './Firebase.service';
 @Injectable({
     providedIn: 'root'
 })
-export class CourseService {
-    http = inject(HttpClient);
-    databaseURL = "https://angular-courses-796a0-default-rtdb.firebaseio.com"
+export class CourseService extends FirebaseService {
 
     getAllCourses(): Observable<Course[]> {
-        return this.http.get<{ [key: string]: any }>(`${this.databaseURL}/courses.json`).pipe(
+        return this.get<{ [key: string]: any }>('courses').pipe(
             map(data => {
                 if (data && Object.keys(data).length) {
                     return Object.keys(data).map(key => {
                         let course = data[key];
                         course.id = key;
-                        // console.log(course);
                         return course;
                     });
                 }
@@ -27,19 +24,19 @@ export class CourseService {
     }
 
     addCourse(course: Course): Observable<Course> {
-        return this.http.post<Course>(`${this.databaseURL}/courses.json`, course);
+        return this.post<Course>('courses', course);
     }
 
     deleteCourse(courseId: string): Observable<void> {
-        return this.http.delete<void>(`${this.databaseURL}/courses/${courseId}.json`);
+        return this.delete(`courses/${courseId}`);
     }
 
     searchCoursesByDescription(description: string): Observable<Course[]> {
         return this.getAllCourses().pipe(
             map(courses => {
-                return courses.filter(course => {
-                    return course.description.toLowerCase().includes(description.toLowerCase());
-                });
+                return courses.filter(course =>
+                    course.description.toLowerCase().includes(description.toLowerCase())
+                );
             })
         );
     }
