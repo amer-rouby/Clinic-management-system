@@ -58,7 +58,6 @@ export class CoursesComponent implements OnInit {
     ngOnInit(): void {
         this.loadCourses();
         this.applyFilter(this.searchTerm);
-        //  this.addCourse();
     }
 
     onCourseClicked(updatedCourses: Course[]): void {
