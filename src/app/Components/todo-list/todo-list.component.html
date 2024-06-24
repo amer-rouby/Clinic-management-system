@@ -38,7 +38,7 @@
                 }
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
-            <button mat-raised-button color="primary" type="submit">{{Add_And_Edite_Button}}</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="todoForm.invalid">{{Add_And_Edite_Button}}</button>
         </div>
     </form>
     <!-- Table -->

@@ -4,48 +4,80 @@
             <mat-icon>close</mat-icon>
         </button>
     </div>
-    <form class="p-2" (ngSubmit)="onSubmit()" #form="ngForm">
+    <form [formGroup]="addCourseForm" class="p-2" (ngSubmit)="addCourse()">
         <div class="form-row d-flex flex-wrap">
             <mat-form-field appearance="fill" class="form-field col-md-5 mb-1 mr-1">
                 <mat-label>First Name</mat-label>
-                <input matInput [(ngModel)]="formData.firstName" name="firstName" required>
+                <input matInput formControlName="firstName" required>
+                @if(addCourseForm.get('firstName')?.hasError('required')){
+                <mat-error>First Name is required</mat-error>
+                }
             </mat-form-field>
-    
+
             <mat-form-field appearance="fill" class="form-field col-md-5 mb-1 ml-1">
                 <mat-label>Last Name</mat-label>
-                <input matInput [(ngModel)]="formData.lastName" name="lastName" required>
+                <input matInput formControlName="lastName" required>
+                @if(addCourseForm.get('lastName')?.hasError('required')){
+                <mat-error>Last Name is required</mat-error>
+                }
             </mat-form-field>
-    
+
             <mat-form-field appearance="fill" class="form-field col-md-12 mb-1">
                 <mat-label>Description</mat-label>
-                <input matInput [(ngModel)]="formData.description" name="description" required>
+                <input matInput formControlName="description" required>
+                @if(addCourseForm.get('description')?.hasError('required')){
+                <mat-error>Description is required</mat-error>
+                }
             </mat-form-field>
         </div>
-    
+
         <div class="form-row d-flex flex-wrap">
             <mat-form-field appearance="fill" class="form-field col-md-5 mb-1 mr-1">
                 <mat-label>Course Price</mat-label>
-                <input matInput [(ngModel)]="formData.coursePrice" name="coursePrice" required>
+                <input matInput type="number" formControlName="coursePrice" required>
+                @if(addCourseForm.get('coursePrice')?.hasError('required')){
+                <mat-error>Course Price is required</mat-error>
+                }
+                @if(addCourseForm.get('coursePrice')?.hasError('min')){
+                <mat-error>Course Price must be a positive number</mat-error>
+                }
+
             </mat-form-field>
-    
+
             <mat-form-field appearance="fill" class="form-field col-md-5 mb-1 ml-1">
                 <mat-label>Experience In The Field</mat-label>
-                <input matInput [(ngModel)]="formData.experienceInTheField" name="experienceInTheField" required>
+                <input matInput type="number" formControlName="experienceInTheField" required>
+                @if(addCourseForm.get('experienceInTheField')?.hasError('required')){
+                <mat-error>Experience In The Field is required</mat-error>
+                }
+                @if(addCourseForm.get('experienceInTheField')?.hasError('min')){
+                <mat-error>Experience must be a positive number</mat-error>
+                }
             </mat-form-field>
-    
+
             <mat-form-field appearance="fill" class="form-field col-md-5 mb-1 mr-1">
                 <mat-label>Category</mat-label>
-                <input matInput [(ngModel)]="formData.category" name="category" required>
+                <input matInput type="number" formControlName="category" required>
+                @if(addCourseForm.get('category')?.hasError('required')){
+                <mat-error>Category is required</mat-error>
+                }
+                @if(addCourseForm.get('category')?.hasError('min')){
+                <mat-error>Category must be a positive number</mat-error>
+                }
             </mat-form-field>
-    
+
             <mat-form-field appearance="fill" class="form-field col-md-5 mb-1 ml-1">
                 <mat-label>Img Url</mat-label>
-                <input matInput [(ngModel)]="formData.imgUrl" name="imgUrl" required>
+                <input matInput formControlName="imgUrl" required>
+                @if(addCourseForm.get('imgUrl')?.hasError('required')){
+                <mat-error>Img Url is required</mat-error>
+                }
             </mat-form-field>
         </div>
-    
+
         <div class="form-row d-flex justify-content-start mb-1 mt-2">
-            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Add Course</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="addCourseForm.invalid">Add
+                Course</button>
         </div>
     </form>
 </div>

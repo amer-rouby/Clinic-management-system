@@ -49,8 +49,10 @@ export class CourseCardComponent {
 
     deleteCourse(id: string) {
         if (id || id.length) {
-            this.courseService.deleteCourse(id).subscribe();
-            this.loadCourses.emit();
+            this.courseService.deleteCourse(id).subscribe({
+                next: () => this.loadCourses.emit(),
+                error: (err) => console.error(err)
+            });
         }
     }
 

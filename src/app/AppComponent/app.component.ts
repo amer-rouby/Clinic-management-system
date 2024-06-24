@@ -8,10 +8,12 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { TodoComponent } from '../Components/todo-list/todo-list.component';
 import { HeaderComponent } from '../Components/header/header.component';
+import { FirebaseService } from '../services/Firebase.service';
 
 @Component({
     selector: 'first-component',
     standalone: true,
+    providers: [FirebaseService],
     imports: [
         RouterOutlet,
         HeaderComponent,

@@ -15,7 +15,6 @@ import { Course } from '../../App-Data/types';
 import { CourseService } from '../../../services/course.service';
 import { AddCourseComponent } from '../add-course/add-course.component';
 
-
 @Component({
     selector: 'app-courses',
     standalone: true,
@@ -27,7 +26,7 @@ import { AddCourseComponent } from '../add-course/add-course.component';
         MatDialogModule, MatToolbarModule
     ],
     templateUrl: './courses.component.html',
-    styleUrl: "./courses.scss"
+    styleUrls: ['./courses.scss']
 })
 export class CoursesComponent implements OnInit {
 
@@ -51,8 +50,8 @@ export class CoursesComponent implements OnInit {
             height: "476px"
         });
 
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
+        dialogRef.componentInstance.courseAdded.subscribe(() => {
+            this.loadCourses();
         });
     }
 
@@ -61,14 +60,6 @@ export class CoursesComponent implements OnInit {
         this.applyFilter(this.searchTerm);
         //  this.addCourse();
     }
-
-    // addCourse() {
-    //     coursesData.forEach(course => {
-    //         this.courseService.addCourse(course).subscribe(response => {
-    //             this.loadCourses();
-    //         });
-    //     });
-    // }
 
     onCourseClicked(updatedCourses: Course[]): void {
         this.courses = updatedCourses;
@@ -108,6 +99,7 @@ export class CoursesComponent implements OnInit {
                 }));
                 this.loadingData = false;
                 this.filteredCourses = this.courses;
+                this.updatePagedCourses(); // Update the paged courses
             }
         });
     }
