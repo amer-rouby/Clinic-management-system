@@ -7,9 +7,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupCourseCardComponent } from '../../../materail-ui/Description-dialog/popup-component';
-import { CategoryType } from '../../App-Data/coursesData';
+
 import { ConfirmDialogComponent } from '../../../materail-ui/delete-confirm-dialog/confirm-dialog.component';
-import { CourseService } from '../../../services/course.service';
+import { CourseService } from '../../../Services/course.service';
+import { CategoryType } from '../../../Enums/category';
 
 @Component({
     selector: 'app-course-card-component',

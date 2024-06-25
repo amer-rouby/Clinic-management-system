@@ -11,9 +11,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { CourseCardComponent } from '../course-card-component/course-card-component';
 import { PageNotFoundComponent } from '../../page-no-found/page-no-found.component';
-import { Course } from '../../App-Data/types';
-import { CourseService } from '../../../services/course.service';
+
+import { CourseService } from '../../../Services/course.service';
 import { AddCourseComponent } from '../add-course/add-course.component';
+import { Course } from '../../../Models/courses';
 
 @Component({
     selector: 'app-courses',

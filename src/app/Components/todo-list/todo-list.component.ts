@@ -15,9 +15,10 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../materail-ui/delete-confirm-dialog/confirm-dialog.component';
-import { Todo } from '../App-Data/types';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { Todo } from '../../Models/todos';
 
 @Component({
     selector: 'app-todo-list',

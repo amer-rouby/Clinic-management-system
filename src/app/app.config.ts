@@ -4,10 +4,10 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 
-import { routes } from '../app.routes';
+import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { environment } from '../../environment/environment';
+import { environment } from '../environment/environment';
 
 export const appConfig: ApplicationConfig = {
     providers: [

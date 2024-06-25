@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 
-import { Course } from '../Components/App-Data/types';
+import { Course } from '../Models/courses';
 import { FirebaseService } from './Firebase.service';
 @Injectable({
     providedIn: 'root'

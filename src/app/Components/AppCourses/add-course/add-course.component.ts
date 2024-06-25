@@ -5,9 +5,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { CourseService } from './../../../services/course.service';
+import { CourseService } from '../../../Services/course.service';
 import { MatIconModule } from '@angular/material/icon';
-import { Course } from '../../App-Data/types';
+import { Course } from '../../../Models/courses';
 
 @Component({
   selector: 'app-add-course',

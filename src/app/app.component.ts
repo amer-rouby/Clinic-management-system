@@ -6,12 +6,12 @@ import { RouterOutlet } from '@angular/router';
 
 import { HttpClientModule } from '@angular/common/http';
 
-import { TodoComponent } from '../Components/todo-list/todo-list.component';
-import { HeaderComponent } from '../Components/header/header.component';
-import { FirebaseService } from '../services/Firebase.service';
+import { TodoComponent } from './Components/todo-list/todo-list.component';
+import { HeaderComponent } from './Components/header/header.component';
+import { FirebaseService } from './Services/Firebase.service';
 
 @Component({
-    selector: 'first-component',
+    selector: 'app-root',
     standalone: true,
     providers: [FirebaseService],
     imports: [

@@ -3,12 +3,13 @@ import { Component, Input, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, ParamMap, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { CourseService } from '../../../services/course.service';
-import { Course } from '../../App-Data/types';
+import { CourseService } from '../../../Services/course.service';
+
 import { PageNotFoundComponent } from '../../page-no-found/page-no-found.component';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Course } from '../../../Models/courses';
 @Component({
     selector: 'app-course-details',
     standalone: true,
