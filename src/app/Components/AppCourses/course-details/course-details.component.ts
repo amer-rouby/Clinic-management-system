@@ -1,21 +1,17 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, RouterModule } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { CourseService } from '../../../Services/course.service';
-
-import { PageNotFoundComponent } from '../../page-no-found/page-no-found.component';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CourseService } from '../../../Services/course.service';
+import { PageNotFoundComponent } from '../../page-no-found/page-no-found.component';
 import { Course } from '../../../Models/courses';
+import { SharedMaterialModule } from '../../../../Shared/shared.material.module';
 @Component({
     selector: 'app-course-details',
     standalone: true,
-    imports: [CommonModule, RouterModule,
-        MatCardModule, MatButtonModule,
-        PageNotFoundComponent, MatProgressSpinnerModule
+    imports: [
+        PageNotFoundComponent,
+        SharedMaterialModule
     ],
     templateUrl: './course-details.component.html',
     styleUrls: ['./course-details.scss']

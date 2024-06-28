@@ -1,30 +1,22 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatDialog} from '@angular/material/dialog';
 
 import { CourseCardComponent } from '../course-card-component/course-card-component';
 import { PageNotFoundComponent } from '../../page-no-found/page-no-found.component';
-
 import { CourseService } from '../../../Services/course.service';
 import { AddCourseComponent } from '../add-course/add-course.component';
 import { Course } from '../../../Models/courses';
+import { SharedMaterialModule } from '../../../../Shared/shared.material.module';
 
 @Component({
     selector: 'app-courses',
     standalone: true,
     imports: [
-        CommonModule, MatCardModule, MatInputModule,
-        FormsModule, MatIconModule, MatPaginatorModule,
-        CourseCardComponent, PageNotFoundComponent,
-        MatProgressSpinnerModule,
-        MatDialogModule, MatToolbarModule
+        CourseCardComponent, 
+        SharedMaterialModule,
+        PageNotFoundComponent
     ],
     templateUrl: './courses.component.html',
     styleUrls: ['./courses.scss']

@@ -1,25 +1,15 @@
-import { MatDialogRef } from '@angular/material/dialog';
 import { Component, EventEmitter, Output } from '@angular/core';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { CourseService } from '../../../Services/course.service';
-import { MatIconModule } from '@angular/material/icon';
 import { Course } from '../../../Models/courses';
+import { SharedMaterialModule } from '../../../../Shared/shared.material.module';
 
 @Component({
   selector: 'app-add-course',
   standalone: true,
   imports: [
-    CommonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatIconModule
+    SharedMaterialModule
   ],
   templateUrl: './add-course.component.html',
   styleUrls: ["./add-course.scss"]
