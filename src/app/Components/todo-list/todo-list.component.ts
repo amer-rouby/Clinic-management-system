@@ -1,24 +1,13 @@
-import { MatDatepickerModule } from '@angular/material/datepicker';
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-import { CommonModule } from '@angular/common';
-
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-
+import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../materail-ui/delete-confirm-dialog/confirm-dialog.component';
-
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { Todo } from '../../Models/todos';
+import { SharedMaterialModule } from '../../../Shared/shared.material.module';
 
 @Component({
     selector: 'app-todo-list',
@@ -26,10 +15,7 @@ import { Todo } from '../../Models/todos';
     templateUrl: './todo-list.component.html',
     providers: [provideNativeDateAdapter()],
     imports: [
-         FormsModule, MatInputModule,
-        MatButtonModule, MatCheckboxModule, MatIconModule,
-        MatTableModule, MatPaginatorModule, ReactiveFormsModule,
-        MatFormFieldModule, MatDatepickerModule,CommonModule
+        SharedMaterialModule,
     ],
     styleUrls: ['./todo-list.component.scss']
 })
@@ -37,7 +23,7 @@ export class TodoComponent implements OnInit {
     todoForm: FormGroup;
     todos: Todo[] = [];
     newTodo: Todo = { id: 0, title: "", date: new Date(), completed: false, phoneNumber: '', description: '' };
-    
+
     currentPage: number = 0;
     itemsPerPage: number = 5;
 
@@ -48,7 +34,7 @@ export class TodoComponent implements OnInit {
 
     dataSource = new MatTableDataSource<Todo>(this.todos);
     displayedColumns: string[] = ['checkbox', 'title', 'phoneNumber', 'date', 'description', 'updateButton', 'deleteButton'];
-    
+
     @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
     constructor(public fb: FormBuilder, public dialog: MatDialog) {

@@ -3,7 +3,9 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ErrorInterceptor implements HttpInterceptor {
  
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -13,10 +15,13 @@ export class ErrorInterceptor implements HttpInterceptor {
         let errorMessage = 'An unknown error occurred!';
         if (error.error instanceof ErrorEvent) {
           // Client-side error
+          console.log(errorMessage, "Amer");
+          
           errorMessage = `Error: ${error.error.message}`;
         } else {
           // Server-side error
           errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+          console.log(errorMessage, "Amer");
         }
         console.error(errorMessage);
         return throwError(errorMessage);
