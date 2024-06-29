@@ -17,6 +17,10 @@ export class FirebaseService {
     return this.http.post<T>(`${this.databaseURL}/${endpoint}.json`, data);
   }
 
+  put<T>(endpoint: string, data: T): Observable<void> {
+    return this.http.put<void>(`${this.databaseURL}/${endpoint}.json`, data);
+  }
+
   delete(endpoint: string): Observable<void> {
     return this.http.delete<void>(`${this.databaseURL}/${endpoint}.json`);
   }
