@@ -1,53 +1,18 @@
 <div class="container mt-5">
-    <form [formGroup]="todoForm" (ngSubmit)="addTodo()">
-        <div class="input-group my-4 mb-3 full-width">
-            <!-- title input -->
-            <mat-form-field appearance="fill" class="full-width mr-2">
-                <mat-label>Add title</mat-label>
-                <input matInput placeholder="Add title" formControlName="title">
-                @if(todoForm.get('title')?.errors?.['required']){
-                    <mat-error>Title is required</mat-error>
-                }
-            </mat-form-field>
-            <!-- phone number input -->
-            <mat-form-field appearance="fill" class="full-width mr-2">
-                <mat-label>Add a phone number</mat-label>
-                <input matInput placeholder="Add a phone number" formControlName="phoneNumber">
-                @if(todoForm.get('phoneNumber')?.errors?.['required'] ){
-                    <mat-error>Phone number is required</mat-error>
-                }
-                @if(todoForm.get('phoneNumber')?.errors?.['pattern']){
-                    <mat-error>Invalid phone number</mat-error>
-                }
-            </mat-form-field>
-            <!-- description Input -->
-            <mat-form-field appearance="fill" class="full-width mr-2">
-                <mat-label>Add a description</mat-label>
-                <input matInput placeholder="Add a description" formControlName="description">
-                @if(todoForm.get('description')?.errors?.['required']){
-                    <mat-error>Description is required</mat-error>
-                }
-            </mat-form-field>
-            <!-- Date Input -->
-            <mat-form-field>
-                <mat-label>Choose a date</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="date">
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                @if(todoForm.get('date')?.errors?.['required']){
-                    <mat-error>Date is required</mat-error>
-                }
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-            <button mat-raised-button color="primary" type="submit" [disabled]="todoForm.invalid">{{Add_And_Edite_Button}}</button>
+    @if(loadingData) {
+        <div class="spinner-container">
+            <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
         </div>
-    </form>
-    <!-- Table -->
-    <mat-table  [dataSource]="dataSource" class="mat-elevation-z8">
+    }
+    <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="checkbox">
             <mat-header-cell color="primary" *matHeaderCellDef>
                 <mat-checkbox (change)="selectAll($event)" [checked]="isAllSelected()"></mat-checkbox>
                 <button mat-icon-button (click)="loadTodos()">
                     <mat-icon>refresh</mat-icon>
+                </button>
+                <button mat-icon-button (click)="openDialog()">
+                    <mat-icon>add</mat-icon>
                 </button>
             </mat-header-cell>
             <mat-cell *matCellDef="let newTodo">
@@ -57,8 +22,8 @@
             </mat-cell>
         </ng-container>
         <!-- Title Column -->
-        <ng-container   matColumnDef="title">
-            <mat-header-cell   *matHeaderCellDef>Title</mat-header-cell>
+        <ng-container matColumnDef="title">
+            <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
             <mat-cell *matCellDef="let newTodo">{{ newTodo.title }}</mat-cell>
         </ng-container>
         <!-- Phone Number Column -->

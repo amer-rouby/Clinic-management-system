@@ -1,13 +1,15 @@
-
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../materail-ui/delete-confirm-dialog/confirm-dialog.component';
+
+import { SharedMaterialModule } from '../../../Shared/shared.material.module';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { Todo } from '../../Models/todos';
-import { SharedMaterialModule } from '../../../Shared/shared.material.module';
+import { TodoService } from '../../Services/todos.service';
+import { AddTodoComponent } from './add-todo/add-todo.component';
 
 @Component({
     selector: 'app-todo-list',
@@ -22,14 +24,14 @@ import { SharedMaterialModule } from '../../../Shared/shared.material.module';
 export class TodoComponent implements OnInit {
     todoForm: FormGroup;
     todos: Todo[] = [];
-    newTodo: Todo = { id: 0, title: "", date: new Date(), completed: false, phoneNumber: '', description: '' };
+    newTodo: Todo = { id: '' , title: "", date: new Date(), completed: false, phoneNumber: '', description: '' };
 
     currentPage: number = 0;
     itemsPerPage: number = 5;
 
     selectedTodos: Todo[] = [];
     editingTodo: Todo | null = null;
-
+    loadingData:boolean = false;
     Add_And_Edite_Button: string = "ADD";
 
     dataSource = new MatTableDataSource<Todo>(this.todos);
@@ -37,7 +39,7 @@ export class TodoComponent implements OnInit {
 
     @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
-    constructor(public fb: FormBuilder, public dialog: MatDialog) {
+    constructor(public fb: FormBuilder, public dialog: MatDialog, private todoService: TodoService) {
         this.todoForm = this.fb.group({
             title: ['', Validators.required],
             phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
@@ -53,29 +55,24 @@ export class TodoComponent implements OnInit {
     }
 
     loadTodos() {
-        if (typeof localStorage !== 'undefined') {
-            const storedTodos = localStorage.getItem('todos');
-            if (storedTodos) {
-                this.todos = JSON.parse(storedTodos);
-                this.dataSource.data = this.todos;
-            }
-        }
+        this.loadingData = true
+        this.todoService.getAllTodos().subscribe(todos => {
+            this.todos = todos;
+            this.dataSource.data = this.todos;
+            this.loadingData = false
+        });
     }
 
-    addTodo() {
-        if (this.todoForm.valid) {
-            if (this.editingTodo) {
-                this.updateTodo();
-                this.Add_And_Edite_Button = "ADD";
-                this.todoForm.reset();
-            } else {
-                const newTodoAdd: Todo = { ...this.newTodo, id: Date.now(), ...this.todoForm.value };
-                this.todos.push(newTodoAdd);
-                this.saveTodos();
-                this.loadTodos();
-                this.todoForm.reset();
-            }
-        }
+
+    openDialog(): void {
+        const dialogRef = this.dialog.open(AddTodoComponent, {
+            width: '600px',
+            height: "450px"
+        });
+
+        dialogRef.componentInstance.todoAdded.subscribe(() => {
+            this.loadTodos();
+        });
     }
 
     editTodo(todo: Todo) {
@@ -90,16 +87,19 @@ export class TodoComponent implements OnInit {
     }
 
     updateTodo() {
+        this.loadingData = true
         if (this.editingTodo) {
-            Object.assign(this.editingTodo, this.todoForm.value);
-            this.saveTodos();
-            this.editingTodo = null;
+            const updatedTodo: Todo = { ...this.editingTodo, ...this.todoForm.value };
+            this.todoService.updateTodo(this.editingTodo.id, updatedTodo).subscribe(() => {
+                this.loadTodos();
+                this.editingTodo = null;
+                this.loadingData = false
+            });
         }
     }
 
-    confirmDelete(todoId: number) {
+    confirmDelete(todoId: string) {
         const dialogRef = this.dialog.open(ConfirmDialogComponent);
-
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.deleteTodo(todoId);
@@ -107,24 +107,19 @@ export class TodoComponent implements OnInit {
         });
     }
 
-    deleteTodo(todoId: number) {
-        this.todos = this.todos.filter(todo => todo.id !== todoId);
-        this.saveTodos();
-        this.loadTodos();
+    deleteTodo(todoId: string) {
+        this.loadingData = true
+        this.todoService.deleteTodo(todoId).subscribe(() => {
+            this.loadingData = false
+            this.loadTodos();
+        });
     }
 
     toggleTodoCompletion(todo: Todo) {
         todo.completed = !todo.completed;
-        this.saveTodos();
+        this.todoService.updateTodo(todo.id, todo).subscribe();
     }
 
-    sortTodosByTitle() {
-        this.todos.sort((a, b) => a.title.localeCompare(b.title));
-    }
-
-    sortTodosById() {
-        this.todos.sort((a, b) => a.id - b.id);
-    }
 
     isAllSelected(): boolean {
         const numSelected = this.selectedTodos.length;
@@ -168,11 +163,5 @@ export class TodoComponent implements OnInit {
 
     get totalPages(): number {
         return Math.ceil(this.todos.length / this.itemsPerPage);
-    }
-
-    private saveTodos() {
-        if (typeof localStorage !== 'undefined') {
-            localStorage.setItem('todos', JSON.stringify(this.todos));
-        }
     }
 }

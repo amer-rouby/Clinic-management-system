@@ -18,6 +18,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AuthComponent } from '../app/auth/auth.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { AuthComponent } from '../app/auth/auth.component';
     MatDividerModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    MatCardModule
+    MatCardModule,
+    MatNativeDateModule
   ],
   exports: [
     CommonModule,
@@ -63,7 +65,8 @@ import { AuthComponent } from '../app/auth/auth.component';
     MatDividerModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    MatCardModule
+    MatCardModule,
+    MatNativeDateModule // Export it here
   ]
 })
 export class SharedMaterialModule { }
