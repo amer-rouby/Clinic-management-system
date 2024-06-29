@@ -17,9 +17,12 @@ import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { AuthComponent } from '../app/auth/auth.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    AuthComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
