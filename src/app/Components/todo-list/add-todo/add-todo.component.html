@@ -5,7 +5,7 @@
 }
 <div class="add-todo-form">
     <div class="dialog-header d-flex justify-content-end">
-        <h2 class="m-auto header">Add New Todo</h2>
+        <h2 class="m-auto header">{{Add_or_modify_button}}</h2>
         <button class="close-button" mat-icon-button (click)="onClose()">
             <mat-icon>close</mat-icon>
         </button>
@@ -44,8 +44,7 @@
 
         <div class="full-width col-md-4">
             <button class="submit-button" mat-raised-button color="primary" type="submit"
-                [disabled]="addTodoForm.invalid">Add
-                Todo</button>
+                [disabled]="addTodoForm.invalid">{{Add_or_modify_button}}</button>
         </div>
     </form>
 </div>

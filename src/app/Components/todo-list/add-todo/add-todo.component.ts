@@ -20,6 +20,7 @@ export class AddTodoComponent implements OnInit {
   @Output() todoAdded = new EventEmitter<Todo>();
   isEdit: boolean = false;
   todo: Todo | null = null;
+  Add_or_modify_button = "Add Todo"
 
   constructor(
     public dialogRef: MatDialogRef<AddTodoComponent>,
@@ -37,6 +38,7 @@ export class AddTodoComponent implements OnInit {
     if (data && data.todo) {
       this.isEdit = true;
       this.todo = data.todo;
+      this.Add_or_modify_button = "Edit Todo"
     }
   }
 
@@ -57,7 +59,7 @@ export class AddTodoComponent implements OnInit {
       if (this.isEdit && this.todo) {
         const updatedTodo: Todo = { ...this.todo, ...this.addTodoForm.value };
         this.todoService.updateTodo(this.todo.id, updatedTodo).subscribe({
-          next: (response:any) => {
+          next: (response: any) => {
             this.todoAdded.emit(response);
             this.onClose();
             this.loadingData = false;

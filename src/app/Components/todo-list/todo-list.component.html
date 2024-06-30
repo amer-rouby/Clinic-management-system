@@ -1,9 +1,7 @@
 <div class="container mt-5">
-    @if(loadingData) {
-        <div class="spinner-container">
-            <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
-        </div>
-    }
+    <div *ngIf="loadingData" class="spinner-container">
+        <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
+    </div>
     <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="checkbox">
             <mat-header-cell *matHeaderCellDef>
@@ -45,7 +43,7 @@
         <ng-container matColumnDef="updateButton">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let newTodo">
-                <button mat-mini-fab color="primary" [disabled]="!newTodo.completed" (click)="editTodoDialog(newTodo)">
+                <button mat-mini-fab color="primary"  [disabled]="!newTodo.completed" (click)="editTodoDialog(newTodo)">
                     <mat-icon>edit</mat-icon>
                 </button>
             </mat-cell>
@@ -54,7 +52,7 @@
         <ng-container matColumnDef="deleteButton">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let newTodo">
-                <button mat-mini-fab color="warn" [disabled]="!newTodo.completed" (click)="confirmDelete(newTodo.id)">
+                <button mat-mini-fab color="warn"  [disabled]="!newTodo.completed" (click)="confirmDelete(newTodo.id)">
                     <mat-icon>delete</mat-icon>
                 </button>
             </mat-cell>

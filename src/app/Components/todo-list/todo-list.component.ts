@@ -15,55 +15,43 @@ import { AddTodoComponent } from './add-todo/add-todo.component';
     standalone: true,
     templateUrl: './todo-list.component.html',
     providers: [provideNativeDateAdapter()],
-    imports: [
-        SharedMaterialModule,
-    ],
+    imports: [SharedMaterialModule],
     styleUrls: ['./todo-list.component.scss']
 })
 export class TodoComponent implements OnInit {
     todoForm: FormGroup;
     todos: Todo[] = [];
-
-    newTodo: Todo = {
-        id: '',
-        title: "",
-        date: new Date(),
-        completed: false,
-        phoneNumber: '',
-        description: ''
-    };
+    newTodo: Todo = this.createEmptyTodo();
     currentPage: number = 0;
     itemsPerPage: number = 5;
-
     selectedTodos: Todo[] = [];
-    editingTodo: Todo | null = null;
     loadingData: boolean = false;
-    Add_And_Edite_Button: string = "ADD";
 
     dataSource = new MatTableDataSource<Todo>(this.todos);
-
     displayedColumns: string[] = [
-        'checkbox', 'title', 
-        'phoneNumber', 'date', 
-        'description', 'updateButton', 
+        'checkbox', 'title', 'phoneNumber', 
+        'date', 'description', 'updateButton', 
         'deleteButton'
     ];
 
     @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
-    constructor(public fb: FormBuilder, public dialog: MatDialog, private todoService: TodoService) {
+    constructor(private fb: FormBuilder, private dialog: MatDialog, private todoService: TodoService) {
         this.todoForm = this.fb.group({
             title: ['', Validators.required],
             phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
             description: ['', Validators.required],
             date: ['', Validators.required],
         });
-
     }
 
     ngOnInit() {
         this.loadTodos();
         this.dataSource.paginator = this.paginator;
+    }
+
+    createEmptyTodo(): Todo {
+        return { id: '', title: '', date: new Date(), completed: false, phoneNumber: '', description: '' };
     }
 
     loadTodos() {
@@ -81,9 +69,7 @@ export class TodoComponent implements OnInit {
             height: "450px"
         });
 
-        dialogRef.componentInstance.todoAdded.subscribe(() => {
-            this.loadTodos();
-        });
+        dialogRef.componentInstance.todoAdded.subscribe(() => this.loadTodos());
     }
 
     editTodoDialog(todo: Todo) {
@@ -93,9 +79,7 @@ export class TodoComponent implements OnInit {
             data: { todo }
         });
 
-        dialogRef.componentInstance.todoAdded.subscribe(() => {
-            this.loadTodos();
-        });
+        dialogRef.componentInstance.todoAdded.subscribe(() => this.loadTodos());
     }
 
     confirmDelete(todoId: string) {
