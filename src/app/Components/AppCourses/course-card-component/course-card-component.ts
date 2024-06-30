@@ -30,7 +30,7 @@ export class CourseCardComponent {
 
     viwoCourse(course: any): void {
         // this.router.navigate(['course-list', course.id]);        
-        this.router.navigate(['course'], { queryParams: { id: course.id, name: course.firstName } });
+        this.router.navigate(['course'], { queryParams: { id: course.id} });
     }
 
     openDialog() {
