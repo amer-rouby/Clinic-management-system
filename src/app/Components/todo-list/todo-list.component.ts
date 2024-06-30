@@ -4,7 +4,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../materail-ui/delete-confirm-dialog/confirm-dialog.component';
-
 import { SharedMaterialModule } from '../../../Shared/shared.material.module';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { Todo } from '../../Models/todos';
@@ -24,18 +23,31 @@ import { AddTodoComponent } from './add-todo/add-todo.component';
 export class TodoComponent implements OnInit {
     todoForm: FormGroup;
     todos: Todo[] = [];
-    newTodo: Todo = { id: '' , title: "", date: new Date(), completed: false, phoneNumber: '', description: '' };
 
+    newTodo: Todo = {
+        id: '',
+        title: "",
+        date: new Date(),
+        completed: false,
+        phoneNumber: '',
+        description: ''
+    };
     currentPage: number = 0;
     itemsPerPage: number = 5;
 
     selectedTodos: Todo[] = [];
     editingTodo: Todo | null = null;
-    loadingData:boolean = false;
+    loadingData: boolean = false;
     Add_And_Edite_Button: string = "ADD";
 
     dataSource = new MatTableDataSource<Todo>(this.todos);
-    displayedColumns: string[] = ['checkbox', 'title', 'phoneNumber', 'date', 'description', 'updateButton', 'deleteButton'];
+
+    displayedColumns: string[] = [
+        'checkbox', 'title', 
+        'phoneNumber', 'date', 
+        'description', 'updateButton', 
+        'deleteButton'
+    ];
 
     @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
@@ -55,14 +67,13 @@ export class TodoComponent implements OnInit {
     }
 
     loadTodos() {
-        this.loadingData = true
+        this.loadingData = true;
         this.todoService.getAllTodos().subscribe(todos => {
             this.todos = todos;
             this.dataSource.data = this.todos;
-            this.loadingData = false
+            this.loadingData = false;
         });
     }
-
 
     openDialog(): void {
         const dialogRef = this.dialog.open(AddTodoComponent, {
@@ -75,27 +86,16 @@ export class TodoComponent implements OnInit {
         });
     }
 
-    editTodo(todo: Todo) {
-        this.Add_And_Edite_Button = "UPDATE";
-        this.editingTodo = todo;
-        this.todoForm.setValue({
-            title: todo.title,
-            phoneNumber: todo.phoneNumber,
-            description: todo.description,
-            date: todo.date,
+    editTodoDialog(todo: Todo) {
+        const dialogRef = this.dialog.open(AddTodoComponent, {
+            width: '600px',
+            height: '450px',
+            data: { todo }
         });
-    }
 
-    updateTodo() {
-        this.loadingData = true
-        if (this.editingTodo) {
-            const updatedTodo: Todo = { ...this.editingTodo, ...this.todoForm.value };
-            this.todoService.updateTodo(this.editingTodo.id, updatedTodo).subscribe(() => {
-                this.loadTodos();
-                this.editingTodo = null;
-                this.loadingData = false
-            });
-        }
+        dialogRef.componentInstance.todoAdded.subscribe(() => {
+            this.loadTodos();
+        });
     }
 
     confirmDelete(todoId: string) {
@@ -108,18 +108,12 @@ export class TodoComponent implements OnInit {
     }
 
     deleteTodo(todoId: string) {
-        this.loadingData = true
+        this.loadingData = true;
         this.todoService.deleteTodo(todoId).subscribe(() => {
-            this.loadingData = false
+            this.loadingData = false;
             this.loadTodos();
         });
     }
-
-    toggleTodoCompletion(todo: Todo) {
-        todo.completed = !todo.completed;
-        this.todoService.updateTodo(todo.id, todo).subscribe();
-    }
-
 
     isAllSelected(): boolean {
         const numSelected = this.selectedTodos.length;
@@ -127,23 +121,23 @@ export class TodoComponent implements OnInit {
         return numSelected === numRows;
     }
 
-    isIndeterminate(): boolean {
-        const numSelected = this.selectedTodos.length;
-        const numRows = this.paginatedTodos.length;
-        return numSelected > 0 && numSelected < numRows;
-    }
-
     selectAll(event: any) {
         if (event.checked) {
             this.selectedTodos = [...this.paginatedTodos];
+            this.paginatedTodos.forEach(todo => todo.completed = true);
         } else {
             this.selectedTodos = [];
+            this.paginatedTodos.forEach(todo => todo.completed = false);
         }
-        this.paginatedTodos.forEach(todo => todo.completed = event.checked);
     }
 
     toggleSelection(todo: Todo) {
         todo.completed = !todo.completed;
+        if (todo.completed) {
+            this.selectedTodos.push(todo);
+        } else {
+            this.selectedTodos = this.selectedTodos.filter(t => t.id !== todo.id);
+        }
     }
 
     isSelected(todo: Todo): boolean {
@@ -159,9 +153,5 @@ export class TodoComponent implements OnInit {
         const startIndex = this.currentPage * this.itemsPerPage;
         const endIndex = startIndex + this.itemsPerPage;
         return this.todos.slice(startIndex, endIndex);
-    }
-
-    get totalPages(): number {
-        return Math.ceil(this.todos.length / this.itemsPerPage);
     }
 }

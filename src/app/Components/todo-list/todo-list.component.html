@@ -6,7 +6,7 @@
     }
     <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="checkbox">
-            <mat-header-cell color="primary" *matHeaderCellDef>
+            <mat-header-cell *matHeaderCellDef>
                 <mat-checkbox (change)="selectAll($event)" [checked]="isAllSelected()"></mat-checkbox>
                 <button mat-icon-button (click)="loadTodos()">
                     <mat-icon>refresh</mat-icon>
@@ -45,7 +45,7 @@
         <ng-container matColumnDef="updateButton">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let newTodo">
-                <button mat-mini-fab color="primary" [disabled]="!newTodo.completed" (click)="editTodo(newTodo)">
+                <button mat-mini-fab color="primary" [disabled]="!newTodo.completed" (click)="editTodoDialog(newTodo)">
                     <mat-icon>edit</mat-icon>
                 </button>
             </mat-cell>
@@ -62,7 +62,6 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
-    <!-- Pagination -->
     <mat-paginator [length]="todos.length" [pageSize]="itemsPerPage" [pageSizeOptions]="[5, 10, 15]"
         (page)="onPageChange($event)">
     </mat-paginator>
