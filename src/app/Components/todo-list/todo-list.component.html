@@ -1,7 +1,9 @@
 <div class="container mt-5">
-    <div *ngIf="loadingData" class="spinner-container">
-        <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
-    </div>
+    @if(loadingData) {
+        <div class="spinner-container">
+            <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
+        </div>
+    }
     <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="checkbox">
             <mat-header-cell *matHeaderCellDef>

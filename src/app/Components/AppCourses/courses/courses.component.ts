@@ -39,7 +39,7 @@ export class CoursesComponent implements OnInit {
 
     openDialog(): void {
         const dialogRef = this.dialog.open(AddCourseComponent, {
-            width: '800px',
+            width: '550px',
             height: "476px"
         });
 

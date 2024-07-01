@@ -6,7 +6,7 @@
     </div>
     <form [formGroup]="addCourseForm" class="p-2" (ngSubmit)="addCourse()">
         <div class="form-row d-flex flex-wrap">
-            <mat-form-field appearance="fill" class="form-field col-md-5 mb-1 mr-1">
+            <mat-form-field appearance="fill" class="form-field col-md-6 mb-1 mr-1">
                 <mat-label>First Name</mat-label>
                 <input matInput formControlName="firstName" required>
                 @if(addCourseForm.get('firstName')?.hasError('required')){
@@ -32,7 +32,7 @@
         </div>
 
         <div class="form-row d-flex flex-wrap">
-            <mat-form-field appearance="fill" class="form-field col-md-5 mb-1 mr-1">
+            <mat-form-field appearance="fill" class="form-field col-md-6 mb-1 mr-1">
                 <mat-label>Course Price</mat-label>
                 <input matInput type="number" formControlName="coursePrice" required>
                 @if(addCourseForm.get('coursePrice')?.hasError('required')){
@@ -55,7 +55,7 @@
                 }
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field col-md-5 mb-1 mr-1">
+            <mat-form-field appearance="fill" class="form-field col-md-6 mb-1 mr-1">
                 <mat-label>Category</mat-label>
                 <input matInput type="number" formControlName="category" required>
                 @if(addCourseForm.get('category')?.hasError('required')){
