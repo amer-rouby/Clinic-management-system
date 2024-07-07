@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, EventEmitter, Output, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CourseService } from '../../../Services/course.service';
 import { Course } from '../../../Models/courses';
 import { SharedMaterialModule } from '../../../../Shared/shared.material.module';
@@ -14,38 +14,64 @@ import { SharedMaterialModule } from '../../../../Shared/shared.material.module'
   templateUrl: './add-course.component.html',
   styleUrls: ["./add-course.scss"]
 })
-export class AddCourseComponent {
-  addCourseForm: FormGroup;
+export class AddCourseComponent implements OnInit {
+  addCourseForm!: FormGroup;
+  courseData: Course;
+  Add_or_modify_button = "Add Course";
 
   @Output() courseAdded = new EventEmitter<Course>();
 
   constructor(
     public dialogRef: MatDialogRef<AddCourseComponent>,
     private fb: FormBuilder,
-    private courseService: CourseService
+    private courseService: CourseService,
+    @Inject(MAT_DIALOG_DATA) public data: Course
   ) {
+    this.courseData = { ...data };
+  }
+
+  ngOnInit(): void {
+    const defaultImgUrl = '../../assets/images/';
     this.addCourseForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      coursePrice: [null, [Validators.required, Validators.min(0)]],
-      experienceInTheField: [null, [Validators.required, Validators.min(0)]],
-      description: ['', Validators.required],
-      category: [null, [Validators.required, Validators.min(0)]],
-      imgUrl: ['', Validators.required],
+      firstName: [this.courseData.firstName || '', Validators.required],
+      lastName: [this.courseData.lastName || '', Validators.required],
+      coursePrice: [this.courseData.coursePrice || null, [Validators.required, Validators.min(0)]],
+      experienceInTheField: [this.courseData.experienceInTheField || null, [Validators.required, Validators.min(0)]],
+      description: [this.courseData.description || '', Validators.required],
+      category: [this.courseData.category || null, [Validators.required, Validators.min(0)]],
+      imgUrl: [this.courseData.imgUrl || defaultImgUrl, Validators.required],
     });
+
+    if (this.courseData.id) {
+      this.Add_or_modify_button = "Edit Course";
+    }
   }
 
   addCourse() {
     if (this.addCourseForm.valid) {
-      this.courseService.addCourse(this.addCourseForm.value).subscribe({
-        next: (response) => {
-          this.courseAdded.emit(response); // Emit the added course
-          this.onClose();
-        },
-        error: (error) => {
-          console.error(error);
-        },
-      });
+      const formData = { ...this.courseData, ...this.addCourseForm.value };
+
+      if (this.courseData.id) {
+        this.courseService.updateCourse(formData).subscribe({
+          next: (response) => {
+            this.courseAdded.emit(response);
+            this.onClose();
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        });
+      } else {
+        this.courseService.addCourse(formData).subscribe({
+          next: (response) => {
+            this.courseAdded.emit(response);
+            this.onClose();
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        });
+      }
     }
   }
 

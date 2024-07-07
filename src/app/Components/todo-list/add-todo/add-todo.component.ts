@@ -30,7 +30,11 @@ export class AddTodoComponent implements OnInit {
   ) {
     this.addTodoForm = this.fb.group({
       title: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^\\+?[0-9]{10,12}$')]],
+      phoneNumber: ['', [Validators.required, 
+        Validators.pattern('^\\+?[0-9]{10,12}$'),
+        Validators.minLength(11), // يحدد الحد الأدنى لطول الرقم
+        Validators.maxLength(11)  // يحدد الحد الأقصى لطول الرقم
+      ]] ,
       description: ['', Validators.required],
       date: [null, Validators.required],
     });

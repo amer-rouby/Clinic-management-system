@@ -20,53 +20,37 @@ import { RouterModule } from '@angular/router';
 import { AuthComponent } from '../app/auth/auth.component';
 import { MatNativeDateModule } from '@angular/material/core';
 
+const modules = [
+  CommonModule,
+  FormsModule,
+  ReactiveFormsModule,
+  RouterModule,
+  MatToolbarModule,
+  MatButtonModule,
+  MatFormFieldModule,
+  MatSelectModule,
+  MatIconModule,
+  MatMenuModule,
+  MatInputModule,
+  MatCheckboxModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatDatepickerModule,
+  MatDividerModule,
+  MatProgressSpinnerModule,
+  MatDialogModule,
+  MatCardModule,
+  MatNativeDateModule
+]
 @NgModule({
   declarations: [
     AuthComponent
   ],
   imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatIconModule,
-    MatMenuModule,
-    MatInputModule,
-    MatCheckboxModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatDatepickerModule,
-    MatDividerModule,
-    MatProgressSpinnerModule,
-    MatDialogModule,
-    MatCardModule,
-    MatNativeDateModule
+  ...modules
   ],
   exports: [
-    CommonModule,
-    FormsModule, 
-    ReactiveFormsModule,
-    RouterModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatIconModule,
-    MatMenuModule,
-    MatInputModule,
-    MatCheckboxModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatDatepickerModule,
-    MatDividerModule,
-    MatProgressSpinnerModule,
-    MatDialogModule,
-    MatCardModule,
-    MatNativeDateModule // Export it here
+    ...modules
   ]
 })
 export class SharedMaterialModule { }

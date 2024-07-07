@@ -1,5 +1,6 @@
 <div class="add-course-form">
     <div class="dialog-header d-flex justify-content-end">
+        <h2 class="m-auto header">{{Add_or_modify_button | uppercase}}</h2>
         <button class="close-button" mat-icon-button (click)="onClose()">
             <mat-icon>close</mat-icon>
         </button>
@@ -68,7 +69,7 @@
 
             <mat-form-field appearance="fill" class="form-field col-md-5 mb-1 ml-1">
                 <mat-label>Img Url</mat-label>
-                <input matInput formControlName="imgUrl" required>
+                <input matInput formControlName="imgUrl"  required>
                 @if(addCourseForm.get('imgUrl')?.hasError('required')){
                 <mat-error>Img Url is required</mat-error>
                 }
@@ -76,8 +77,8 @@
         </div>
 
         <div class="form-row d-flex justify-content-start mb-1 mt-2">
-            <button mat-raised-button color="primary" type="submit" [disabled]="addCourseForm.invalid">Add
-                Course</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="addCourseForm.invalid">
+                {{Add_or_modify_button}}</button>
         </div>
     </form>
 </div>

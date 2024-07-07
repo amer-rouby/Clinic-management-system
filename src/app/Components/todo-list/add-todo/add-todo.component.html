@@ -1,37 +1,41 @@
 @if(loadingData) {
-    <div class="spinner-container">
-        <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
-    </div>
+<div class="spinner-container">
+    <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
+</div>
 }
 <div class="add-todo-form">
     <div class="dialog-header d-flex justify-content-end">
-        <h2 class="m-auto header">{{Add_or_modify_button}}</h2>
+        <h2 class="m-auto header">{{Add_or_modify_button | uppercase}}</h2>
         <button class="close-button" mat-icon-button (click)="onClose()">
             <mat-icon>close</mat-icon>
         </button>
     </div>
     <form [formGroup]="addTodoForm" class="m-4" (ngSubmit)="addTodo()">
+        <!-- Title Input -->
         <mat-form-field appearance="fill" class="full-width col-md-12">
             <mat-label>Add title</mat-label>
             <input matInput placeholder="Add title" formControlName="title">
             <mat-error *ngIf="addTodoForm.get('title')?.errors?.['required']">Title is required</mat-error>
         </mat-form-field>
-        <!-- Phone number input -->
-        <mat-form-field appearance="fill" class="full-width col-md-12">
-            <mat-label>Add a phone number</mat-label>
-            <input matInput placeholder="Add a phone number" formControlName="phoneNumber">
-            <mat-error *ngIf="addTodoForm.get('phoneNumber')?.errors?.['required']">Phone number is
-                required</mat-error>
-            <mat-error *ngIf="addTodoForm.get('phoneNumber')?.errors?.['pattern']">Invalid phone
-                number</mat-error>
-        </mat-form-field>
-
         <!-- Description Input -->
         <mat-form-field appearance="fill" class="full-width col-md-12">
             <mat-label>Add a description</mat-label>
             <input matInput placeholder="Add a description" formControlName="description">
             <mat-error *ngIf="addTodoForm.get('description')?.errors?.['required']">Description is
                 required</mat-error>
+        </mat-form-field>
+        <!-- Phone number input -->
+        <mat-form-field appearance="fill" class="full-width col-md-12">
+            <mat-label>Add a phone number</mat-label>
+            <input matInput placeholder="Add a phone number" formControlName="phoneNumber" maxlength="11">
+            <mat-error *ngIf="addTodoForm.get('phoneNumber')?.errors?.['required']">Phone number is
+                required</mat-error>
+            <mat-error *ngIf="addTodoForm.get('phoneNumber')?.errors?.['pattern']">Invalid phone
+                number</mat-error>
+            <mat-error
+                *ngIf="addTodoForm.get('phoneNumber')?.hasError('minlength') || addTodoForm.get('phoneNumber')?.hasError('maxlength')">
+                Phone number must be 11 digits long
+            </mat-error>
         </mat-form-field>
         <!-- Date Input -->
         <mat-form-field appearance="fill" class="full-width col-md-12">
@@ -48,4 +52,3 @@
         </div>
     </form>
 </div>
-
