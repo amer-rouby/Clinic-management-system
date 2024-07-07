@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SharedMaterialModule } from '../../../../Shared/shared.material.module';
 import { Todo } from '../../../Models/todos';
 import { TodoService } from '../../../Services/todos.service';
+import { noFutureDateValidator } from '../../../../Shared/Date-Validator/FutureDateValidator';
 
 @Component({
   selector: 'app-add-todo',
@@ -30,13 +31,14 @@ export class AddTodoComponent implements OnInit {
   ) {
     this.addTodoForm = this.fb.group({
       title: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, 
+      phoneNumber: ['', [
+        Validators.required,
         Validators.pattern('^\\+?[0-9]{10,12}$'),
-        Validators.minLength(11), // يحدد الحد الأدنى لطول الرقم
-        Validators.maxLength(11)  // يحدد الحد الأقصى لطول الرقم
-      ]] ,
+        Validators.minLength(11),
+        Validators.maxLength(11)
+      ]],
       description: ['', Validators.required],
-      date: [null, Validators.required],
+      date: [null, [Validators.required, noFutureDateValidator()]], // apply both validators
     });
 
     if (data && data.todo) {
@@ -70,7 +72,7 @@ export class AddTodoComponent implements OnInit {
           },
           error: (error) => {
             console.error(error);
-            this.loadingData = false;
+            this.loadingData = true;
           },
         });
       } else {

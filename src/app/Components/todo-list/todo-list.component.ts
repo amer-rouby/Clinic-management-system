@@ -30,7 +30,7 @@ export class TodoComponent implements OnInit {
     dataSource = new MatTableDataSource<Todo>(this.todos);
     displayedColumns: string[] = [
         'checkbox', 'title', 'description',
-         'phoneNumber', 'date', 'updateButton', 
+        'phoneNumber', 'date', 'updateButton',
         'deleteButton'
     ];
 
@@ -57,7 +57,7 @@ export class TodoComponent implements OnInit {
     loadTodos() {
         this.loadingData = true;
         this.todoService.getAllTodos().subscribe(todos => {
-            this.todos = todos;
+            this.todos = todos.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
             this.dataSource.data = this.todos;
             this.loadingData = false;
         });
