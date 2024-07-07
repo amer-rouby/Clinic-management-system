@@ -23,14 +23,14 @@ export class TodoComponent implements OnInit {
     todos: Todo[] = [];
     newTodo: Todo = this.createEmptyTodo();
     currentPage: number = 0;
-    itemsPerPage: number = 5;
+    itemsPerPage: number = 10;
     selectedTodos: Todo[] = [];
     loadingData: boolean = false;
 
     dataSource = new MatTableDataSource<Todo>(this.todos);
     displayedColumns: string[] = [
-        'checkbox', 'title', 'phoneNumber', 
-        'date', 'description', 'updateButton', 
+        'checkbox', 'title', 'description',
+         'phoneNumber', 'date', 'updateButton', 
         'deleteButton'
     ];
 

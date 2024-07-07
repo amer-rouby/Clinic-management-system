@@ -1,7 +1,6 @@
-
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 import { CourseCardComponent } from '../course-card-component/course-card-component';
 import { PageNotFoundComponent } from '../../page-no-found/page-no-found.component';
@@ -14,7 +13,7 @@ import { SharedMaterialModule } from '../../../../Shared/shared.material.module'
     selector: 'app-courses',
     standalone: true,
     imports: [
-        CourseCardComponent, 
+        CourseCardComponent,
         SharedMaterialModule,
         PageNotFoundComponent
     ],
@@ -39,8 +38,20 @@ export class CoursesComponent implements OnInit {
 
     openDialog(): void {
         const dialogRef = this.dialog.open(AddCourseComponent, {
-            width: '800px',
+            width: '600px',
             height: "476px"
+        });
+
+        dialogRef.componentInstance.courseAdded.subscribe(() => {
+            this.loadCourses();
+        });
+    }
+
+    editCourse(course: Course): void {
+        const dialogRef = this.dialog.open(AddCourseComponent, {
+            width: '550px',
+            height: "476px",
+            data: course
         });
 
         dialogRef.componentInstance.courseAdded.subscribe(() => {
@@ -73,7 +84,7 @@ export class CoursesComponent implements OnInit {
     }
 
     applyFilter(description: string): void {
-        this.loadingData = true
+        this.loadingData = true;
         this.courseService.searchCoursesByDescription(description).subscribe(results => {
             this.loadingData = false;
             this.filteredCourses = results;
@@ -82,7 +93,7 @@ export class CoursesComponent implements OnInit {
     }
 
     loadCourses(): void {
-        this.loadingData = true
+        this.loadingData = true;
         this.courseService.getAllCourses().subscribe(courses => {
             if (courses && courses.length) {
                 this.courses = courses.map(course => ({
