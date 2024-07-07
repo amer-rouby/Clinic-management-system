@@ -1,8 +1,6 @@
-@if(loadingData) {
-<div class="spinner-container">
+<div *ngIf="loadingData" class="spinner-container">
     <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
 </div>
-}
 <div class="add-todo-form">
     <div class="dialog-header d-flex justify-content-end">
         <h2 class="m-auto header">{{Add_or_modify_button | uppercase}}</h2>
@@ -42,9 +40,12 @@
             <mat-label>Choose a date</mat-label>
             <input matInput [matDatepicker]="picker" formControlName="date">
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-error *ngIf="addTodoForm.get('date')?.errors?.['required']">Date is required</mat-error>
             <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="addTodoForm.get('date')?.errors?.['required']">Date is required</mat-error>
+            <!-- <mat-error *ngIf="addTodoForm.get('date')?.errors?.['pastDate']">Date cannot be in the past</mat-error> -->
+            <mat-error *ngIf="addTodoForm.get('date')?.errors?.['futureDate']">Date cannot be in the future</mat-error>
         </mat-form-field>
+
 
         <div class="full-width col-md-4">
             <button class="submit-button" mat-raised-button color="primary" type="submit"
