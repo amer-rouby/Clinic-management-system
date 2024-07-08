@@ -1,61 +1,68 @@
 <mat-card class="auth-card mt-5">
     <mat-card-header>
-        <mat-card-title>{{ isLoginMode ? 'Login' : 'Register' }}</mat-card-title>
+        <mat-card-title>{{ isLoginMode ? ('LOGIN'| translate) : 'REGISTER' | translate }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
             <mat-form-field appearance="fill" class="full-width">
-                <mat-label>Email</mat-label>
-                <input matInput formControlName="username" type="email" placeholder="Enter your email">
-                <mat-error *ngIf="authForm.get('username')?.hasError('required')">
-                    Email is required
-                </mat-error>
-                <mat-error *ngIf="authForm.get('username')?.hasError('email')">
-                    Invalid email format
-                </mat-error>
+                <mat-label>{{ 'EMAIL' | translate }}</mat-label>
+                <input matInput formControlName="username" type="email" [placeholder]="'EMAIL_PLACEHOLDER' | translate">
+                @if(authForm.get('username')?.hasError('required')){
+                <mat-error>{{ 'EMAIL_REQUIRED' | translate }} </mat-error>
+                }
+                @if(authForm.get('username')?.hasError('email')){
+                <mat-error>{{ 'EMAIL_INVALID' | translate }}</mat-error>
+                }
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width">
-                <mat-label>Password</mat-label>
+                <mat-label>{{ 'PASSWORD' | translate }}</mat-label>
                 <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'"
-                    placeholder="Enter your password">
+                    [placeholder]="'PASSWORD_PLACEHOLDER' | translate">
                 <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
-                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                    [attr.aria-label]="'HIDE_PASSWORD' | translate" [attr.aria-pressed]="hidePassword">
                     <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
                 </button>
-                <mat-error *ngIf="authForm.get('password')?.hasError('required')">
-                    Password is required
-                </mat-error>
-                <mat-error *ngIf="authForm.get('password')?.hasError('minlength')">
-                    Password must be at least 6 characters long
-                </mat-error>
+                @if(authForm.get('password')?.hasError('required')){
+                <mat-error>{{ 'PASSWORD_REQUIRED' | translate }}</mat-error>
+                }
+                @if(authForm.get('password')?.hasError('minlength')){
+                <mat-error>{{ 'PASSWORD_MINLENGTH' | translate }}</mat-error>
+                }
             </mat-form-field>
-            <mat-form-field *ngIf="!isLoginMode" appearance="fill" class="full-width">
-                <mat-label>Confirm Password</mat-label>
+            @if(!isLoginMode){
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>{{ 'CONFIRM_PASSWORD' | translate }}</mat-label>
                 <input matInput formControlName="confirmPassword" [type]="hidePassword ? 'password' : 'text'"
-                    placeholder="Confirm your password">
+                    [placeholder]="'CONFIRM_PASSWORD_PLACEHOLDER' | translate">
                 <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
-                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                    [attr.aria-label]="'HIDE_PASSWORD' | translate" [attr.aria-pressed]="hidePassword">
                     <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
                 </button>
-                <mat-error *ngIf="authForm.hasError('mismatch')">
-                    Passwords must match
-                </mat-error>
-                <mat-error *ngIf="authForm.get('confirmPassword')?.hasError('required')">
-                    Confirmation password is required
-                </mat-error>
-                <mat-error *ngIf="authForm.get('confirmPassword')?.hasError('minlength')">
-                    Confirmation password must be at least 6 characters long
-                </mat-error>
+                @if(authForm.hasError('mismatch')){
+                <mat-error>{{ 'PASSWORD_MISMATCH' | translate }}</mat-error>
+                }
+                @if(authForm.get('confirmPassword')?.hasError('required')){
+                <mat-error>{{ 'CONFIRM_PASSWORD_REQUIRED' | translate }}</mat-error>
+                }
+                @if(authForm.get('confirmPassword')?.hasError('minlength')){
+                <mat-error> {{ 'CONFIRM_PASSWORD_MINLENGTH' | translate }} </mat-error>
+                }
+
             </mat-form-field>
+            }
+
             <div class="button-container">
                 <button mat-raised-button color="primary" type="submit" [disabled]="authForm.invalid">
-                    {{ isLoginMode ? 'Login' : 'Register' }}
+                    {{ isLoginMode ? ('LOGIN'| translate ):( 'REGISTER' | translate) }}
                 </button>
             </div>
         </form>
         <button mat-button style="color: rgb(87, 87, 240);" (click)="onSwitchMode()">
-            {{ isLoginMode ? 'Switch to Register' : 'Switch to Login' }}
+            {{ isLoginMode ? ('SWITCH_TO_REGISTER'| translate ):( 'SWITCH_TO_LOGIN' | translate )}}
         </button>
-        <div *ngIf="isLoginMode && loginError" class="login-error">{{ loginError }}</div>
+        @if(isLoginMode && loginError){
+        <div class="login-error">{{ loginError }}</div>
+        }
+
     </mat-card-content>
 </mat-card>

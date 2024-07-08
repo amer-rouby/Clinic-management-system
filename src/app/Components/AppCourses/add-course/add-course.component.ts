@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CourseService } from '../../../Services/course.service';
 import { Course } from '../../../Models/courses';
-import { SharedMaterialModule } from '../../../../Shared/shared.material.module';
+import { SharedMaterialModule } from '../../../../Shared/modules/shared.material.module';
+
 
 @Component({
   selector: 'app-add-course',

@@ -37,22 +37,22 @@
         background-color: #3f51b5;
         color: white;
     }
+
     mat-icon {
         font-size: 40px !important;
         display: block;
         margin: auto;
     }
 </style>
-
 <mat-card>
     <mat-card-header>
         <mat-icon mat-card-avatar color="warn">delete</mat-icon>
     </mat-card-header>
     <mat-card-content>
-        <p>Are you sure you want to delete this item?</p>
+        <p>{{ 'CONFIRM_DELETE' | translate }}</p>
     </mat-card-content>
     <mat-card-actions align="end">
-        <button mat-button color="warn" (click)="onNoClick()">No</button>
-        <button mat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Yes</button>
+        <button mat-button color="warn" (click)="onNoClick()">{{ 'NO' | translate }}</button>
+        <button mat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>{{ 'YES' | translate }}</button>
     </mat-card-actions>
 </mat-card>

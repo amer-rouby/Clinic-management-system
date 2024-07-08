@@ -4,8 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../materail-ui/delete-confirm-dialog/confirm-dialog.component';
 import { CourseService } from '../../../Services/course.service';
 import { CategoryType } from '../../../Enums/category';
-import { SharedMaterialModule } from '../../../../Shared/shared.material.module';
 import { AddCourseComponent } from '../add-course/add-course.component'; // Import the AddCourseComponent if not imported already
+import { SharedMaterialModule } from '../../../../Shared/modules/shared.material.module';
 
 @Component({
     selector: 'app-course-card-component',

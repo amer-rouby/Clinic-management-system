@@ -7,7 +7,7 @@ import { PageNotFoundComponent } from '../../page-no-found/page-no-found.compone
 import { CourseService } from '../../../Services/course.service';
 import { AddCourseComponent } from '../add-course/add-course.component';
 import { Course } from '../../../Models/courses';
-import { SharedMaterialModule } from '../../../../Shared/shared.material.module';
+import { SharedMaterialModule } from '../../../../Shared/modules/shared.material.module';
 
 @Component({
     selector: 'app-courses',

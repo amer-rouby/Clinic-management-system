@@ -1,4 +1,8 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,10 +18,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { AuthComponent } from '../app/auth/auth.component';
 import { MatNativeDateModule } from '@angular/material/core';
 
 const modules = [
@@ -40,17 +40,12 @@ const modules = [
   MatProgressSpinnerModule,
   MatDialogModule,
   MatCardModule,
-  MatNativeDateModule
-]
+  MatNativeDateModule,
+  TranslateModule
+];
+
 @NgModule({
-  declarations: [
-    AuthComponent
-  ],
-  imports: [
-  ...modules
-  ],
-  exports: [
-    ...modules
-  ]
+  imports: modules,
+  exports: modules
 })
 export class SharedMaterialModule { }

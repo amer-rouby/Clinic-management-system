@@ -10,6 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { SharedMaterialModule } from '../../../Shared/modules/shared.material.module';
 
 @Component({
     selector: 'app-header',
@@ -17,13 +18,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     imports: [
         CommonModule,
         RouterModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        FormsModule,
-        MatSelectModule,
-        MatIconModule,
-        MatMenuModule
+        SharedMaterialModule
     ],
     templateUrl: './header.component.html',
     styleUrls: ['./header.scss'],
