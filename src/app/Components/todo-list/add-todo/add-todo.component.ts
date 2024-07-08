@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Output, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { SharedMaterialModule } from '../../../../Shared/shared.material.module';
+
+
 import { Todo } from '../../../Models/todos';
 import { TodoService } from '../../../Services/todos.service';
 import { noFutureDateValidator } from '../../../../Shared/Date-Validator/FutureDateValidator';
+import { SharedMaterialModule } from '../../../../Shared/modules/shared.material.module';
 
 @Component({
   selector: 'app-add-todo',
@@ -21,13 +23,14 @@ export class AddTodoComponent implements OnInit {
   @Output() todoAdded = new EventEmitter<Todo>();
   isEdit: boolean = false;
   todo: Todo | null = null;
-  Add_or_modify_button = "Add Todo"
+  Add_or_modify_button = "ADD_TODO";
+  validation: any;
 
   constructor(
     public dialogRef: MatDialogRef<AddTodoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
-    private todoService: TodoService
+    private todoService: TodoService,
   ) {
     this.addTodoForm = this.fb.group({
       title: ['', Validators.required],
@@ -38,13 +41,13 @@ export class AddTodoComponent implements OnInit {
         Validators.maxLength(11)
       ]],
       description: ['', Validators.required],
-      date: [null, [Validators.required, noFutureDateValidator()]], // apply both validators
+      date: [null, [Validators.required, noFutureDateValidator()]],
     });
 
     if (data && data.todo) {
       this.isEdit = true;
       this.todo = data.todo;
-      this.Add_or_modify_button = "Edit Todo"
+      this.Add_or_modify_button = "EDIT_TODO";
     }
   }
 

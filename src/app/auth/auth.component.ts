@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SharedMaterialModule } from '../../Shared/modules/shared.material.module';
 
 @Component({
   selector: 'app-auth',
+  standalone: true,
+  imports: [SharedMaterialModule],
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
 })
@@ -39,11 +42,10 @@ export class AuthComponent {
   onSubmit(): void {
     if (this.isLoginMode) {
       this.login();
-      this.authForm.reset()
     } else {
       this.register();
-      this.authForm.reset()
     }
+    this.authForm.reset();
   }
 
   login(): void {

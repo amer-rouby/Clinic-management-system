@@ -4,12 +4,13 @@
             <img [src]="course.imgUrl" alt="Course Image" class="course-image">
             <div>
                 <h5 class="card-title">{{ course.firstName + " " + course.lastName }}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Card Subtitle</h6>
+                <h6 class="card-subtitle mb-2 text-muted">{{ 'CARD_SUBTITLE' | translate }}</h6>
             </div>
         </div>
         <p class="card-text mb-2">{{ course.description | titlecase }}</p>
-        <button mat-raised-button color="primary" class="card-link" (click)="editCourse(course)">Edit Course</button>
-        <button mat-raised-button color="accent" class="card-link" (click)="viewCourse(course)">View Course</button>
-        <button mat-raised-button color="warn" class="card-link" (click)="confirmDelete(course.id)">Delete Course</button>
+        <button mat-raised-button color="primary" class="card-link" (click)="editCourse(course)">{{ 'EDIT_COURSE' | translate }}</button>
+        <button mat-raised-button color="accent" class="card-link" (click)="viewCourse(course)">{{ 'VIEW_COURSE' | translate }}</button>
+        <button mat-raised-button color="warn" class="card-link" (click)="confirmDelete(course.id)">{{ 'DELETE_COURSE' | translate }}</button>
     </mat-card-content>
 </mat-card>
+

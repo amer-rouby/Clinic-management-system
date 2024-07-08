@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, RouterModule } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { CourseService } from '../../../Services/course.service';
 import { PageNotFoundComponent } from '../../page-no-found/page-no-found.component';
 import { Course } from '../../../Models/courses';
-import { SharedMaterialModule } from '../../../../Shared/shared.material.module';
+import { SharedMaterialModule } from '../../../../Shared/modules/shared.material.module';
+
 @Component({
     selector: 'app-course-details',
     standalone: true,

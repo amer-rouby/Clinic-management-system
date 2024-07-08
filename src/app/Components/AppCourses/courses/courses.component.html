@@ -4,13 +4,13 @@
             <div class="col-md-6 d-flex align-items-center">
                 <mat-form-field class="w-100">
                     <mat-icon matPrefix>search</mat-icon>
-                    <input matInput placeholder="Search by description" [(ngModel)]="searchTerm"
+                    <input matInput placeholder="{{ 'SEARCH_BY_DESCRIPTION' | translate }}" [(ngModel)]="searchTerm"
                         (input)="applyFilter(searchTerm)">
                 </mat-form-field>
             </div>
             <div class="add-course col-md-6 d-flex justify-content-end align-items-center">
                 <button class="btn btn-primary" (click)="openDialog()">
-                    <mat-icon>add</mat-icon> Add New Course
+                    <mat-icon>add</mat-icon> {{ 'ADD_NEW_COURSE' | translate }}
                 </button>
             </div>
         </div>
