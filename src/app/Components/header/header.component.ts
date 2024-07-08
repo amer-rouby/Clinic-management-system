@@ -1,16 +1,11 @@
+import { DOCUMENT } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
 import { ThemeService } from './themeService';
-import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { SharedMaterialModule } from '../../../Shared/modules/shared.material.module';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-header',
@@ -40,8 +35,16 @@ import { SharedMaterialModule } from '../../../Shared/modules/shared.material.mo
 export class HeaderComponent {
     selectedTheme: string | undefined; // Declare selectedTheme property
     showThemesColor = false;
-
-    constructor(public themeService: ThemeService) { }
+    currentLang: string;
+    loadingData: boolean= false;
+    constructor(
+        public themeService: ThemeService, 
+        private translate: TranslateService, 
+        @Inject(DOCUMENT) private document: Document
+    ) {
+        this.currentLang = this.translate.currentLang || 'ar';
+        this.updateDirection();
+    }
 
     changeThemeColor(color: string): void {
         this.selectedTheme = color; // Assign the selected color to selectedTheme
@@ -51,5 +54,21 @@ export class HeaderComponent {
     showThemes(): void {
         this.showThemesColor = !this.showThemesColor;
     }
-}
 
+    toggleLanguage(): void {
+        this.currentLang = this.currentLang === 'ar' ? 'en' : 'ar';
+        this.loadingData = true;
+        setTimeout(() => {
+            this.translate.use(this.currentLang);
+            localStorage.setItem('lang', this.currentLang);
+            this.updateDirection();
+            this.loadingData = false;
+        }, 500); // 10 seconds delay
+    }
+
+    private updateDirection(): void {
+        const dir = this.currentLang === 'ar' ? 'rtl' : 'ltr';
+        this.document.documentElement.lang = this.currentLang;
+        this.document.documentElement.dir = dir;
+    }
+}

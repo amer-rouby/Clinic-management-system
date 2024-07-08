@@ -4,6 +4,7 @@ import { HeaderComponent } from './Components/header/header.component';
 import { FirebaseService } from './Services/Firebase.service';
 import { SharedMaterialModule } from '../Shared/modules/shared.material.module';
 import { TranslateService } from '@ngx-translate/core';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
     selector: 'app-root',
@@ -18,9 +19,14 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent implements OnInit {
     translateService = inject(TranslateService);
+    document = inject(DOCUMENT);
 
     ngOnInit(): void {
-        this.translateService.setDefaultLang('ar');
-        this.translateService.use('ar');  // قم بتعيين اللغة التي تريد استخدامها
+        const lang = localStorage.getItem('lang') || 'ar';
+        const dir = lang === 'ar' ? 'rtl' : 'ltr';
+        this.translateService.setDefaultLang(lang);
+        this.translateService.use(lang);  // Set the language to use
+        this.document.documentElement.lang = lang;
+        this.document.documentElement.dir = dir;
     }
 }

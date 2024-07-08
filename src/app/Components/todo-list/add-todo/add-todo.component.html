@@ -50,6 +50,11 @@
             @if(addTodoForm.get('date')?.errors?.['required']){
             <mat-error>{{ 'DATE_REQUIRED' | translate }}</mat-error>
             }
+            <!-- <mat-error *ngIf="addTodoForm.get('date')?.errors?.['pastDate']">Date cannot be in the past</mat-error> -->
+            @if(addTodoForm.get('date')?.errors?.['futureDate']){
+                <mat-error>{{ 'DATE_CANNOT_BE_IN_FUTURE' | translate }}</mat-error>
+            }
+            
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
