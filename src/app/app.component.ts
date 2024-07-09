@@ -26,11 +26,10 @@ export class AppComponent implements OnInit {
             const lang = localStorage.getItem('lang') || 'ar';
             const dir = lang === 'ar' ? 'rtl' : 'ltr';
             this.translateService.setDefaultLang(lang);
-            this.translateService.use(lang);  // Set the language to use
+            this.translateService.use(lang);
             this.document.documentElement.lang = lang;
             this.document.documentElement.dir = dir;
         } else {
-            // Fallback language setup if localStorage is not available
             const lang = 'ar';
             const dir = 'rtl';
             this.translateService.setDefaultLang(lang);
