@@ -11,7 +11,10 @@
                 routerLinkActive="active">
                 <mat-icon>home</mat-icon>
             </button>
-            <!-- <div class="theme-selector d-inline">
+            <button mat-button (click)="toggleLanguage()">
+                <mat-icon style="color: #fff; font-size: 20px;">language</mat-icon>{{ 'SELECT_LANGUAGE' | translate }}
+            </button>
+            <div class="theme-selector d-inline">
                 <mat-icon (click)="showThemes()" aria-hidden="false" aria-label="Example theme icon">brush</mat-icon>
                 <ng-container *ngIf="showThemesColor">
                     <button mat-button (click)="changeThemeColor('primary')"
@@ -19,10 +22,7 @@
                     <button mat-button (click)="changeThemeColor('accent')"
                         [class.selected]="selectedTheme === 'accent'">{{ 'THEME_ACCENT' | translate }}</button>
                 </ng-container>
-            </div> -->
-            <button mat-button (click)="toggleLanguage()">
-                {{ 'TOGGLE_LANGUAGE' | translate }}
-            </button>
+            </div>
         </div>
         <span class="spacer"></span>
 

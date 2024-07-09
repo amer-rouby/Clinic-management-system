@@ -68,5 +68,9 @@
     "PASSWORD_MISMATCH": "يجب أن تتطابق كلمات المرور",
     "SWITCH_TO_REGISTER": "التبديل إلى التسجيل",
     "SWITCH_TO_LOGIN": "التبديل إلى تسجيل الدخول",
-    "HIDE_PASSWORD": "إخفاء كلمة المرور"
+    "HIDE_PASSWORD": "إخفاء كلمة المرور",
+    "EDIT_BUTTON" : "تعديل ",
+    "ADD_BUTTON" : "اضافه ",
+    "SELECT_LANGUAGE": "العربية"
+    
 }

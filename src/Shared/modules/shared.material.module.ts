@@ -41,7 +41,7 @@ const modules = [
   MatDialogModule,
   MatCardModule,
   MatNativeDateModule,
-  TranslateModule
+  TranslateModule,
 ];
 
 @NgModule({

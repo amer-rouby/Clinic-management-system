@@ -68,5 +68,8 @@
     "PASSWORD_MISMATCH": "Passwords must match",
     "SWITCH_TO_REGISTER": "Switch to Register",
     "SWITCH_TO_LOGIN": "Switch to Login",
-    "HIDE_PASSWORD": "Hide password"
+    "HIDE_PASSWORD": "Hide password",
+    "EDIT_BUTTON" : "EDIT",
+    "ADD_BUTTON" : "ADD",
+    "SELECT_LANGUAGE": "English"
 }

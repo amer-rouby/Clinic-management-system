@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Output, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
-
 import { Todo } from '../../../Models/todos';
 import { TodoService } from '../../../Services/todos.service';
 import { noFutureDateValidator } from '../../../../Shared/Date-Validator/FutureDateValidator';
 import { SharedMaterialModule } from '../../../../Shared/modules/shared.material.module';
+
 
 @Component({
   selector: 'app-add-todo',
@@ -23,7 +22,7 @@ export class AddTodoComponent implements OnInit {
   @Output() todoAdded = new EventEmitter<Todo>();
   isEdit: boolean = false;
   todo: Todo | null = null;
-  Add_or_modify_button = "ADD_TODO";
+  ADD_OR_MODIFY_BUTTON = "ADD_BUTTON";
   validation: any;
 
   constructor(
@@ -47,7 +46,7 @@ export class AddTodoComponent implements OnInit {
     if (data && data.todo) {
       this.isEdit = true;
       this.todo = data.todo;
-      this.Add_or_modify_button = "EDIT_TODO";
+      this.ADD_OR_MODIFY_BUTTON = 'EDIT_BUTTON'
     }
   }
 
@@ -64,6 +63,7 @@ export class AddTodoComponent implements OnInit {
 
   addTodo() {
     this.loadingData = true;
+
     if (this.addTodoForm.valid) {
       if (this.isEdit && this.todo) {
         const updatedTodo: Todo = { ...this.todo, ...this.addTodoForm.value };

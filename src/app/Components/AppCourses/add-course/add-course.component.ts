@@ -18,7 +18,7 @@ import { SharedMaterialModule } from '../../../../Shared/modules/shared.material
 export class AddCourseComponent implements OnInit {
   addCourseForm!: FormGroup;
   courseData: Course;
-  Add_or_modify_button = "Add Course";
+  ADD_OR_MODIFY_BUTTON = "ADD_BUTTON";
 
   @Output() courseAdded = new EventEmitter<Course>();
 
@@ -44,7 +44,7 @@ export class AddCourseComponent implements OnInit {
     });
 
     if (this.courseData.id) {
-      this.Add_or_modify_button = "Edit Course";
+      this.ADD_OR_MODIFY_BUTTON = 'EDIT_BUTTON'
     }
   }
 

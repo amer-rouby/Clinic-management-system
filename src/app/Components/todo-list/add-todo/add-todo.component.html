@@ -5,7 +5,7 @@
 }
 <div class="add-todo-form">
     <div class="dialog-header d-flex justify-content-end">
-        <h2 class="m-auto header">{{ 'ADD_OR_MODIFY_BUTTON' | translate | uppercase }}</h2>
+        <h2 class="m-auto header">{{ ADD_OR_MODIFY_BUTTON | translate | uppercase }}</h2>
         <button class="close-button" mat-icon-button (click)="onClose()">
             <mat-icon>close</mat-icon>
         </button>
@@ -61,7 +61,7 @@
         <div class="full-width col-md-4">
             <button class="submit-button" mat-raised-button color="primary" type="submit"
                 [disabled]="addTodoForm.invalid">
-                {{ 'ADD_OR_MODIFY_BUTTON' | translate }}
+                {{ ADD_OR_MODIFY_BUTTON | translate }}
             </button>
         </div>
     </form>
