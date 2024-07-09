@@ -8,6 +8,8 @@ import { CourseService } from '../../../Services/course.service';
 import { AddCourseComponent } from '../add-course/add-course.component';
 import { Course } from '../../../Models/courses';
 import { SharedMaterialModule } from '../../../../Shared/modules/shared.material.module';
+import { ThemeService } from '../../header/themeService';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-courses',
@@ -28,13 +30,18 @@ export class CoursesComponent implements OnInit {
 
     loadingData: boolean = false;
     searchTerm: string = '';
-
+    themeColor: string = 'primary';
+    themeSubscription!: Subscription;
     pageSize = 4;
     currentPage = 0;
     totalPages = 0;
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-    constructor(public dialog: MatDialog, private courseService: CourseService) { }
+    constructor(
+        public dialog: MatDialog,
+        private courseService: CourseService,
+        public themeService: ThemeService
+    ) { }
 
     openDialog(): void {
         const dialogRef = this.dialog.open(AddCourseComponent, {
@@ -62,6 +69,16 @@ export class CoursesComponent implements OnInit {
     ngOnInit(): void {
         this.loadCourses();
         this.applyFilter(this.searchTerm);
+        this.themeSubscription = this.themeService.themeColor$.subscribe(color => {
+            this.themeColor = color;
+        });
+
+    }
+
+    ngOnDestroy(): void  {
+        if (this.themeSubscription) {
+            this.themeSubscription.unsubscribe();
+        }
     }
 
     onCourseClicked(updatedCourses: Course[]): void {
@@ -105,5 +122,9 @@ export class CoursesComponent implements OnInit {
                 this.updatePagedCourses(); // Update the paged courses
             }
         });
+    }
+
+    getThemeColor(): any {
+        return this.themeColor === 'primary' ? '#3f51b5' : '#e91e63';
     }
 }

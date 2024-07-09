@@ -17,12 +17,12 @@
             <div class="theme-selector d-inline">
                 <mat-icon (click)="showThemes()" aria-hidden="false" aria-label="Example theme icon">brush</mat-icon>
                 <ng-container *ngIf="showThemesColor">
-                    <button mat-button (click)="changeThemeColor('primary')"
-                        [class.selected]="selectedTheme === 'primary'">{{ 'THEME_PRIMARY' | translate }}</button>
-                    <button mat-button (click)="changeThemeColor('accent')"
-                        [class.selected]="selectedTheme === 'accent'">{{ 'THEME_ACCENT' | translate }}</button>
+                  <button mat-button (click)="changeThemeColor('primary')"
+                    [class.selected]="selectedTheme === 'primary'">{{ 'THEME_PRIMARY' | translate }}</button>
+                  <button mat-button (click)="changeThemeColor('accent')"
+                    [class.selected]="selectedTheme === 'accent'">{{ 'THEME_ACCENT' | translate }}</button>
                 </ng-container>
-            </div>
+              </div>
         </div>
         <span class="spacer"></span>
 

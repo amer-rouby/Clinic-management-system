@@ -1,4 +1,3 @@
-// theme.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -6,13 +5,14 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class ThemeService {
-  private _themeColor = new BehaviorSubject<string>('primary');
-
-  themeColor$ = this._themeColor.asObservable();
-
-  constructor() { }
+  private themeColorSubject = new BehaviorSubject<string>('primary');
+  themeColor$ = this.themeColorSubject.asObservable();
 
   setThemeColor(color: string): void {
-    this._themeColor.next(color);
+    this.themeColorSubject.next(color);
+  }
+
+  getThemeColor(): string {
+    return this.themeColorSubject.value;
   }
 }

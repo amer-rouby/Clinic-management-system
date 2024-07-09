@@ -9,7 +9,9 @@
                 </mat-form-field>
             </div>
             <div class="add-course col-md-6 d-flex justify-content-end align-items-center">
-                <button class="btn btn-primary" (click)="openDialog()">
+                <button  class="btn" 
+                    [ngStyle]="{ 'background-color': getThemeColor() , 'color':'#fff'}" 
+                    (click)="openDialog()">
                     <mat-icon>add</mat-icon> {{ 'ADD_NEW_COURSE' | translate }}
                 </button>
             </div>
