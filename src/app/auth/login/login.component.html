@@ -1,0 +1,47 @@
+<mat-card class="auth-card mt-5">
+    <mat-card-header>
+      <mat-card-title>{{ 'LOGIN' | translate }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>{{ 'EMAIL' | translate }}</mat-label>
+          <input matInput formControlName="username" type="email" [placeholder]="'EMAIL_PLACEHOLDER' | translate">
+          <mat-error *ngIf="loginForm.get('username')?.errors?.['required']">
+            {{ 'EMAIL_REQUIRED' | translate }}
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('username')?.errors?.['email']">
+            {{ 'EMAIL_INVALID' | translate }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>{{ 'PASSWORD' | translate }}</mat-label>
+          <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'"
+            [placeholder]="'PASSWORD_PLACEHOLDER' | translate">
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+            [attr.aria-label]="'HIDE_PASSWORD' | translate" [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.get('password')?.errors?.['required']">
+            {{ 'PASSWORD_REQUIRED' | translate }}
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('password')?.errors?.['minlength']">
+            {{ 'PASSWORD_MINLENGTH' | translate }}
+          </mat-error>
+        </mat-form-field>
+  
+        <div class="button-container">
+          <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">
+            {{ 'LOGIN' | translate }}
+          </button>
+        </div>
+      </form>
+      <button mat-button style="color: rgb(87, 87, 240);" [routerLink]="['/register']">
+        {{ 'SWITCH_TO_REGISTER' | translate }}
+      </button>
+      <div class="login-error" *ngIf="loginError">
+        {{ loginError }}
+      </div>
+    </mat-card-content>
+  </mat-card>
+  

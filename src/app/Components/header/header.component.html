@@ -16,7 +16,7 @@
             </button>
         </div>
         <span class="spacer"></span>
-        <div class="theme-selector d-inline">
+        <!-- <div class="theme-selector d-inline">
             <mat-icon (click)="showThemes()" aria-hidden="false" aria-label="Example theme icon">brush</mat-icon>
             <ng-container *ngIf="showThemesColor">
               <button mat-button (click)="changeThemeColor('primary')"
@@ -24,7 +24,7 @@
               <button mat-button (click)="changeThemeColor('accent')"
                 [class.selected]="selectedTheme === 'accent'">{{ 'THEME_ACCENT' | translate }}</button>
             </ng-container>
-        </div>
+        </div> -->
         <div class="menu-icon">
             <button mat-icon-button [matMenuTriggerFor]="menu">
                 <mat-icon>menu</mat-icon>
@@ -37,9 +37,6 @@
             <button mat-menu-item routerLink="course-list" [routerLinkActiveOptions]="{exact: true}"
                 routerLinkActive="active">
                 <mat-icon style="color: rgb(163, 1, 1);">list</mat-icon>{{ 'COURSES_LIST' | translate }}
-            </button>
-            <button mat-menu-item routerLink="auth" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
-                <mat-icon style="color: rgb(163, 1, 1);">account_circle</mat-icon>{{ 'ACCOUNT' | translate }}
             </button>
         </mat-menu>
     </mat-toolbar-row>
