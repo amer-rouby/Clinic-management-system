@@ -3,6 +3,7 @@
     <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
 </div>
 }
+
 <div class="add-todo-form">
     <div class="dialog-header d-flex justify-content-end">
         <h2 class="m-auto header">{{ ADD_OR_MODIFY_BUTTON | translate | uppercase }} TODO</h2>
@@ -10,57 +11,73 @@
             <mat-icon>close</mat-icon>
         </button>
     </div>
+
     <form [formGroup]="addTodoForm" class="m-4" (ngSubmit)="addTodo()">
         <mat-form-field appearance="fill" class="full-width col-md-12">
             <mat-label>{{ 'ADD_TITLE' | translate }}</mat-label>
             <input matInput placeholder="{{ 'ADD_TITLE' | translate }}" formControlName="title">
             @if(addTodoForm.get('title')?.errors?.['required']){
-            <mat-error>{{ 'TITLE_REQUIRED' | translate }}</mat-error>
+                <mat-error>
+                    {{ 'TITLE_REQUIRED' | translate }}
+                </mat-error>
             }
-
         </mat-form-field>
+
         <!-- Description Input -->
         <mat-form-field appearance="fill" class="full-width col-md-12">
             <mat-label>{{ 'ADD_DESCRIPTION' | translate }}</mat-label>
             <input matInput placeholder="{{ 'ADD_DESCRIPTION' | translate }}" formControlName="description">
             @if(addTodoForm.get('description')?.errors?.['required']){
-            <mat-error>{{ 'DESCRIPTION_REQUIRED' | translate }}</mat-error>
+                <mat-error>
+                    {{ 'DESCRIPTION_REQUIRED' | translate }}
+                </mat-error>
             }
         </mat-form-field>
+
         <!-- Phone number input -->
         <mat-form-field appearance="fill" class="full-width col-md-12">
             <mat-label>{{ 'ADD_PHONE_NUMBER' | translate }}</mat-label>
             <input matInput placeholder="{{ 'ADD_PHONE_NUMBER' | translate }}" formControlName="phoneNumber">
             @if(addTodoForm.get('phoneNumber')?.errors?.['required']){
-            <mat-error>{{ 'PHONE_NUMBER_REQUIRED' | translate }}</mat-error>
+                <mat-error>
+                    {{ 'PHONE_NUMBER_REQUIRED' | translate }}
+                </mat-error>
             }
             @if(addTodoForm.get('phoneNumber')?.errors?.['pattern']){
-            <mat-error>{{ 'INVALID_PHONE_NUMBER' | translate }}</mat-error>
+                <mat-error>
+                    {{ 'INVALID_PHONE_NUMBER' | translate }}
+                </mat-error>
             }
             @if(addTodoForm.get('phoneNumber')?.hasError('minlength') ||
-            addTodoForm.get('phoneNumber')?.hasError('maxlength')){
-            <mat-error>{{ 'PHONE_NUMBER_LENGTH' | translate }}</mat-error>
+                addTodoForm.get('phoneNumber')?.hasError('maxlength')){
+                <mat-error>
+                    {{ 'PHONE_NUMBER_LENGTH' | translate }}
+                </mat-error>
             }
         </mat-form-field>
         <!-- Date Input -->
         <mat-form-field appearance="fill" class="full-width col-md-12">
             <mat-label>{{ 'CHOOSE_DATE' | translate }}</mat-label>
             <input matInput [matDatepicker]="picker" formControlName="date">
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            @if(addTodoForm.get('date')?.errors?.['required']){
-            <mat-error>{{ 'DATE_REQUIRED' | translate }}</mat-error>
-            }
-            <!-- <mat-error *ngIf="addTodoForm.get('date')?.errors?.['pastDate']">Date cannot be in the past</mat-error> -->
-            @if(addTodoForm.get('date')?.errors?.['futureDate']){
-                <mat-error>{{ 'DATE_CANNOT_BE_IN_FUTURE' | translate }}</mat-error>
-            }
-            
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
+            @if(addTodoForm.get('date')?.errors?.['required']){
+                <mat-error>
+                    {{ 'DATE_REQUIRED' | translate }}
+                </mat-error>
+            }
+            @if(addTodoForm.get('date')?.errors?.['futureDate']){
+                <mat-error>
+                    {{ 'DATE_CANNOT_BE_IN_FUTURE' | translate }}
+                </mat-error>
+            }
         </mat-form-field>
 
-        <div class="full-width col-md-4">
-            <button class="submit-button" mat-raised-button color="primary" type="submit"
-                [disabled]="addTodoForm.invalid">
+        <!-- Completed toggle -->
+        <mat-slide-toggle formControlName="completed">{{ 'COMPLETE' | translate }}</mat-slide-toggle>
+
+        <div class="full-width col-md-4 mt-3">
+            <button mat-raised-button color="primary" type="submit" [disabled]="addTodoForm.invalid">
                 {{ ADD_OR_MODIFY_BUTTON | translate }}
             </button>
         </div>

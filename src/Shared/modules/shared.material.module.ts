@@ -19,7 +19,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 const modules = [
   CommonModule,
   FormsModule,
@@ -41,7 +43,10 @@ const modules = [
   MatDialogModule,
   MatCardModule,
   MatNativeDateModule,
+  MatSidenavModule,
+  MatListModule,
   TranslateModule,
+  MatSlideToggleModule
 ];
 
 @NgModule({

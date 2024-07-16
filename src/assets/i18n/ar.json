@@ -71,6 +71,10 @@
     "HIDE_PASSWORD": "إخفاء كلمة المرور",
     "EDIT_BUTTON" : "تعديل ",
     "ADD_BUTTON" : "اضافه ",
-    "SELECT_LANGUAGE": "العربية"
+    "SELECT_LANGUAGE": "العربية",
+    "LOGOUT": "تسجيل خروج",
+    "CHANGE_THEME": "تغيير الخلفيه",
+    "SELECT_THEME": "اختر نمطا",
+    "COMPLETE": "مكتمله"
     
 }
