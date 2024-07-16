@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private isAuthenticated = false;
   private restAPIURL = "https://identitytoolkit.googleapis.com/v1/accounts:";
   private APIKey = "AIzaSyANnpk_nHIpG3QlcrGH1yP1RRxORd_6yj0";
   
   private signUpURL = `${this.restAPIURL}signUp?key=${this.APIKey}`;
   private signInURL = `${this.restAPIURL}signInWithPassword?key=${this.APIKey}`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private localStorageService: LocalStorageService) { }
 
   private post(url: string, body: any, headers: HttpHeaders): Observable<any> {
     return this.http.post<any>(url, body, { headers }).pipe(
@@ -31,16 +31,29 @@ export class AuthService {
   signIn(email: string, password: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = { email, password, returnSecureToken: true };
-    return this.post(this.signInURL, body, headers);
-  }
-  isLoggedIn(): boolean {
-    return this.isAuthenticated;
-  }
-
-  setLoggedIn(value: boolean) {
-    this.isAuthenticated = value;
+    return this.post(this.signInURL, body, headers).pipe(
+      tap(response => {
+        this.setToken(response.idToken);
+      })
+    );
   }
   
+  isLoggedIn(): boolean {
+    return !!this.localStorageService.getItem('token');
+  }
+
+  setToken(token: string): void {
+    this.localStorageService.setItem('token', token);
+  }
+
+  getToken(): string | null {
+    return this.localStorageService.getItem('token');
+  }
+
+  logout(): void {
+    this.localStorageService.removeItem('token');
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error!';
     if (error.error instanceof ErrorEvent) {
@@ -53,4 +66,3 @@ export class AuthService {
     return throwError(errorMessage);
   }
 }
-

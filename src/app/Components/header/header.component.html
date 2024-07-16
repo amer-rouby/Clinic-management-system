@@ -38,6 +38,9 @@
                 routerLinkActive="active">
                 <mat-icon style="color: rgb(163, 1, 1);">list</mat-icon>{{ 'COURSES_LIST' | translate }}
             </button>
+            <button mat-menu-item (click)="logout()">
+                <mat-icon style="color: rgb(163, 1, 1);">exit_to_app</mat-icon>{{ 'LOGOUT' | translate }}
+            </button>
         </mat-menu>
     </mat-toolbar-row>
 </mat-toolbar>

@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-
 import { TodoComponent } from './Components/todo-list/todo-list.component';
 import { CoursesComponent } from './Components/AppCourses/courses/courses.component';
 import { PageNotFoundComponent } from './Components/page-no-found/page-no-found.component';
@@ -7,7 +6,6 @@ import { CourseDetailsComponent } from './Components/AppCourses/course-details/c
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AuthGuard } from './Guards/auth.guard';
-
 
 export const routes: Routes = [
     { path: 'home', component: TodoComponent, canActivate: [AuthGuard] },

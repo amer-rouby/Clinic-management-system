@@ -29,7 +29,6 @@ export class LoginComponent {
       this.authService.signIn(username, password).subscribe(
         res => {
           console.log(res);
-          this.authService.setLoggedIn(true);
           this.router.navigate(['/home']); // توجيه المستخدم إلى الصفحة الرئيسية بعد تسجيل الدخول بنجاح
           this.loginError = '';
         },

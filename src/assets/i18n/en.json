@@ -71,5 +71,6 @@
     "HIDE_PASSWORD": "Hide password",
     "EDIT_BUTTON" : "EDIT",
     "ADD_BUTTON" : "ADD",
-    "SELECT_LANGUAGE": "English"
+    "SELECT_LANGUAGE": "English",
+    "LOGOUT": " Log Out"
 }
