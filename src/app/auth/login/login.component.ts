@@ -15,7 +15,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   hidePassword = true;
   loginError = '';
-
+  loadingData: boolean = false;
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
@@ -41,7 +41,12 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
-    this.login();
-    this.loginForm.reset();
+    this.loadingData = true;
+    setTimeout(() => {
+      this.login();
+      this.loginForm.reset();
+      this.loadingData = false;
+    }, 500);
+
   }
 }

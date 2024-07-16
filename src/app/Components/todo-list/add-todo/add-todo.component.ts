@@ -6,13 +6,10 @@ import { TodoService } from '../../../Services/todos.service';
 import { noFutureDateValidator } from '../../../../Shared/Date-Validator/FutureDateValidator';
 import { SharedMaterialModule } from '../../../../Shared/modules/shared.material.module';
 
-
 @Component({
   selector: 'app-add-todo',
-  standalone: true,
-  imports: [
-    SharedMaterialModule
-  ],
+  standalone:true,
+  imports: [SharedMaterialModule],
   templateUrl: './add-todo.component.html',
   styleUrls: ['./add-todo.component.scss']
 })
@@ -23,7 +20,6 @@ export class AddTodoComponent implements OnInit {
   isEdit: boolean = false;
   todo: Todo | null = null;
   ADD_OR_MODIFY_BUTTON = "ADD_BUTTON";
-  validation: any;
 
   constructor(
     public dialogRef: MatDialogRef<AddTodoComponent>,
@@ -41,6 +37,7 @@ export class AddTodoComponent implements OnInit {
       ]],
       description: ['', Validators.required],
       date: [null, [Validators.required, noFutureDateValidator()]],
+      completed: [false] // Initialize completed field
     });
 
     if (data && data.todo) {
@@ -52,11 +49,12 @@ export class AddTodoComponent implements OnInit {
 
   ngOnInit() {
     if (this.todo) {
-      this.addTodoForm.setValue({
+      this.addTodoForm.patchValue({
         title: this.todo.title,
         phoneNumber: this.todo.phoneNumber,
         description: this.todo.description,
         date: this.todo.date,
+        completed: this.todo.completed,
       });
     }
   }
@@ -75,7 +73,7 @@ export class AddTodoComponent implements OnInit {
           },
           error: (error) => {
             console.error(error);
-            this.loadingData = true;
+            this.loadingData = false;
           },
         });
       } else {

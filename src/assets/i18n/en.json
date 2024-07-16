@@ -72,5 +72,8 @@
     "EDIT_BUTTON" : "EDIT",
     "ADD_BUTTON" : "ADD",
     "SELECT_LANGUAGE": "English",
-    "LOGOUT": " Log Out"
+    "LOGOUT": " Log Out",
+    "CHANGE_THEME": "Change Theme",
+    "SELECT_THEME": " Select Theme",
+    "COMPLETE":"Complete"
 }

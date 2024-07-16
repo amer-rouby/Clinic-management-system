@@ -36,6 +36,7 @@ export class HeaderComponent {
   showThemesColor = false;
   currentLang: string;
   loadingData: boolean= false;
+  showThemeSelector = false;
 
   constructor(
     public themeService: ThemeService, 
@@ -48,8 +49,13 @@ export class HeaderComponent {
     this.updateDirection();
   }
   logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+    this.loadingData = true;
+    setTimeout(() => {
+      this.authService.logout();
+      this.router.navigate(['/login']);
+      this.loadingData = false;
+    }, 500); 
+
   }
   changeThemeColor(color: string): void {
     this.selectedTheme = color;
@@ -57,7 +63,7 @@ export class HeaderComponent {
   }
 
   showThemes(): void {
-    this.showThemesColor = !this.showThemesColor;
+    this.showThemeSelector = !this.showThemeSelector;
   }
 
   toggleLanguage(): void {

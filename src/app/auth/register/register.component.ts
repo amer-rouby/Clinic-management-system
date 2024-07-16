@@ -13,7 +13,7 @@ import { SharedMaterialModule } from '../../../Shared/modules/shared.material.mo
 export class RegisterComponent {
   registerForm: FormGroup;
   hidePassword = true;
-
+  loadingData: boolean = false;
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.registerForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
@@ -44,7 +44,12 @@ export class RegisterComponent {
   }
 
   onSubmit(): void {
-    this.register();
-    this.registerForm.reset();
+    this.loadingData = true;
+    setTimeout(() => {
+      this.register();
+      this.registerForm.reset()
+      this.loadingData = false;
+    }, 500);
+;
   }
 }

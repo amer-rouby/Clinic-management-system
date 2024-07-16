@@ -1,3 +1,8 @@
+@if(loadingData) {
+  <div class="spinner-container">
+      <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
+  </div>
+  }
 <mat-card class="auth-card mt-5">
     <mat-card-header>
       <mat-card-title>{{ 'REGISTER' | translate }}</mat-card-title>
@@ -7,12 +12,17 @@
             <mat-form-field appearance="fill" class="full-width">
               <mat-label>{{ 'EMAIL' | translate }}</mat-label>
               <input matInput formControlName="username" type="email" [placeholder]="'EMAIL_PLACEHOLDER' | translate">
-              <mat-error *ngIf="registerForm.get('username')?.errors?.['required']">
-                {{ 'EMAIL_REQUIRED' | translate }}
-              </mat-error>
-              <mat-error *ngIf="registerForm.get('username')?.errors?.['email']">
-                {{ 'EMAIL_INVALID' | translate }}
-              </mat-error>
+              @if(registerForm.get('username')?.errors?.['required']){
+                <mat-error>
+                  {{ 'EMAIL_REQUIRED' | translate }}
+                </mat-error>
+              }
+              @if(registerForm.get('username')?.errors?.['email']){
+                <mat-error>
+                  {{ 'EMAIL_INVALID' | translate }}
+                </mat-error>
+              }
+
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width">
               <mat-label>{{ 'PASSWORD' | translate }}</mat-label>
@@ -22,12 +32,17 @@
                 [attr.aria-label]="'HIDE_PASSWORD' | translate" [attr.aria-pressed]="hidePassword">
                 <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
               </button>
-              <mat-error *ngIf="registerForm.get('password')?.errors?.['required']">
-                {{ 'PASSWORD_REQUIRED' | translate }}
-              </mat-error>
-              <mat-error *ngIf="registerForm.get('password')?.errors?.['minlength']">
-                {{ 'PASSWORD_MINLENGTH' | translate }}
-              </mat-error>
+              @if(registerForm.get('password')?.errors?.['required']){
+                <mat-error>
+                  {{ 'PASSWORD_REQUIRED' | translate }}
+                </mat-error>
+              }
+              @if(registerForm.get('password')?.errors?.['minlength']){
+                <mat-error>
+                  {{ 'PASSWORD_MINLENGTH' | translate }}
+                </mat-error>
+              }
+
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width">
               <mat-label>{{ 'CONFIRM_PASSWORD' | translate }}</mat-label>
@@ -37,15 +52,22 @@
                 [attr.aria-label]="'HIDE_PASSWORD' | translate" [attr.aria-pressed]="hidePassword">
                 <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
               </button>
-              <mat-error *ngIf="registerForm.errors?.['mismatch']">
-                {{ 'PASSWORD_MISMATCH' | translate }}
-              </mat-error>
-              <mat-error *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">
-                {{ 'CONFIRM_PASSWORD_REQUIRED' | translate }}
-              </mat-error>
-              <mat-error *ngIf="registerForm.get('confirmPassword')?.errors?.['minlength']">
-                {{ 'CONFIRM_PASSWORD_MINLENGTH' | translate }}
-              </mat-error>
+              @if(registerForm.errors?.['mismatch']){
+                <mat-error>
+                  {{ 'PASSWORD_MISMATCH' | translate }}
+                </mat-error>
+              }
+              @if(registerForm.get('confirmPassword')?.errors?.['required']){
+                <mat-error>
+                  {{ 'CONFIRM_PASSWORD_REQUIRED' | translate }}
+                </mat-error>
+              }
+              @if(registerForm.get('confirmPassword')?.errors?.['minlength']){
+                <mat-error>
+                  {{ 'CONFIRM_PASSWORD_MINLENGTH' | translate }}
+                </mat-error>
+              }
+
             </mat-form-field>
       
             <div class="button-container">
