@@ -9,8 +9,7 @@ import { Todo } from '../../Models/todos';
 import { TodoService } from '../../Services/todos.service';
 import { AddTodoComponent } from './add-todo/add-todo.component';
 import { SharedMaterialModule } from '../../../Shared/modules/shared.material.module';
-import { ThemeService } from '../header/themeService';
-import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-todo-list',
@@ -25,7 +24,7 @@ export class TodoComponent implements OnInit {
   todos: Todo[] = [];
   newTodo: Todo = this.createEmptyTodo();
   currentPage: number = 0;
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 9;
   selectedTodos: Todo[] = [];
   loadingData: boolean = false;
   dataSource = new MatTableDataSource<Todo>(this.todos);
@@ -34,8 +33,7 @@ export class TodoComponent implements OnInit {
     'phoneNumber', 'date', 'updateButton',
     'deleteButton'
   ];
-  themeColor: string = 'primary';
-  private themeSubscription!: Subscription;
+
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
@@ -43,7 +41,6 @@ export class TodoComponent implements OnInit {
     private fb: FormBuilder, 
     private dialog: MatDialog,
     private todoService: TodoService,
-    public themeService: ThemeService
   ) {
     this.todoForm = this.fb.group({
       title: ['', Validators.required],
@@ -57,15 +54,6 @@ export class TodoComponent implements OnInit {
     this.loadTodos();
     this.dataSource.paginator = this.paginator;
 
-    this.themeSubscription = this.themeService.themeColor$.subscribe(color => {
-      this.themeColor = color;
-    });
-  }
-
-  ngOnDestroy() {
-    if (this.themeSubscription) {
-      this.themeSubscription.unsubscribe();
-    }
   }
 
   createEmptyTodo(): Todo {
@@ -155,9 +143,5 @@ export class TodoComponent implements OnInit {
     const startIndex = this.currentPage * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     return this.todos.slice(startIndex, endIndex);
-  }
-
-  getThemeColor(): any {
-    return this.themeColor === 'primary' ? '#3f51b5' : '#e91e63'; 
   }
 }
