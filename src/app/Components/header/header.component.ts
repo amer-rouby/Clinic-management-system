@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { ThemeService } from './themeService';
+import { ThemeService } from '../../Services/theme.service';
 import { TranslateService } from '@ngx-translate/core';
 import { DOCUMENT } from '@angular/common';
 import { AuthService } from '../../Services/Auth.service';

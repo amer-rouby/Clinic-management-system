@@ -9,7 +9,7 @@ import { PageNotFoundComponent } from '../../page-no-found/page-no-found.compone
 import { CourseService } from '../../../Services/course.service';
 import { AddCourseComponent } from '../add-course/add-course.component';
 import { SharedMaterialModule } from '../../../../Shared/modules/shared.material.module';
-import { ThemeService } from '../../header/themeService';
+import { ThemeService } from '../../../Services/theme.service';
 
 @Component({
     selector: 'app-courses',
