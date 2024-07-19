@@ -1,10 +1,19 @@
 .sidenav-container {
   height: 100vh !important;
+  a{
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    .mat-icon ,span{
+      margin: 0 10px;
+      padding: 0;
+    }
+  }
   // position: fixed;
 }
 
 .sidenav {
-  width: 200px;
+  width: 230px;
 }
 
 .custom-toolbar {
@@ -65,10 +74,7 @@ mat-icon {
 }
 
 span {
-  display: inline-block;
   font-size: 18px;
-  margin-right: 5px !important;
-  padding: 0;
   color: #fff !important;
 }
 

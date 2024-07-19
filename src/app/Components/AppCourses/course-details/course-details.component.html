@@ -1,10 +1,10 @@
 <div class="container card-details mt-5">
     @if(loadingData) {
-        <div class="spinner-container">
-            <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
-        </div>
+    <div class="spinner-container">
+        <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
+    </div>
     }
-    <mat-card class="course-card bg-dark text-white">
+    <mat-card class="course-card  text-white" [ngStyle]="{ 'background-color': getThemeColor()}">
         @if(courseData){
         <div>
             <mat-card-header>
@@ -17,15 +17,17 @@
                 <p class="mt-3">{{ courseData.description | titlecase }}</p>
                 <div>
                     <p>{{ 'COURSE_PRICE' | translate }}: {{courseData.coursePrice | currency}}</p>
-                    <p>{{ 'EXPERIENCE_IN_FIELD' | translate }}: {{courseData.experienceInTheField}} {{ 'YEARS' | translate }}</p>
+                    <p>{{ 'EXPERIENCE_IN_FIELD' | translate }}: {{courseData.experienceInTheField}} {{ 'YEARS' |
+                        translate }}</p>
                 </div>
-                <button mat-raised-button color="primary" routerLink="/course-list">{{ 'VIEW_COURSES' | translate }}</button>
+                <button mat-raised-button color="sucsses" routerLink="/course-list">{{ 'VIEW_COURSES' | translate
+                    }}</button>
             </mat-card-content>
         </div>
         }@else {
         <ng-template>
             <div class="text-center fw-bold p-3">
-                <app-page-not-found/>
+                <app-page-not-found />
             </div>
         </ng-template>
         }

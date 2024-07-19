@@ -6,6 +6,8 @@ import { CourseService } from '../../../Services/course.service';
 import { PageNotFoundComponent } from '../../page-no-found/page-no-found.component';
 import { Course } from '../../../Models/courses';
 import { SharedMaterialModule } from '../../../../Shared/modules/shared.material.module';
+import { Subscription } from 'rxjs';
+import { ThemeService } from '../../header/themeService';
 
 @Component({
     selector: 'app-course-details',
@@ -20,7 +22,12 @@ import { SharedMaterialModule } from '../../../../Shared/modules/shared.material
 export class CourseDetailsComponent implements OnInit {
     courseData!: Course;
     loadingData: boolean = false;
-    constructor(private activatedRoute: ActivatedRoute, private courseService: CourseService) { }
+    private themeSubscription!: Subscription;
+
+    themeColor: string = 'primary';
+    constructor(private activatedRoute: ActivatedRoute,
+         private courseService: CourseService,
+         private themeService: ThemeService, ) { }
 
     ngOnInit(): void {
         this.activatedRoute.queryParamMap.pipe(
@@ -34,6 +41,9 @@ export class CourseDetailsComponent implements OnInit {
                 this.courseData = course;
             }
         });
+        this.themeSubscription = this.themeService.themeColor$.subscribe(color => {
+            this.themeColor = color;
+        })
     }
 
     private getCourse(courseId: string | null): Observable<Course | undefined> {
@@ -46,4 +56,12 @@ export class CourseDetailsComponent implements OnInit {
         );
 
     }
+    ngOnDestroy() {
+        if (this.themeSubscription) {
+          this.themeSubscription.unsubscribe();
+        }
+      }
+      getThemeColor(): any {
+        return this.themeColor === 'primary' ? '#3f51b5' : '#e91e63'; 
+      }
 }
