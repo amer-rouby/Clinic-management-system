@@ -3,7 +3,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
-import { Course } from '../../../Models/courses';
+import { Course } from '../../../Models/course.module';
 import { CourseCardComponent } from '../course-card-component/course-card-component';
 import { PageNotFoundComponent } from '../../page-no-found/page-no-found.component';
 import { CourseService } from '../../../Services/course.service';

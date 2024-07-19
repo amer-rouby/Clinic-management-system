@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../materail-ui/delete-confirm-dialog/confirm-dialog.component';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { Todo } from '../../Models/todos';
+import { Todo } from '../../Models/todo.module';
 import { TodoService } from '../../Services/todos.service';
 import { AddTodoComponent } from './add-todo/add-todo.component';
 import { SharedMaterialModule } from '../../../Shared/modules/shared.material.module';

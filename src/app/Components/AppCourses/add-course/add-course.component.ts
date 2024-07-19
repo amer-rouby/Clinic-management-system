@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CourseService } from '../../../Services/course.service';
-import { Course } from '../../../Models/courses';
+import { Course } from '../../../Models/course.module';
 import { SharedMaterialModule } from '../../../../Shared/modules/shared.material.module';
 
 

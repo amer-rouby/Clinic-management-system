@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 
 import { FirebaseService } from './Firebase.service';
-import { Todo } from '../Models/todos';
+import { Todo } from '../Models/todo.module';
 
 @Injectable({
     providedIn: 'root'

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { CourseService } from '../../../Services/course.service';
 import { PageNotFoundComponent } from '../../page-no-found/page-no-found.component';
-import { Course } from '../../../Models/courses';
+import { Course } from '../../../Models/course.module';
 import { SharedMaterialModule } from '../../../../Shared/modules/shared.material.module';
 import { Subscription } from 'rxjs';
 import { ThemeService } from '../../header/themeService';

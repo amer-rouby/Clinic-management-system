@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Todo } from '../../../Models/todos';
+import { Todo } from '../../../Models/todo.module';
 import { TodoService } from '../../../Services/todos.service';
 import { noFutureDateValidator } from '../../../../Shared/Date-Validator/FutureDateValidator';
 import { SharedMaterialModule } from '../../../../Shared/modules/shared.material.module';
