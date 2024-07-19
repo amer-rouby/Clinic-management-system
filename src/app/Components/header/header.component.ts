@@ -1,45 +1,29 @@
-import { Component, Inject } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { ThemeService } from './themeService';
-import { trigger, state, style, animate, transition } from '@angular/animations';
-import { SharedMaterialModule } from '../../../Shared/modules/shared.material.module';
 import { TranslateService } from '@ngx-translate/core';
 import { DOCUMENT } from '@angular/common';
 import { AuthService } from '../../Services/Auth.service';
+import { Subscription } from 'rxjs';
+import { SharedMaterialModule } from '../../../Shared/modules/shared.material.module';
 
 @Component({
   selector: 'app-header',
-  standalone: true,
-  imports: [
-    SharedMaterialModule,
-    RouterModule
-  ],
+  standalone:true,
+  imports:[SharedMaterialModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.scss'],
-  animations: [
-    trigger('themeToggle', [
-      state('true', style({
-        height: '*',
-        opacity: 1,
-      })),
-      state('false', style({
-        height: '0',
-        opacity: 0,
-        overflow: 'hidden'
-      })),
-      transition('false <=> true', animate('300ms ease-in-out'))
-    ])
-  ]
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
   selectedTheme: string | undefined;
-  showThemesColor = false;
-  currentLang: string;
-  loadingData: boolean= false;
   showThemeSelector = false;
+  currentLang: string;
+  loadingData = false;
+  themeColor = 'primary';
+  private themeSubscription!: Subscription;
 
   constructor(
-    public themeService: ThemeService, 
+    public themeService: ThemeService, // Changed to public
     private translate: TranslateService, 
     private authService: AuthService, 
     private router: Router, 
@@ -48,6 +32,27 @@ export class HeaderComponent {
     this.currentLang = this.translate.currentLang || 'ar';
     this.updateDirection();
   }
+
+  ngOnInit(): void {
+    if (this.isBrowser()) {
+      const savedTheme = localStorage.getItem('themeColor');
+      if (savedTheme) {
+        this.themeColor = savedTheme;
+        this.themeService.setThemeColor(savedTheme);
+      }
+    }
+
+    this.themeSubscription = this.themeService.themeColor$.subscribe(color => {
+      this.themeColor = color;
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.themeSubscription) {
+      this.themeSubscription.unsubscribe();
+    }
+  }
+
   logout(): void {
     this.loadingData = true;
     setTimeout(() => {
@@ -55,11 +60,14 @@ export class HeaderComponent {
       this.router.navigate(['/login']);
       this.loadingData = false;
     }, 500); 
-
   }
+
   changeThemeColor(color: string): void {
     this.selectedTheme = color;
     this.themeService.setThemeColor(color);
+    if (this.isBrowser()) {
+      localStorage.setItem('themeColor', color);
+    }
   }
 
   showThemes(): void {
@@ -71,7 +79,9 @@ export class HeaderComponent {
     this.loadingData = true;
     setTimeout(() => {
       this.translate.use(this.currentLang);
-      localStorage.setItem('lang', this.currentLang);
+      if (this.isBrowser()) {
+        localStorage.setItem('lang', this.currentLang);
+      }
       this.updateDirection();
       this.loadingData = false;
     }, 500); 
@@ -81,5 +91,13 @@ export class HeaderComponent {
     const dir = this.currentLang === 'ar' ? 'rtl' : 'ltr';
     this.document.documentElement.lang = this.currentLang;
     this.document.documentElement.dir = dir;
+  }
+
+  getThemeColor(): any {
+    return this.themeColor === 'primary' ? '#3f51b5' : '#e91e63'; 
+  }
+
+  private isBrowser(): boolean {
+    return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
   }
 }

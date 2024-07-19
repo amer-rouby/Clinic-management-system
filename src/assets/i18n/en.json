@@ -75,5 +75,6 @@
     "LOGOUT": " Log Out",
     "CHANGE_THEME": "Change Theme",
     "SELECT_THEME": " Select Theme",
-    "COMPLETE":"Complete"
+    "COMPLETE":"Complete",
+    "ADD_NEW_USERS": "Add Users"
 }
