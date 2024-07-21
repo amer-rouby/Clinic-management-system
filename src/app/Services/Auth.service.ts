@@ -3,13 +3,14 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { LocalStorageService } from './local-storage.service';
+import { environment } from '../../environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private restAPIURL = "https://identitytoolkit.googleapis.com/v1/accounts:";
-  private APIKey = "AIzaSyANnpk_nHIpG3QlcrGH1yP1RRxORd_6yj0";
+  private restAPIURL = 'https://identitytoolkit.googleapis.com/v1/accounts:';
+  private APIKey = environment.firebaseConfig.apiKey;
   
   private signUpURL = `${this.restAPIURL}signUp?key=${this.APIKey}`;
   private signInURL = `${this.restAPIURL}signInWithPassword?key=${this.APIKey}`;
@@ -39,7 +40,7 @@ export class AuthService {
   }
   
   isLoggedIn(): boolean {
-    return !!this.localStorageService.getItem('token');
+    return !!this.getToken();
   }
 
   setToken(token: string): void {
@@ -57,12 +58,34 @@ export class AuthService {
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error!';
     if (error.error instanceof ErrorEvent) {
-      // Client-side errors
       errorMessage = `Error: ${error.error.message}`;
     } else {
-      // Server-side errors
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     return throwError(errorMessage);
+  }
+
+  async generateCodeChallenge(verifier: string): Promise<string> {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(verifier);
+    const digest = await crypto.subtle.digest('SHA-256', data);
+    return btoa(String.fromCharCode(...new Uint8Array(digest)))
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=+$/, '');
+  }
+
+  private generateRandomString(length: number = 128): string {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
+    let randomString = '';
+    for (let i = 0; i < length; i++) {
+      const randomChar = characters.charAt(Math.floor(Math.random() * characters.length));
+      randomString += randomChar;
+    }
+    return randomString;
+  }
+
+  testRandomString(): void {
+    console.log(this.generateRandomString());
   }
 }

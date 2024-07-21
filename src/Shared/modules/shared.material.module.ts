@@ -46,7 +46,7 @@ const modules = [
   MatSidenavModule,
   MatListModule,
   TranslateModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
 ];
 
 @NgModule({

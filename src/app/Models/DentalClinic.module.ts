@@ -1,4 +1,4 @@
-export class Todo {
+export class DentalClinic {
     declare id: string;
     declare title: string;
     declare completed: boolean;
