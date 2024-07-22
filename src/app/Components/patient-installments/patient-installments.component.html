@@ -1,10 +1,11 @@
-<div *ngIf="isLoading" class="spinner-container">
-  <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
-</div>
-
+@if(isLoading){
+  <div class="spinner-container">
+      <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
+  </div>
+  }
 <div class="container">
   <div class="d-flex justify-content-between">
-    <button mat-raised-button  [ngStyle]="{ 'background-color': getThemeColor() , 'color':'#fff'}" (click)="openAddEditDialog()">
+    <button mat-raised-button [ngStyle]="{ 'background-color': getThemeColor(), 'color':'#fff'}" (click)="openAddEditDialog()">
       {{ 'ADD_INSTALLMENT' | translate }}
     </button>
     <div class="col-md-6 d-flex align-items-center">
@@ -54,6 +55,17 @@
       </mat-cell>
     </ng-container>
 
+    <!-- Column for details -->
+    <ng-container matColumnDef="details">
+      <mat-header-cell *matHeaderCellDef>{{ 'DETAILS' | translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-button color="accent" (click)="viewInstallmentDetails(element)">
+          <mat-icon>info</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Header and row definitions -->
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>

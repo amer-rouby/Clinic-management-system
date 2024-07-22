@@ -4,20 +4,27 @@
     <mat-form-field appearance="fill">
       <mat-label>{{ 'PATIENT_NAME' | translate }}</mat-label>
       <input matInput formControlName="patientName">
-      <mat-error *ngIf="installmentForm.get('patientName')?.hasError('required')">
-        {{ 'PATIENT_NAME_REQUIRED' | translate }}
-      </mat-error>
+      @if(installmentForm.get('patientName')?.hasError('required')) {
+        <mat-error>
+          {{ 'PATIENT_NAME_REQUIRED' | translate }}
+        </mat-error>
+      }
+
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>{{ 'AMOUNT' | translate }}</mat-label>
       <input matInput type="number" formControlName="amount">
-      <mat-error *ngIf="installmentForm.get('amount')?.hasError('required')">
-        {{ 'AMOUNT_REQUIRED' | translate }}
-      </mat-error>
-      <mat-error *ngIf="installmentForm.get('amount')?.hasError('min')">
-        {{ 'AMOUNT_MIN' | translate }}
-      </mat-error>
+      @if(installmentForm.get('amount')?.hasError('required')){
+        <mat-error>
+          {{ 'AMOUNT_REQUIRED' | translate }}
+        </mat-error>
+      }
+      @if(installmentForm.get('amount')?.hasError('min')){
+        <mat-error>
+          {{ 'AMOUNT_MIN' | translate }}
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="fill">
@@ -25,9 +32,11 @@
       <input matInput [matDatepicker]="picker" formControlName="dueDate">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
-      <mat-error *ngIf="installmentForm.get('dueDate')?.hasError('required')">
-        {{ 'DUE_DATE_REQUIRED' | translate }}
-      </mat-error>
+      @if(installmentForm.get('dueDate')?.hasError('required')){
+        <mat-error>
+          {{ 'DUE_DATE_REQUIRED' | translate }}
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="fill">

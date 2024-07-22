@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { SharedMaterialModule } from '../../../Shared/modules/shared.material.module';
 import { PatientInstallmentService } from '../../Services/PatientInstallment.service';
 import { AddEditInstallmentDialogComponent } from './add-patient-installments/add-patient-installments.component';
 import { ConfirmDialogComponent } from '../../materail-ui/delete-confirm-dialog/confirm-dialog.component';
 import { ThemeService } from '../../Services/theme.service';
-import { Subscription } from 'rxjs';
+import { InstallmentDetailsDialogComponent } from './installment-details/installment-details-dialog.component';
 
 @Component({
   selector: 'app-patient-installments',
@@ -14,9 +15,9 @@ import { Subscription } from 'rxjs';
   templateUrl: './patient-installments.component.html',
   styleUrls: ['./patient-installments.component.scss']
 })
-export class PatientInstallmentsComponent implements OnInit {
+export class PatientInstallmentsComponent implements OnInit, OnDestroy {
   installments: any[] = [];
-  displayedColumns: string[] = ['patientName', 'amount', 'dueDate', 'description', 'actions'];
+  displayedColumns: string[] = ['patientName', 'amount', 'dueDate', 'description', 'actions', 'details'];
   dataSource: any[] = []; // Define dataSource
   isLoading = false;
   searchTerm: string = '';
@@ -33,13 +34,15 @@ export class PatientInstallmentsComponent implements OnInit {
     this.loadInstallments();
     this.themeSubscription = this.themeService.themeColor$.subscribe(color => {
       this.themeColor = color;
-  });
+    });
   }
-  ngOnDestroy(): void  {
+
+  ngOnDestroy(): void {
     if (this.themeSubscription) {
-        this.themeSubscription.unsubscribe();
+      this.themeSubscription.unsubscribe();
     }
-}
+  }
+
   loadInstallments() {
     this.isLoading = true;
     this.patientInstallmentService.getAllInstallments().subscribe({
@@ -59,7 +62,6 @@ export class PatientInstallmentsComponent implements OnInit {
     this.isLoading = true;
     const searchTermLower = this.searchTerm.toLowerCase();
     this.dataSource = this.installments.filter(installment =>
-      
       installment.patientName.toLowerCase().includes(searchTermLower)
     );
     this.isLoading = false;
@@ -69,7 +71,7 @@ export class PatientInstallmentsComponent implements OnInit {
     const dialogRef = this.dialog.open(AddEditInstallmentDialogComponent, {
       data: { installment },
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.loadInstallments();
@@ -79,7 +81,7 @@ export class PatientInstallmentsComponent implements OnInit {
 
   confirmDelete(id: string) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '250px',
+      width: '350px',
       data: { message: 'Are you sure you want to delete this installment?' }
     });
 
@@ -99,9 +101,14 @@ export class PatientInstallmentsComponent implements OnInit {
     this.isLoading = false;
   }
 
-     // Utility
-     getThemeColor(): any {
-      return this.themeColor === 'primary' ? '#3f51b5' : '#e91e63';
+  viewInstallmentDetails(element: any) {
+    this.dialog.open(InstallmentDetailsDialogComponent, {
+      data: { patientName: element.patientName, installments: this.installments.filter(i => i.patientName === element.patientName) }
+    });
   }
-  
+
+  getThemeColor(): any {
+    return this.themeColor === 'primary' ? '#3f51b5' : '#e91e63';
+  }
+
 }

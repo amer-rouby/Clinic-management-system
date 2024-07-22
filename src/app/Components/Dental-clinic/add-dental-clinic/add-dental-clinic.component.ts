@@ -2,14 +2,13 @@ import { Component, EventEmitter, Output, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DentalClinic } from '../../../Models/DentalClinic.module';
-
 import { noFutureDateValidator } from '../../../../Shared/Date-Validator/FutureDateValidator';
 import { SharedMaterialModule } from '../../../../Shared/modules/shared.material.module';
 import { DentalClinicService } from '../../../Services/dental-clinic.service';
 
 @Component({
   selector: 'app-add-dental-clinic',
-  standalone:true,
+  standalone: true,
   imports: [SharedMaterialModule],
   templateUrl: './add-dental-clinic.component.html',
   styleUrls: ['./add-dental-clinic.component.scss']
@@ -38,18 +37,19 @@ export class AddDentalClinicComponent implements OnInit {
       ]],
       description: ['', Validators.required],
       date: [null, [Validators.required, noFutureDateValidator()]],
-      completed: [false] // Initialize completed field
+      completed: [false]
     });
 
     if (data && data.dental) {
       this.isEdit = true;
       this.dental = data.dental;
-      this.ADD_OR_MODIFY_BUTTON = 'EDIT_BUTTON'
+      this.ADD_OR_MODIFY_BUTTON = 'EDIT_BUTTON';
     }
   }
 
   ngOnInit() {
     if (this.dental) {
+      console.log("Patching values to the form:", this.dental); // تحقق من البيانات هنا
       this.addDentalForm.patchValue({
         title: this.dental.title,
         phoneNumber: this.dental.phoneNumber,

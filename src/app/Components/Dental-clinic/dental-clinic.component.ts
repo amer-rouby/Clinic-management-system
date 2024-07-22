@@ -82,11 +82,12 @@ export class DentalClinicComponent implements OnInit {
     const dialogRef = this.dialog.open(AddDentalClinicComponent, {
       width: '600px',
       height: '450px',
-      data: { dentalClinic }
+      data: { dental: dentalClinic }
     });
-
+  
     dialogRef.componentInstance.dentalClinicAdded.subscribe(() => this.loadDental());
   }
+  
 
   confirmDelete(dentalId: string) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent);
