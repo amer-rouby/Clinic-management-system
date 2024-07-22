@@ -24,22 +24,20 @@ export class DentalClinicComponent implements OnInit {
   dental: DentalClinic[] = [];
   newDental: DentalClinic = this.createEmptyDenta();
   currentPage: number = 0;
-  itemsPerPage: number = 9;
+  itemsPerPage: number = 5;
   selectedDentalClinic: DentalClinic[] = [];
   loadingData: boolean = false;
+  systemDate = new Date();
   dataSource = new MatTableDataSource<DentalClinic>(this.dental);
   displayedColumns: string[] = [
     'checkbox', 'title', 'description',
     'phoneNumber', 'date', 'updateButton',
     'deleteButton'
   ];
-
-
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   constructor(
-    private fb: FormBuilder, 
-    private dialog: MatDialog,
+    private fb: FormBuilder, private dialog: MatDialog,
     private dentalClinicService: DentalClinicService,
   ) {
     this.dentalClinicForm = this.fb.group({
@@ -48,6 +46,9 @@ export class DentalClinicComponent implements OnInit {
       description: ['', Validators.required],
       date: ['', Validators.required],
     });
+    setInterval(() => {
+      this.systemDate = new Date();
+    }, 1000);
   }
 
   ngOnInit() {
@@ -84,10 +85,10 @@ export class DentalClinicComponent implements OnInit {
       height: '450px',
       data: { dental: dentalClinic }
     });
-  
+
     dialogRef.componentInstance.dentalClinicAdded.subscribe(() => this.loadDental());
   }
-  
+
 
   confirmDelete(dentalId: string) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent);
@@ -114,10 +115,10 @@ export class DentalClinicComponent implements OnInit {
 
   selectAll(event: any) {
     if (event.checked) {
-      this.selectedDentalClinic= [...this.paginatedDentalClinic];
+      this.selectedDentalClinic = [...this.paginatedDentalClinic];
       this.paginatedDentalClinic.forEach(dentalClinic => dentalClinic.completed = true);
     } else {
-      this.selectedDentalClinic= [];
+      this.selectedDentalClinic = [];
       this.paginatedDentalClinic.forEach(dentalClinic => dentalClinic.completed = false);
     }
   }
@@ -145,6 +146,5 @@ export class DentalClinicComponent implements OnInit {
     const endIndex = startIndex + this.itemsPerPage;
     return this.dental.slice(startIndex, endIndex);
   }
-
 
 }

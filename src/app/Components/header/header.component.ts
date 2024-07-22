@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   currentLang: string;
   loadingData = false;
   themeColor = 'primary';
+  systemDate = new Date();
   private themeSubscription!: Subscription;
 
   constructor(

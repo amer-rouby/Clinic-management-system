@@ -39,10 +39,16 @@ export class InstallmentDetailsDialogComponent {
       amount: ['', [Validators.required, Validators.min(1)]],
       description: ['', Validators.required]
     });
+
+
   }
 
 
   loadInstallments(patientName: string) {
+    this.getInstallmentsByPatient(patientName)
+  }
+
+  getInstallmentsByPatient(patientName: string) {
     this.isLoading = true;
     this.addInstallmentService.getInstallmentsByPatient(patientName).subscribe({
       next: (installments) => {
@@ -56,7 +62,6 @@ export class InstallmentDetailsDialogComponent {
       }
     });
   }
-  
   calculateTotals() {
     this.totalPaid = this.installments.reduce((total, installment) => total + (installment.amount || 0), 0);
     this.remainingAmount = this.totalAmount - this.totalPaid;
@@ -65,7 +70,7 @@ export class InstallmentDetailsDialogComponent {
   onSubmit() {
     if (this.installmentForm.valid) {
       this.isLoading = true;
-      
+
       const newInstallment: any = {
         dueDate: this.installmentForm.value.dueDate,
         amount: this.installmentForm.value.amount,
@@ -81,6 +86,7 @@ export class InstallmentDetailsDialogComponent {
             this.currentInstallmentId = null;
             this.loadInstallments(this.data.patientName);
             this.isLoading = false;
+            this.ADD_OR_EDIT = "ADD_BUTTON";
           },
           error: (error) => {
             console.error('Error updating installment', error);
@@ -112,6 +118,7 @@ export class InstallmentDetailsDialogComponent {
       amount: installment.amount,
       description: installment.description
     });
+
   }
 
   confirmDelete(id: string) {

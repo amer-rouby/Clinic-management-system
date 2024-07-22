@@ -5,7 +5,8 @@
 }
 
 <div class="container dental-lest">
-    <h1 class="screen-title">{{"APPOINTMENTS_TODAY" | translate}}</h1>
+    <h1 style="color:chocolate" class="screen-title">
+        {{"APPOINTMENTS_TODAY" | translate}} - {{ systemDate | date: 'dd/MM/yyyy / HH:mm:ss' }}</h1>
     <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="checkbox">
             <mat-header-cell *matHeaderCellDef>
