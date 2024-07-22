@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{ 'INSTALLMENT_DETAILS' | translate }}</h1>
+<h1 mat-dialog-title>{{ 'INSTALLMENT_DETAILS' | translate }} / {{data.patientName}}</h1>
 @if(isLoading) {
   <div class="spinner-container">
     <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
@@ -79,3 +79,17 @@
     </form>
   </div>
 }
+<style>
+  .spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 9999;
+}
+</style>

@@ -5,6 +5,7 @@ import { SharedMaterialModule } from '../../../../Shared/modules/shared.material
 import { Installment } from '../../../Models/Installment.module';
 import { AddInstallmentService } from '../../../Services/add-installment.service';
 import { ConfirmDialogComponent } from '../../../materail-ui/delete-confirm-dialog/confirm-dialog.component';
+import { noFutureDateValidator } from '../../../../Shared/Date-Validator/FutureDateValidator';
 
 @Component({
   selector: 'app-installment-details-dialog',
@@ -13,39 +14,39 @@ import { ConfirmDialogComponent } from '../../../materail-ui/delete-confirm-dial
   templateUrl: './installment-details-dialog.component.html',
 })
 export class InstallmentDetailsDialogComponent {
-  installments: Installment[] = []; // مصفوفة لتخزين تفاصيل الأقساط
-  totalPaid: number = 0; // إجمالي المبلغ المدفوع من الأقساط
-  remainingAmount: number = 0; // المبلغ المتبقي من إجمالي المبلغ الذي سيتم دفعه
-  installmentForm: FormGroup; // نموذج لإضافة قسط جديد
-  isLoading = false; // حالة التحميل للتعامل مع التأخيرات أو العمليات غير المتزامنة
-  totalAmount: number; // إجمالي المبلغ الذي سيتم دفعه على أقساط
-  displayedColumns: string[] = ['dueDate', 'description', 'amount', 'actions']; // إضافة عمود الإجراءات
-  isEditMode = false; // حالة تعديل القسط الحالي
-  currentInstallmentId: string | null = null; // تخزين معرف القسط الحالي
-  ADD_OR_EDIT= "ADD_BUTTON";
+  installments: Installment[] = [];
+  totalPaid: number = 0;
+  remainingAmount: number = 0;
+  installmentForm: FormGroup;
+  isLoading = false;
+  totalAmount: number;
+  displayedColumns: string[] = ['dueDate', 'description', 'amount', 'actions'];
+  isEditMode = false;
+  currentInstallmentId: string | null = null;
+  ADD_OR_EDIT = "ADD_BUTTON";
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<InstallmentDetailsDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private addInstallmentService: AddInstallmentService, // تعديل هنا
+    private addInstallmentService: AddInstallmentService,
     private dialog: MatDialog,
   ) {
     this.totalAmount = data.totalAmount || 0;
-    this.loadInstallments(data.patientName); // تعديل هنا
+    this.loadInstallments(data.patientName);
 
     this.installmentForm = this.fb.group({
-      dueDate: ['', Validators.required],
+      dueDate: ['', Validators.required, , noFutureDateValidator()],
       amount: ['', [Validators.required, Validators.min(1)]],
       description: ['', Validators.required]
     });
   }
 
-  // دالة لجلب الأقساط من الخدمة بناءً على اسم المريض
+
   loadInstallments(patientName: string) {
     this.isLoading = true;
     this.addInstallmentService.getInstallmentsByPatient(patientName).subscribe({
       next: (installments) => {
-        this.installments = installments;
+        this.installments = installments.sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime());
         this.calculateTotals();
         this.isLoading = false;
       },
@@ -55,8 +56,7 @@ export class InstallmentDetailsDialogComponent {
       }
     });
   }
-
-  // دالة لحساب إجمالي المبلغ المدفوع والمبلغ المتبقي
+  
   calculateTotals() {
     this.totalPaid = this.installments.reduce((total, installment) => total + (installment.amount || 0), 0);
     this.remainingAmount = this.totalAmount - this.totalPaid;
@@ -65,12 +65,12 @@ export class InstallmentDetailsDialogComponent {
   onSubmit() {
     if (this.installmentForm.valid) {
       this.isLoading = true;
-
+      
       const newInstallment: any = {
         dueDate: this.installmentForm.value.dueDate,
         amount: this.installmentForm.value.amount,
         description: this.installmentForm.value.description,
-        patientName: this.data.patientName // تأكد من إضافة اسم المريض هنا
+        patientName: this.data.patientName
       };
 
       if (this.isEditMode && this.currentInstallmentId) {
@@ -79,7 +79,7 @@ export class InstallmentDetailsDialogComponent {
             this.installmentForm.reset();
             this.isEditMode = false;
             this.currentInstallmentId = null;
-            this.loadInstallments(this.data.patientName); // استدعاء الدالة لجلب الأقساط مرة أخرى
+            this.loadInstallments(this.data.patientName);
             this.isLoading = false;
           },
           error: (error) => {
@@ -91,7 +91,7 @@ export class InstallmentDetailsDialogComponent {
         this.addInstallmentService.addInstallment(newInstallment).subscribe({
           next: (addedInstallment: Installment) => {
             this.installmentForm.reset();
-            this.loadInstallments(this.data.patientName); // استدعاء الدالة لجلب الأقساط مرة أخرى
+            this.loadInstallments(this.data.patientName);
             this.isLoading = false;
           },
           error: (error) => {
@@ -105,7 +105,7 @@ export class InstallmentDetailsDialogComponent {
 
   editInstallment(installment: any) {
     this.isEditMode = true;
-     this.ADD_OR_EDIT = "EDIT_BUTTON"
+    this.ADD_OR_EDIT = "EDIT_BUTTON"
     this.currentInstallmentId = installment.id;
     this.installmentForm.patchValue({
       dueDate: installment.dueDate,
@@ -116,7 +116,7 @@ export class InstallmentDetailsDialogComponent {
 
   confirmDelete(id: string) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '350px',
+      width: '400px',
       data: { message: 'Are you sure you want to delete this installment?' }
     });
 
@@ -127,12 +127,12 @@ export class InstallmentDetailsDialogComponent {
     });
   }
 
-  // دالة لحذف القسط
+
   deleteInstallment(id: string) {
     this.isLoading = true;
     this.addInstallmentService.deleteInstallment(id).subscribe({
       next: () => {
-        this.loadInstallments(this.data.patientName); // استدعاء الدالة لجلب الأقساط مرة أخرى
+        this.loadInstallments(this.data.patientName);
         this.isLoading = false;
       },
       error: (error) => {
@@ -148,6 +148,8 @@ export class InstallmentDetailsDialogComponent {
 
   myFilter = (date: Date | null): boolean => {
     const today = new Date();
-    return date ? date > today : false;
+    today.setHours(0, 0, 0, 0);
+    return date ? date >= today : false;
   }
+
 }

@@ -1,6 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { SharedMaterialModule } from '../../../Shared/modules/shared.material.module';
 import { PatientInstallmentService } from '../../Services/PatientInstallment.service';
 import { AddEditInstallmentDialogComponent } from './add-patient-installments/add-patient-installments.component';
@@ -18,11 +20,13 @@ import { InstallmentDetailsDialogComponent } from './installment-details/install
 export class PatientInstallmentsComponent implements OnInit, OnDestroy {
   installments: any[] = [];
   displayedColumns: string[] = ['patientName', 'amount', 'dueDate', 'description', 'actions', 'details'];
-  dataSource: any[] = []; // Define dataSource
+  dataSource = new MatTableDataSource<any>([]); // Update dataSource
   isLoading = false;
   searchTerm: string = '';
   themeColor: string = 'primary';
   themeSubscription!: Subscription;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private patientInstallmentService: PatientInstallmentService,
@@ -47,8 +51,9 @@ export class PatientInstallmentsComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.patientInstallmentService.getAllInstallments().subscribe({
       next: (data) => {
-        this.installments = data;
-        this.dataSource = this.installments; // Set dataSource
+        this.installments = data.sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime());
+        this.dataSource.data = this.installments; // Set dataSource data
+        this.dataSource.paginator = this.paginator; // Set paginator
         this.isLoading = false;
       },
       error: (error) => {
@@ -57,13 +62,12 @@ export class PatientInstallmentsComponent implements OnInit, OnDestroy {
       }
     });
   }
+  
 
   applyFilter() {
     this.isLoading = true;
     const searchTermLower = this.searchTerm.toLowerCase();
-    this.dataSource = this.installments.filter(installment =>
-      installment.patientName.toLowerCase().includes(searchTermLower)
-    );
+    this.dataSource.filter = searchTermLower; // Use built-in filter method
     this.isLoading = false;
   }
 
@@ -110,5 +114,4 @@ export class PatientInstallmentsComponent implements OnInit, OnDestroy {
   getThemeColor(): any {
     return this.themeColor === 'primary' ? '#3f51b5' : '#e91e63';
   }
-
 }

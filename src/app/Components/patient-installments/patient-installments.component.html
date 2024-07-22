@@ -1,8 +1,8 @@
-@if(isLoading){
+<div *ngIf="isLoading">
   <div class="spinner-container">
-      <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
+    <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
   </div>
-  }
+</div>
 <div class="container">
   <div class="d-flex justify-content-between">
     <button mat-raised-button [ngStyle]="{ 'background-color': getThemeColor(), 'color':'#fff'}" (click)="openAddEditDialog()">
@@ -26,7 +26,7 @@
 
     <!-- Column for amount -->
     <ng-container matColumnDef="amount">
-      <mat-header-cell *matHeaderCellDef>{{ 'AMOUNT' | translate }}</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>{{ 'TOTAL_AMOUNT' | translate }}</mat-header-cell>
       <mat-cell *matCellDef="let element">{{ element.amount }}</mat-cell>
     </ng-container>
 
@@ -57,10 +57,10 @@
 
     <!-- Column for details -->
     <ng-container matColumnDef="details">
-      <mat-header-cell *matHeaderCellDef>{{ 'DETAILS' | translate }}</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>{{ 'INSTALLMENT_DETAILS' | translate }}</mat-header-cell>
       <mat-cell *matCellDef="let element">
         <button mat-button color="accent" (click)="viewInstallmentDetails(element)">
-          <mat-icon>info</mat-icon>
+          <mat-icon>visibility</mat-icon>
         </button>
       </mat-cell>
     </ng-container>
@@ -69,4 +69,6 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
