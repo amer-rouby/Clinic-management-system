@@ -1,33 +1,34 @@
 import { Component, EventEmitter, Output, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Todo } from '../../../Models/todo.module';
-import { TodoService } from '../../../Services/todos.service';
+import { DentalClinic } from '../../../Models/DentalClinic.module';
+
 import { noFutureDateValidator } from '../../../../Shared/Date-Validator/FutureDateValidator';
 import { SharedMaterialModule } from '../../../../Shared/modules/shared.material.module';
+import { DentalClinicService } from '../../../Services/dental-clinic.service';
 
 @Component({
-  selector: 'app-add-todo',
+  selector: 'app-add-dental-clinic',
   standalone:true,
   imports: [SharedMaterialModule],
-  templateUrl: './add-todo.component.html',
-  styleUrls: ['./add-todo.component.scss']
+  templateUrl: './add-dental-clinic.component.html',
+  styleUrls: ['./add-dental-clinic.component.scss']
 })
-export class AddTodoComponent implements OnInit {
-  addTodoForm: FormGroup;
+export class AddDentalClinicComponent implements OnInit {
+  addDentalForm: FormGroup;
   loadingData: boolean = false;
-  @Output() todoAdded = new EventEmitter<Todo>();
+  @Output() dentalClinicAdded = new EventEmitter<DentalClinic>();
   isEdit: boolean = false;
-  todo: Todo | null = null;
+  dental: DentalClinic | null = null;
   ADD_OR_MODIFY_BUTTON = "ADD_BUTTON";
 
   constructor(
-    public dialogRef: MatDialogRef<AddTodoComponent>,
+    public dialogRef: MatDialogRef<AddDentalClinicComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
-    private todoService: TodoService,
+    private dentalClinicService: DentalClinicService,
   ) {
-    this.addTodoForm = this.fb.group({
+    this.addDentalForm = this.fb.group({
       title: ['', Validators.required],
       phoneNumber: ['', [
         Validators.required,
@@ -40,34 +41,34 @@ export class AddTodoComponent implements OnInit {
       completed: [false] // Initialize completed field
     });
 
-    if (data && data.todo) {
+    if (data && data.dental) {
       this.isEdit = true;
-      this.todo = data.todo;
+      this.dental = data.dental;
       this.ADD_OR_MODIFY_BUTTON = 'EDIT_BUTTON'
     }
   }
 
   ngOnInit() {
-    if (this.todo) {
-      this.addTodoForm.patchValue({
-        title: this.todo.title,
-        phoneNumber: this.todo.phoneNumber,
-        description: this.todo.description,
-        date: this.todo.date,
-        completed: this.todo.completed,
+    if (this.dental) {
+      this.addDentalForm.patchValue({
+        title: this.dental.title,
+        phoneNumber: this.dental.phoneNumber,
+        description: this.dental.description,
+        date: this.dental.date,
+        completed: this.dental.completed,
       });
     }
   }
 
-  addTodo() {
+  addDentalClinic() {
     this.loadingData = true;
 
-    if (this.addTodoForm.valid) {
-      if (this.isEdit && this.todo) {
-        const updatedTodo: Todo = { ...this.todo, ...this.addTodoForm.value };
-        this.todoService.updateTodo(this.todo.id, updatedTodo).subscribe({
+    if (this.addDentalForm.valid) {
+      if (this.isEdit && this.dental) {
+        const updatedDental: DentalClinic = { ...this.dental, ...this.addDentalForm.value };
+        this.dentalClinicService.updateDentalClinic(this.dental.id, updatedDental).subscribe({
           next: (response: any) => {
-            this.todoAdded.emit(response);
+            this.dentalClinicAdded.emit(response);
             this.onClose();
             this.loadingData = false;
           },
@@ -77,9 +78,9 @@ export class AddTodoComponent implements OnInit {
           },
         });
       } else {
-        this.todoService.addTodo(this.addTodoForm.value).subscribe({
+        this.dentalClinicService.addDentalClinic(this.addDentalForm.value).subscribe({
           next: (response) => {
-            this.todoAdded.emit(response);
+            this.dentalClinicAdded.emit(response);
             this.onClose();
             this.loadingData = false;
           },

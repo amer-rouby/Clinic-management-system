@@ -11,10 +11,14 @@
                 <mat-icon>home</mat-icon>
                 <span>{{ 'HOME' | translate }}</span>
             </a>
-            <a mat-list-item routerLink="course-list" routerLinkActive="active">
+            <a mat-list-item routerLink="installments" routerLinkActive="active">
+                <mat-icon matPrefix>attach_money</mat-icon>
+                <span>{{ 'INSTALLMENTS' | translate }}</span>
+            </a>
+            <!-- <a mat-list-item routerLink="course-list" routerLinkActive="active">
                 <mat-icon>list</mat-icon>
                 <span>{{ 'COURSES_LIST' | translate }}</span>
-            </a>
+            </a> -->
             <a mat-list-item class="theme-selector" (click)="showThemes()">
                 <mat-icon>brush</mat-icon>
                 <span>{{ 'CHANGE_THEME' | translate }}</span>
@@ -60,7 +64,7 @@
                 <span class="spacer"></span>
                 <h2 style="cursor: pointer;" routerLink="home">{{ "APP_TITLE" | translate }}</h2>
                 <span class="spacer"></span>
-                <h1></h1>
+                <h1>{{ systemDate | date: 'dd/MM/yyyy' }}</h1>
             </mat-toolbar-row>
         </mat-toolbar>
 

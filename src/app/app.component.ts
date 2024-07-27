@@ -30,8 +30,8 @@ export class AppComponent implements OnInit {
             this.document.documentElement.lang = lang;
             this.document.documentElement.dir = dir;
         } else {
-            const lang = 'ar';
-            const dir = 'rtl';
+            const lang = 'en';
+            const dir = 'ltr';
             this.translateService.setDefaultLang(lang);
             this.translateService.use(lang);
             this.document.documentElement.lang = lang;

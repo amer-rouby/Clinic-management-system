@@ -15,8 +15,13 @@ export class LoginComponent {
   loginForm: FormGroup;
   hidePassword = true;
   loginError = '';
-  loadingData: boolean = false;
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  loadingData = false;
+
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -44,9 +49,7 @@ export class LoginComponent {
     this.loadingData = true;
     setTimeout(() => {
       this.login();
-      this.loginForm.reset();
       this.loadingData = false;
     }, 500);
-
   }
 }

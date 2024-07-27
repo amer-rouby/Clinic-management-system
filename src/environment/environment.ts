@@ -2,6 +2,7 @@
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// environment.ts
 export const environment = {
     production: false,
     firebaseConfig: {
@@ -12,6 +13,7 @@ export const environment = {
         messagingSenderId: "706249947166",
         appId: "1:706249947166:web:66142c16ba04bfecc3160f"
     }
-}
+};
+
 
 
