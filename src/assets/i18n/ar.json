@@ -72,8 +72,8 @@
     "SELECT_LANGUAGE": "العربية",
     "LOGOUT": "تسجيل خروج",
     "INSTALLMENTS": "قسم الاقساط",
-    "ADD_INSTALLMENT": "إضافة قسط",
-    "INSTALLMENT_DETAILS": "تفاصيل الاقساط",
+    "ADD_INSTALLMENT": "إضافة حاله",
+    "INSTALLMENT_DETAILS": "دفع او استعلام اقساط",
     "EDIT_INSTALLMENT": "تعديل القسط",
     "PAYMENT_DATE": "تاريخ الدفع",
     "TOTAL_PAID": "إجمالي المبلغ المدفوع",
@@ -92,5 +92,7 @@
     "YES": "نعم",
     "APPOINTMENTS_TODAY": "حجز مواعيد الكشوفات اليوم",
     "COMPLETE": "مكتمله",
-    "ADD_NEW_USERS": "إضافة مستخدمين "
+    "ADD_NEW_USERS": "إضافة مستخدمين ",
+    "PAGE_SIZE":"حجم الصفحه",
+    "ALL": "الكل"
 }

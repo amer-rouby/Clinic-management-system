@@ -104,10 +104,17 @@ export class PatientInstallmentsComponent implements OnInit, OnDestroy {
     });
     this.isLoading = false;
   }
-
   viewInstallmentDetails(element: any) {
     this.dialog.open(InstallmentDetailsDialogComponent, {
-      data: { patientName: element.patientName, installments: this.installments.filter(i => i.patientName === element.patientName) }
+      data: { 
+        patientName: element.patientName, 
+        installments: this.installments.filter(i => i.patientName === element.patientName) 
+      },
+      width: '100vw',
+      height: '100vh',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      panelClass: 'full-screen-dialog'
     });
   }
 

@@ -1,25 +1,16 @@
 import { Routes } from '@angular/router';
-
-import { CoursesComponent } from './Components/AppCourses/courses/courses.component';
-import { PageNotFoundComponent } from './Components/page-no-found/page-no-found.component';
-import { CourseDetailsComponent } from './Components/AppCourses/course-details/course-details.component';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
 import { AuthGuard } from './Guards/auth.guard';
-import { DentalClinicComponent } from './Components/Dental-clinic/dental-clinic.component';
-import { PatientInstallmentsComponent } from './Components/patient-installments/patient-installments.component';
+import { AppRoutes } from '../constants/app-routes';
 
 export const routes: Routes = [
-    { path: 'home', component: DentalClinicComponent, canActivate: [AuthGuard] },
-    { path: 'course-list', component: CoursesComponent, canActivate: [AuthGuard] },
-    { path: 'course', component: CourseDetailsComponent, canActivate: [AuthGuard] },
-    { path: 'course-list/:id', component: CourseDetailsComponent, canActivate: [AuthGuard] },
-    
-    { path: 'installments', component: PatientInstallmentsComponent, canActivate: [AuthGuard] },
-    
-    { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent },
-    { path: '', redirectTo: '/login', pathMatch: 'full' },
-    { path: '', redirectTo: '/home', pathMatch: 'full' },
-    { path: '**', component: PageNotFoundComponent },
+    { path: AppRoutes.HOME, canActivate: [AuthGuard], loadComponent: () => import('./Components/Dental-clinic/dental-clinic.component').then(m => m.DentalClinicComponent) },
+    { path: AppRoutes.COURSE_LIST, canActivate: [AuthGuard], loadComponent: () => import('./Components/AppCourses/courses/courses.component').then(m => m.CoursesComponent) },
+    { path: AppRoutes.COURSE, canActivate: [AuthGuard], loadComponent: () => import('./Components/AppCourses/course-details/course-details.component').then(m => m.CourseDetailsComponent) },
+    { path: AppRoutes.COURSE_LIST_ID, canActivate: [AuthGuard], loadComponent: () => import('./Components/AppCourses/course-details/course-details.component').then(m => m.CourseDetailsComponent) },
+    { path: AppRoutes.INSTALLMENTS, canActivate: [AuthGuard], loadComponent: () => import('./Components/patient-installments/patient-installments.component').then(m => m.PatientInstallmentsComponent) },
+    { path: AppRoutes.LOGIN, loadComponent: () => import('./auth/login/login.component').then(m => m.LoginComponent) },
+    { path: AppRoutes.REGISTER, loadComponent: () => import('./auth/register/register.component').then(m => m.RegisterComponent) },
+    { path: '', redirectTo: AppRoutes.LOGIN, pathMatch: 'full' },
+    { path: '**', loadComponent: () => import('./Components/page-no-found/page-no-found.component').then(m => m.PageNotFoundComponent) }
 ];
+

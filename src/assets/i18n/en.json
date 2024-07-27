@@ -76,7 +76,7 @@
     "LOGOUT": "Logout",
     "ADD_NEW_USERS": "Add New Users",
     "INSTALLMENTS": "Installments",
-    "ADD_INSTALLMENT": "Add Installment",
+    "ADD_INSTALLMENT": "Add Status",
     "INSTALLMENT_DETAILS": "Installments Details",
     "EDIT_INSTALLMENT": "Edit Installment",
     "PAYMENT_DATE": "Payment Date",
@@ -95,5 +95,7 @@
     "CLOSE": "Close",
     "DETAILS": "Details",
     "COMPLETE": "Complete",
-    "APPOINTMENTS_TODAY": "Appointments Today"
+    "APPOINTMENTS_TODAY": "Appointments Today",
+    "PAGE_SIZE":" Page Size",
+    "ALL": "All"
 }
