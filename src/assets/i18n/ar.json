@@ -73,7 +73,7 @@
     "LOGOUT": "تسجيل خروج",
     "INSTALLMENTS": "قسم الاقساط",
     "ADD_INSTALLMENT": "إضافة حاله",
-    "INSTALLMENT_DETAILS": "دفع او استعلام اقساط",
+    "INSTALLMENT_DETAILS": "دفع او استعلام اقساط السيد",
     "EDIT_INSTALLMENT": "تعديل القسط",
     "PAYMENT_DATE": "تاريخ الدفع",
     "TOTAL_PAID": "إجمالي المبلغ المدفوع",
@@ -94,5 +94,6 @@
     "COMPLETE": "مكتمله",
     "ADD_NEW_USERS": "إضافة مستخدمين ",
     "PAGE_SIZE":"حجم الصفحه",
-    "ALL": "الكل"
+    "ALL": "الكل",
+     "ADD_NEW_INSTALLMENT": "إضافة قسط جديد"
 }

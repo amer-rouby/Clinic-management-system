@@ -27,6 +27,8 @@ export class InstallmentDetailsDialogComponent implements AfterViewInit {
   displayedColumns: string[] = ['dueDate', 'description', 'amount', 'actions'];
   isEditMode = false;
   currentInstallmentId: string | null = null;
+  showAddInstallmentForm:boolean = false;
+  ADD_NEW_INSTALLMENT = "ADD_NEW_INSTALLMENT"
   dataSource: MatTableDataSource<Installment>;
 
   // Variables for pagination
@@ -85,7 +87,6 @@ export class InstallmentDetailsDialogComponent implements AfterViewInit {
   onSubmit() {
     if (this.installmentForm.valid) {
       this.isLoading = true;
-
       const newInstallment: Installment = {
         dueDate: this.installmentForm.value.dueDate,
         amount: this.installmentForm.value.amount,
@@ -99,6 +100,9 @@ export class InstallmentDetailsDialogComponent implements AfterViewInit {
             this.resetForm();
             this.loadInstallments(this.data.patientName);
             this.isLoading = false;
+            this.showAddInstallmentForm = false;
+            this.ADD_NEW_INSTALLMENT = "ADD_NEW_INSTALLMENT"
+            
           },
           error: (error) => {
             console.error('Error updating installment', error);
@@ -111,6 +115,7 @@ export class InstallmentDetailsDialogComponent implements AfterViewInit {
             this.resetForm();
             this.loadInstallments(this.data.patientName);
             this.isLoading = false;
+            this.showAddInstallmentForm = false;
           },
           error: (error) => {
             console.error('Error adding installment', error);
@@ -129,6 +134,8 @@ export class InstallmentDetailsDialogComponent implements AfterViewInit {
 
   editInstallment(installment: any) {
     this.isEditMode = true;
+    this.showAddInstallmentForm = true;
+    this.ADD_NEW_INSTALLMENT = "CANCEL"
     this.currentInstallmentId = installment.id;
     this.installmentForm.patchValue({
       dueDate: installment.dueDate,
@@ -196,5 +203,15 @@ export class InstallmentDetailsDialogComponent implements AfterViewInit {
     // Handle page event if needed
     this.currentPageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
+  }
+
+  showAddInstallmentFormF(){
+    if(this.showAddInstallmentForm === true){
+      this.showAddInstallmentForm = false;
+      this.ADD_NEW_INSTALLMENT = "ADD_NEW_INSTALLMENT"
+    }else{
+      this.showAddInstallmentForm = true;
+      this.ADD_NEW_INSTALLMENT = "CANCEL"
+    }
   }
 }

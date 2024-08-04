@@ -10,7 +10,7 @@ export const routes: Routes = [
     { path: AppRoutes.INSTALLMENTS, canActivate: [AuthGuard], loadComponent: () => import('./Components/patient-installments/patient-installments.component').then(m => m.PatientInstallmentsComponent) },
     { path: AppRoutes.LOGIN, loadComponent: () => import('./auth/login/login.component').then(m => m.LoginComponent) },
     { path: AppRoutes.REGISTER, loadComponent: () => import('./auth/register/register.component').then(m => m.RegisterComponent) },
-    { path: '', redirectTo: AppRoutes.LOGIN, pathMatch: 'full' },
+    { path: '', redirectTo: AppRoutes.LOGIN, pathMatch: 'full'},
     { path: '**', loadComponent: () => import('./Components/page-no-found/page-no-found.component').then(m => m.PageNotFoundComponent) }
 ];
 

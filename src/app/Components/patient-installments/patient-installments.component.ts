@@ -19,7 +19,7 @@ import { InstallmentDetailsDialogComponent } from './installment-details/install
 })
 export class PatientInstallmentsComponent implements OnInit, OnDestroy {
   installments: any[] = [];
-  displayedColumns: string[] = ['patientName', 'amount', 'dueDate', 'description', 'actions', 'details'];
+  displayedColumns: string[] = ['index' ,'patientName', 'amount', 'dueDate', 'description', 'actions', 'details'];
   dataSource = new MatTableDataSource<any>([]); // Update dataSource
   isLoading = false;
   searchTerm: string = '';
