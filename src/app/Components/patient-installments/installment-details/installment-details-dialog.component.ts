@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedMaterialModule } from '../../../../Shared/modules/shared.material.module';
@@ -6,14 +6,17 @@ import { Installment } from '../../../Models/Installment.module';
 import { AddInstallmentService } from '../../../Services/add-installment.service';
 import { ConfirmDialogComponent } from '../../../materail-ui/delete-confirm-dialog/confirm-dialog.component';
 import { noFutureDateValidator } from '../../../../Shared/Date-Validator/FutureDateValidator';
+import { ThemeService } from '../../../Services/theme.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-installment-details-dialog',
   standalone: true,
   imports: [SharedMaterialModule],
   templateUrl: './installment-details-dialog.component.html',
+  styleUrls: ['./installment-details-dialog.component.scss']
 })
-export class InstallmentDetailsDialogComponent {
+export class InstallmentDetailsDialogComponent implements OnInit {
   installments: Installment[] = [];
   totalPaid: number = 0;
   remainingAmount: number = 0;
@@ -22,25 +25,35 @@ export class InstallmentDetailsDialogComponent {
   totalAmount: number;
   displayedColumns: string[] = ['dueDate', 'description', 'amount', 'actions'];
   isEditMode = false;
+  showAddInstallment: boolean = false;
+  themeColor: string = 'primary';
   currentInstallmentId: string | null = null;
   ADD_OR_EDIT = "ADD_BUTTON";
+  ADD_OR_CANCEL = 'ADD_INSTALLMENT';
+  themeSubscription!: Subscription;
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<InstallmentDetailsDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private addInstallmentService: AddInstallmentService,
     private dialog: MatDialog,
+    public themeService: ThemeService
   ) {
     this.totalAmount = data.totalAmount || 0;
     this.loadInstallments(data.patientName);
 
     this.installmentForm = this.fb.group({
-      dueDate: ['', Validators.required, , noFutureDateValidator()],
+      dueDate: ['', [Validators.required, noFutureDateValidator()]],
       amount: ['', [Validators.required, Validators.min(1)]],
       description: ['', Validators.required]
     });
   }
 
+  ngOnInit() {
+    this.themeSubscription = this.themeService.themeColor$.subscribe(color => {
+      this.themeColor = color;
+    });
+  }
 
   loadInstallments(patientName: string) {
     this.isLoading = true;
@@ -56,16 +69,28 @@ export class InstallmentDetailsDialogComponent {
       }
     });
   }
-  
+
   calculateTotals() {
     this.totalPaid = this.installments.reduce((total, installment) => total + (installment.amount || 0), 0);
     this.remainingAmount = this.totalAmount - this.totalPaid;
   }
 
+  toggleAddInstallment() {
+
+    if (this.showAddInstallment == false) {
+      this.showAddInstallment = true;
+      this.ADD_OR_CANCEL = "CANCEL"
+    } else {
+      this.showAddInstallment = false;
+      this.ADD_OR_CANCEL = "ADD_INSTALLMENT"
+      this.ADD_OR_EDIT = "ADD_BUTTON";
+      this.installmentForm.reset();
+    }
+  }
   onSubmit() {
     if (this.installmentForm.valid) {
       this.isLoading = true;
-      
+
       const newInstallment: any = {
         dueDate: this.installmentForm.value.dueDate,
         amount: this.installmentForm.value.amount,
@@ -79,6 +104,9 @@ export class InstallmentDetailsDialogComponent {
             this.installmentForm.reset();
             this.isEditMode = false;
             this.currentInstallmentId = null;
+            this.showAddInstallment = false;
+            this.ADD_OR_CANCEL = 'ADD_INSTALLMENT';
+            this.ADD_OR_EDIT = "ADD_BUTTON";
             this.loadInstallments(this.data.patientName);
             this.isLoading = false;
           },
@@ -93,6 +121,8 @@ export class InstallmentDetailsDialogComponent {
             this.installmentForm.reset();
             this.loadInstallments(this.data.patientName);
             this.isLoading = false;
+            this.showAddInstallment = false;
+            this.ADD_OR_CANCEL = 'ADD_INSTALLMENT';
           },
           error: (error) => {
             console.error('Error adding installment', error);
@@ -105,7 +135,9 @@ export class InstallmentDetailsDialogComponent {
 
   editInstallment(installment: any) {
     this.isEditMode = true;
-    this.ADD_OR_EDIT = "EDIT_BUTTON"
+    this.showAddInstallment = true;
+    this.ADD_OR_CANCEL = 'CANCEL';
+    this.ADD_OR_EDIT = "EDIT_BUTTON";
     this.currentInstallmentId = installment.id;
     this.installmentForm.patchValue({
       dueDate: installment.dueDate,
@@ -116,8 +148,8 @@ export class InstallmentDetailsDialogComponent {
 
   confirmDelete(id: string) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '400px',
-      data: { message: 'Are you sure you want to delete this installment?' }
+      width: '500px',
+      data: { message: 'هل انت متاكد من حذف هذا القسط؟' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -127,22 +159,16 @@ export class InstallmentDetailsDialogComponent {
     });
   }
 
-
   deleteInstallment(id: string) {
     this.isLoading = true;
     this.addInstallmentService.deleteInstallment(id).subscribe({
-      next: () => {
-        this.loadInstallments(this.data.patientName);
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.error('Error deleting installment', error);
-        this.isLoading = false;
-      }
+      next: () => this.loadInstallments(this.data.patientName),
+      error: (error) => console.error('Error deleting installment', error),
+      complete: () => this.isLoading = false
     });
   }
 
-  close() {
+  onCloseClick(): void {
     this.dialogRef.close();
   }
 
@@ -150,6 +176,12 @@ export class InstallmentDetailsDialogComponent {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     return date ? date >= today : false;
-  }
+  };
 
+  isEditModeButton() {
+    return this.ADD_OR_EDIT === "EDIT_BUTTON";
+  }
+  getThemeColor(): any {
+    return this.themeColor === 'primary' ? '#3f51b5' : '#e91e63';
+  }
 }

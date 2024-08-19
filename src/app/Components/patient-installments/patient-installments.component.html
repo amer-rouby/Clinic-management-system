@@ -18,6 +18,11 @@
   </div>
 
   <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Column for index -->
+    <ng-container matColumnDef="index">
+      <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">{{  i + 1 + paginator.pageIndex * paginator.pageSize}}</mat-cell>
+    </ng-container>
     <!-- Column for patientName -->
     <ng-container matColumnDef="patientName">
       <mat-header-cell *matHeaderCellDef>{{ 'PATIENT_NAME' | translate }}</mat-header-cell>
