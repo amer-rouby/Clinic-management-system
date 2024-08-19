@@ -19,7 +19,7 @@ import { InstallmentDetailsDialogComponent } from './installment-details/install
 })
 export class PatientInstallmentsComponent implements OnInit, OnDestroy {
   installments: any[] = [];
-  displayedColumns: string[] = ['patientName', 'amount', 'dueDate', 'description', 'actions', 'details'];
+  displayedColumns: string[] = ['index','patientName', 'amount', 'dueDate', 'description', 'actions', 'details'];
   dataSource = new MatTableDataSource<any>([]); // Update dataSource
   isLoading = false;
   searchTerm: string = '';
@@ -107,10 +107,13 @@ export class PatientInstallmentsComponent implements OnInit, OnDestroy {
 
   viewInstallmentDetails(element: any) {
     this.dialog.open(InstallmentDetailsDialogComponent, {
-      data: { patientName: element.patientName, installments: this.installments.filter(i => i.patientName === element.patientName) }
+      data: { patientName: element.patientName, installments: this.installments.filter(i => i.patientName === element.patientName) },
+      width: '100vw ',
+      height: '100vh',
+      panelClass: 'full-screen-dialog'  // استخدام اسم الفئة لأسلوب CSS
     });
   }
-
+  
   getThemeColor(): any {
     return this.themeColor === 'primary' ? '#3f51b5' : '#e91e63';
   }
