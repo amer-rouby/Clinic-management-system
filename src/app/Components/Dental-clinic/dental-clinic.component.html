@@ -44,10 +44,12 @@
         </ng-container>
         <!-- Date Column -->
         <ng-container matColumnDef="date">
-            <mat-header-cell *matHeaderCellDef>{{ 'BOOKING_DATE' | translate
-                }}</mat-header-cell>
-            <mat-cell *matCellDef="let newDental">{{ newDental.date | date: 'dd/MM/yyyy' }}</mat-cell>
-        </ng-container>
+            <mat-header-cell *matHeaderCellDef>{{ 'BOOKING_DATE' | translate }}</mat-header-cell>
+            <mat-cell *matCellDef="let newDental" [appDateFormat]="'dd/MM/yyyy'" [dateValue]="newDental.date">
+              {{ newDental.date }}
+            </mat-cell>
+          </ng-container>
+          
         <!-- Update Button Column -->
         <ng-container matColumnDef="updateButton">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
@@ -58,6 +60,7 @@
                 </button>
             </mat-cell>
         </ng-container>
+        
         <!-- Delete Button Column -->
         <ng-container matColumnDef="deleteButton">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>

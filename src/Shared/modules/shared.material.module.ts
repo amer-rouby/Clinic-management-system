@@ -21,7 +21,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { DateFormatDirective } from '../Directives/date-format.directive';
+
 const modules = [
   CommonModule,
   FormsModule,
@@ -51,6 +53,8 @@ const modules = [
 
 @NgModule({
   imports: modules,
-  exports: modules
+  declarations: [DateFormatDirective], // Declare the directive here
+  exports: [...modules, DateFormatDirective] // Export the directive if needed
 })
-export class SharedMaterialModule { }
+export class SharedMaterialModule {}
+
