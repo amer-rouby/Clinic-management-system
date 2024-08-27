@@ -38,9 +38,11 @@
     <!-- Column for dueDate -->
     <ng-container matColumnDef="dueDate">
       <mat-header-cell *matHeaderCellDef>{{ 'DUE_DATE' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.dueDate | date: 'dd/MM/yyyy' }}</mat-cell>
-    </ng-container>
-
+      <mat-cell *matCellDef="let element" [appDateFormat]="'dd/MM/yyyy'" [dateValue]="element.dueDate">
+        {{ element.dueDate }}
+      </mat-cell>
+    </ng-container>    
+    
     <!-- Column for description -->
     <ng-container matColumnDef="description">
       <mat-header-cell *matHeaderCellDef>{{ 'DESCRIPTION' | translate }}</mat-header-cell>

@@ -48,11 +48,11 @@
       <!-- Date Column -->
       <ng-container matColumnDef="dueDate">
         <mat-header-cell *matHeaderCellDef>{{ 'PAYMENT_DATE' | translate }}</mat-header-cell>
-        <mat-cell *matCellDef="let installment">
-          {{ installment.dueDate ? (installment.dueDate | date: 'dd/MM/yyyy') : 'No Date' }}
+        <mat-cell *matCellDef="let installment" [appDateFormat]="'dd/MM/yyyy'" [dateValue]="installment.dueDate">
+          {{ installment.dueDate ? installment.dueDate : 'No Date' }}
         </mat-cell>
       </ng-container>
-
+      
       <!-- Description Column -->
       <ng-container matColumnDef="description">
         <mat-header-cell *matHeaderCellDef>{{ 'DESCRIPTION' | translate }}</mat-header-cell>
