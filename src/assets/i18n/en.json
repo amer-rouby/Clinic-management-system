@@ -95,5 +95,14 @@
     "CLOSE": "Close",
     "DETAILS": "Details",
     "COMPLETE": "Complete",
-    "APPOINTMENTS_TODAY": "Appointments Today"
+    "APPOINTMENTS_TODAY": "Appointments Today",
+    "INSTALLMENT_ADDED_SUCCESS": "Installment added successfully!",
+    "INSTALLMENT_UPDATED_SUCCESS": "Installment updated successfully!",
+    "INSTALLMENT_DELETED_SUCCESS": "Installment deleted successfully!",
+    "DENTAL_CLINIC_ADDED_SUCCESS": "Dental clinic added successfully!",
+    "DENTAL_CLINIC_UPDATED_SUCCESS": "Dental clinic updated successfully!",
+    "DENTAL_CLINIC_DELETED_SUCCESS": "Dental clinic deleted successfully!",
+    "COURSE_UPDATED_SUCCESS": "Course updated successfully!",
+    "COURSE_ADDED_SUCCESS": "Course added successfully!",
+     "COURSE_DELETED_SUCCESS": "Course deleted successfully!"
 }

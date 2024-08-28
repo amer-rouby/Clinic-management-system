@@ -6,6 +6,8 @@ import { DentalClinic } from '../../../Models/DentalClinic.module';
 import { noFutureDateValidator } from '../../../../Shared/Date-Validator/FutureDateValidator';
 import { SharedMaterialModule } from '../../../../Shared/modules/shared.material.module';
 import { DentalClinicService } from '../../../Services/dental-clinic.service';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-dental-clinic',
@@ -27,6 +29,8 @@ export class AddDentalClinicComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     private dentalClinicService: DentalClinicService,
+    private toastr: ToastrService,
+    private translate: TranslateService
   ) {
     this.addDentalForm = this.fb.group({
       title: ['', Validators.required],
@@ -71,6 +75,7 @@ export class AddDentalClinicComponent implements OnInit {
             this.dentalClinicAdded.emit(response);
             this.onClose();
             this.loadingData = false;
+            this.toastr.success(this.translate.instant('DENTAL_CLINIC_UPDATED_SUCCESS'));
           },
           error: (error) => {
             console.error(error);
@@ -83,6 +88,7 @@ export class AddDentalClinicComponent implements OnInit {
             this.dentalClinicAdded.emit(response);
             this.onClose();
             this.loadingData = false;
+            this.toastr.success(this.translate.instant('DENTAL_CLINIC_ADDED_SUCCESS'));
           },
           error: (error) => {
             console.error(error);

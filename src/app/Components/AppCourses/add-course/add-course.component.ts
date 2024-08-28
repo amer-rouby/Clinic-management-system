@@ -4,6 +4,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CourseService } from '../../../Services/course.service';
 import { Course } from '../../../Models/course.module';
 import { SharedMaterialModule } from '../../../../Shared/modules/shared.material.module';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -26,6 +28,8 @@ export class AddCourseComponent implements OnInit {
     public dialogRef: MatDialogRef<AddCourseComponent>,
     private fb: FormBuilder,
     private courseService: CourseService,
+    private toastr: ToastrService,
+    private translate: TranslateService,
     @Inject(MAT_DIALOG_DATA) public data: Course
   ) {
     this.courseData = { ...data };
@@ -55,6 +59,7 @@ export class AddCourseComponent implements OnInit {
       if (this.courseData.id) {
         this.courseService.updateCourse(formData).subscribe({
           next: (response) => {
+            this.toastr.success(this.translate.instant('COURSE_UPDATED_SUCCESS'));
             this.courseAdded.emit(response);
             this.onClose();
           },
@@ -65,6 +70,7 @@ export class AddCourseComponent implements OnInit {
       } else {
         this.courseService.addCourse(formData).subscribe({
           next: (response) => {
+            this.toastr.success(this.translate.instant('COURSE_ADDED_SUCCESS'));
             this.courseAdded.emit(response);
             this.onClose();
           },
