@@ -8,6 +8,8 @@ import { ConfirmDialogComponent } from '../../../materail-ui/delete-confirm-dial
 import { noFutureDateValidator } from '../../../../Shared/Date-Validator/FutureDateValidator';
 import { ThemeService } from '../../../Services/theme.service';
 import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-installment-details-dialog',
@@ -37,7 +39,9 @@ export class InstallmentDetailsDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private addInstallmentService: AddInstallmentService,
     private dialog: MatDialog,
-    public themeService: ThemeService
+    public themeService: ThemeService,
+    private toastr: ToastrService,
+    private translate: TranslateService
   ) {
     this.totalAmount = data.totalAmount || 0;
     this.loadInstallments(data.patientName);
@@ -109,6 +113,7 @@ export class InstallmentDetailsDialogComponent implements OnInit {
             this.ADD_OR_EDIT = "ADD_BUTTON";
             this.loadInstallments(this.data.patientName);
             this.isLoading = false;
+            this.toastr.success(this.translate.instant('INSTALLMENT_UPDATED_SUCCESS'));
           },
           error: (error) => {
             console.error('Error updating installment', error);
@@ -123,6 +128,7 @@ export class InstallmentDetailsDialogComponent implements OnInit {
             this.isLoading = false;
             this.showAddInstallment = false;
             this.ADD_OR_CANCEL = 'ADD_INSTALLMENT';
+            this.toastr.success(this.translate.instant('INSTALLMENT_ADDED_SUCCESS'));
           },
           error: (error) => {
             console.error('Error adding installment', error);
@@ -166,6 +172,7 @@ export class InstallmentDetailsDialogComponent implements OnInit {
       error: (error) => console.error('Error deleting installment', error),
       complete: () => this.isLoading = false
     });
+    this.toastr.success(this.translate.instant('INSTALLMENT_DELETED_SUCCESS')); 
   }
 
   onCloseClick(): void {

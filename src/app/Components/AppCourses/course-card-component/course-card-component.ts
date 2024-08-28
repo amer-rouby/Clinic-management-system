@@ -6,6 +6,8 @@ import { CourseService } from '../../../Services/course.service';
 import { CategoryType } from '../../../Enums/category';
 import { AddCourseComponent } from '../add-course/add-course.component'; // Import the AddCourseComponent if not imported already
 import { SharedMaterialModule } from '../../../../Shared/modules/shared.material.module';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-course-card-component',
@@ -26,7 +28,10 @@ export class CourseCardComponent {
     categoryType = CategoryType;
 
     constructor(public dialog: MatDialog, private router: Router,
-        private courseService: CourseService) { }
+        private courseService: CourseService,
+        private toastr: ToastrService,
+        private translate: TranslateService
+    ) { }
 
     viewCourse(course: any): void {
         // Navigate to course view
@@ -58,6 +63,7 @@ export class CourseCardComponent {
         const dialogRef = this.dialog.open(ConfirmDialogComponent);
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
+                this.toastr.success(this.translate.instant('COURSE_DELETED_SUCCESS'));
                 this.deleteCourse(courseId);
             }
         });

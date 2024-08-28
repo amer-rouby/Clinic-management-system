@@ -9,6 +9,8 @@ import { AddEditInstallmentDialogComponent } from './add-patient-installments/ad
 import { ConfirmDialogComponent } from '../../materail-ui/delete-confirm-dialog/confirm-dialog.component';
 import { ThemeService } from '../../Services/theme.service';
 import { InstallmentDetailsDialogComponent } from './installment-details/installment-details-dialog.component';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-patient-installments',
@@ -31,7 +33,9 @@ export class PatientInstallmentsComponent implements OnInit, OnDestroy {
   constructor(
     private patientInstallmentService: PatientInstallmentService,
     private dialog: MatDialog,
-    public themeService: ThemeService
+    public themeService: ThemeService,
+    private toastr: ToastrService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -102,6 +106,7 @@ export class PatientInstallmentsComponent implements OnInit, OnDestroy {
       next: () => this.loadInstallments(),
       error: (error) => console.error('Error deleting installment', error),
     });
+    this.toastr.success(this.translate.instant('INSTALLMENT_DELETED_SUCCESS')); 
     this.isLoading = false;
   }
 

@@ -9,6 +9,8 @@ import { DentalClinic } from '../../Models/DentalClinic.module';
 import { AddDentalClinicComponent } from './add-dental-clinic/add-dental-clinic.component';
 import { SharedMaterialModule } from '../../../Shared/modules/shared.material.module';
 import { DentalClinicService } from '../../Services/dental-clinic.service';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -41,6 +43,8 @@ export class DentalClinicComponent implements OnInit {
     private fb: FormBuilder, 
     private dialog: MatDialog,
     private dentalClinicService: DentalClinicService,
+    private toastr: ToastrService,
+    private translate: TranslateService
   ) {
     this.dentalClinicForm = this.fb.group({
       title: ['', Validators.required],
@@ -103,6 +107,8 @@ export class DentalClinicComponent implements OnInit {
     this.dentalClinicService.deleteDentalClinic(dentalId).subscribe(() => {
       this.loadingData = false;
       this.loadDental();
+      this.toastr.success(this.translate.instant('DENTAL_CLINIC_DELETED_SUCCESS'));
+
     });
   }
 

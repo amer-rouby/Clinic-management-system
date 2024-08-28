@@ -96,5 +96,14 @@
     "YES": "نعم",
     "APPOINTMENTS_TODAY": "حجز مواعيد الكشوفات اليوم",
     "COMPLETE": "مكتمله",
-    "ADD_NEW_USERS": "إضافة مستخدمين "
+    "ADD_NEW_USERS": "إضافة مستخدمين ",
+    "INSTALLMENT_ADDED_SUCCESS": "تمت إضافة القسط بنجاح!",
+    "INSTALLMENT_UPDATED_SUCCESS": "تم تحديث القسط بنجاح!",
+    "INSTALLMENT_DELETED_SUCCESS": "تم حذف القسط بنجاح!",
+    "DENTAL_CLINIC_ADDED_SUCCESS": "تمت الإضافة  الي العيادة بنجاح!",
+    "DENTAL_CLINIC_UPDATED_SUCCESS": "تم التحديث في العيادة بنجاح!",
+    "DENTAL_CLINIC_DELETED_SUCCESS": "تم الحذف من العيادة بنجاح!",
+    "COURSE_UPDATED_SUCCESS": "تم تحديث الدورة بنجاح!",
+    "COURSE_ADDED_SUCCESS": "تمت إضافة الدورة بنجاح!",
+    "COURSE_DELETED_SUCCESS": "تم حذف الدورة بنجاح!"
 }
