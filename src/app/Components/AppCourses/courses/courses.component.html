@@ -1,4 +1,4 @@
-<div class="container course-lest">
+<div class="container course-lest" appDisableRightClick>
     <div class="row justify-content-center">
         <div class="col-md-12 mt-3 mb-2 d-flex justify-content-between">
             <div class="col-md-6 d-flex align-items-center">
@@ -9,10 +9,10 @@
                 </mat-form-field>
             </div>
             <div class="add-course col-md-6 d-flex justify-content-end align-items-center">
-                <button  class="btn" 
+                <button  class="btn btn-sm" 
                     [ngStyle]="{ 'background-color': getThemeColor() , 'color':'#fff'}" 
                     (click)="openDialog()">
-                    <mat-icon>add</mat-icon> {{ 'ADD_NEW_COURSE' | translate }}
+                    <mat-icon>add_circle</mat-icon>{{ 'ADD_NEW_COURSE' | translate }}
                 </button>
             </div>
         </div>

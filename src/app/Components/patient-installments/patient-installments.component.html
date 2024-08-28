@@ -1,9 +1,9 @@
-<div *ngIf="isLoading">
+@if(isLoading){
   <div class="spinner-container">
     <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
   </div>
-</div>
-<div class="container">
+}
+<div class="container" appDisableRightClick>
   <div class="d-flex justify-content-between">
     <button mat-raised-button [ngStyle]="{ 'background-color': getThemeColor(), 'color':'#fff'}" (click)="openAddEditDialog()">
       {{ 'ADD_INSTALLMENT' | translate }}
