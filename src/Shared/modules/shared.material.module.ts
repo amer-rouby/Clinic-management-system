@@ -23,6 +23,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DateFormatDirective } from '../Directives/date-format.directive';
+import { DisableRightClickDirective } from '../Directives/disable-right-click.directive';
 
 const modules = [
   CommonModule,
@@ -53,8 +54,8 @@ const modules = [
 
 @NgModule({
   imports: modules,
-  declarations: [DateFormatDirective], // Declare the directive here
-  exports: [...modules, DateFormatDirective] // Export the directive if needed
+  declarations: [DateFormatDirective, DisableRightClickDirective], // Declare the directive here
+  exports: [...modules, DateFormatDirective, DisableRightClickDirective] // Export the directive if needed
 })
 export class SharedMaterialModule {}
 

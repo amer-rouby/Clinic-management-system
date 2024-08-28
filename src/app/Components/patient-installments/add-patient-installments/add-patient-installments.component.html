@@ -1,5 +1,5 @@
-<h1 mat-dialog-title>{{ isEdit ? ('EDIT_INSTALLMENT' | translate) : ('ADD_INSTALLMENT' | translate) }}</h1>
-<div mat-dialog-content>
+<h1 mat-dialog-title appDisableRightClick>{{ isEdit ? ('EDIT_INSTALLMENT' | translate) : ('ADD_INSTALLMENT' | translate) }}</h1>
+<div mat-dialog-content appDisableRightClick>
   <form [formGroup]="installmentForm">
     <mat-form-field appearance="fill">
       <mat-label>{{ 'PATIENT_NAME' | translate }}</mat-label>
@@ -45,7 +45,7 @@
     </mat-form-field>
   </form>
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions appDisableRightClick>
   <button mat-button (click)="close()">{{ 'CANCEL' | translate }}</button>
   <button mat-raised-button color="primary" (click)="save()" [disabled]="installmentForm.invalid">
     {{ 'SAVE' | translate }}
