@@ -34,7 +34,7 @@ export class LoginComponent {
       this.authService.signIn(username, password).subscribe(
         res => {
           console.log(res);
-          this.router.navigate(['/home']); // توجيه المستخدم إلى الصفحة الرئيسية بعد تسجيل الدخول بنجاح
+          this.router.navigate(['/home']);
           this.loginError = '';
         },
         error => {

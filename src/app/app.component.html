@@ -1,4 +1,12 @@
-<app-header appDisableRightClick></app-header>
+
+<!-- app.component.html -->
+<div *ngIf="isLoggedIn; else loginTemplate">
+  <app-header appDisableRightClick></app-header>
+</div>
+
+<ng-template #loginTemplate>
+  <app-login></app-login>
+</ng-template>
 <!-- <router-outlet></router-outlet> -->
 
 <!-- <section>

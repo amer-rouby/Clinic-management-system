@@ -1,9 +1,11 @@
 @if(loadingData) {
-  <div class="spinner-container">
-      <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
-  </div>
-  }
-<mat-card class="auth-card mt-5">
+<div class="spinner-container">
+  <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
+</div>
+}
+<div class="content">
+  <mat-card class="auth-card mt-5">
+    <img class="d-block mx-auto" width="250" src="assets/images/lock.png" alt="تسجيل الدخول">
     <mat-card-header>
       <mat-card-title>{{ 'LOGIN' | translate }}</mat-card-title>
     </mat-card-header>
@@ -13,14 +15,14 @@
           <mat-label>{{ 'EMAIL' | translate }}</mat-label>
           <input matInput formControlName="username" type="email" [placeholder]="'EMAIL_PLACEHOLDER' | translate">
           @if(loginForm.get('username')?.errors?.['required']){
-            <mat-error>
-              {{ 'EMAIL_REQUIRED' | translate }}
-            </mat-error>
+          <mat-error>
+            {{ 'EMAIL_REQUIRED' | translate }}
+          </mat-error>
           }
           @if(loginForm.get('username')?.errors?.['email']){
-            <mat-error>
-              {{ 'EMAIL_INVALID' | translate }}
-            </mat-error>
+          <mat-error>
+            {{ 'EMAIL_INVALID' | translate }}
+          </mat-error>
           }
         </mat-form-field>
         <mat-form-field appearance="fill" class="full-width">
@@ -32,17 +34,17 @@
             <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>
           @if(loginForm.get('password')?.errors?.['required']){
-            <mat-error>
-              {{ 'PASSWORD_REQUIRED' | translate }}
-            </mat-error>
+          <mat-error>
+            {{ 'PASSWORD_REQUIRED' | translate }}
+          </mat-error>
           }
           @if(loginForm.get('password')?.errors?.['minlength']){
-            <mat-error>
-              {{ 'PASSWORD_MINLENGTH' | translate }}
-            </mat-error>
+          <mat-error>
+            {{ 'PASSWORD_MINLENGTH' | translate }}
+          </mat-error>
           }
         </mat-form-field>
-  
+
         <div class="button-container">
           <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">
             {{ 'LOGIN' | translate }}
@@ -50,14 +52,16 @@
         </div>
       </form>
       <!-- <button mat-button style="color: rgb(87, 87, 240);" [routerLink]="['/register']">
-        {{ 'SWITCH_TO_REGISTER' | translate }}
-      </button> -->
+            {{ 'SWITCH_TO_REGISTER' | translate }}
+          </button> -->
       @if(loginError){
-        <div class="login-error">
-          {{ loginError }}
-        </div>
+      <div class="login-error">
+        {{ loginError }}
+      </div>
       }
 
     </mat-card-content>
   </mat-card>
+</div>
+
   
