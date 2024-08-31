@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { LocalStorageService } from './local-storage.service';
 import { environment } from '../../environment/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,10 @@ export class AuthService {
   private signUpURL = `${this.restAPIURL}signUp?key=${this.APIKey}`;
   private signInURL = `${this.restAPIURL}signInWithPassword?key=${this.APIKey}`;
 
-  constructor(private http: HttpClient, private localStorageService: LocalStorageService) { }
+  private isLoggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn()); // متابعة حالة تسجيل الدخول
+  isLoggedIn$ = this.isLoggedInSubject.asObservable();
+
+  constructor(private http: HttpClient, private localStorageService: LocalStorageService, private router: Router) { }
 
   private post(url: string, body: any, headers: HttpHeaders): Observable<any> {
     return this.http.post<any>(url, body, { headers }).pipe(
@@ -35,6 +39,8 @@ export class AuthService {
     return this.post(this.signInURL, body, headers).pipe(
       tap(response => {
         this.setToken(response.idToken);
+        this.isLoggedInSubject.next(true); // تحديث حالة تسجيل الدخول
+        this.router.navigate(['/home']); // توجيه المستخدم إلى الشاشة الرئيسية بعد تسجيل الدخول
       })
     );
   }
@@ -53,6 +59,8 @@ export class AuthService {
 
   logout(): void {
     this.localStorageService.removeItem('token');
+    this.isLoggedInSubject.next(false); // تحديث حالة تسجيل الدخول بعد تسجيل الخروج
+    this.router.navigate(['/login']); // توجيه المستخدم إلى شاشة تسجيل الدخول بعد تسجيل الخروج
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -63,29 +71,5 @@ export class AuthService {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     return throwError(errorMessage);
-  }
-
-  async generateCodeChallenge(verifier: string): Promise<string> {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(verifier);
-    const digest = await crypto.subtle.digest('SHA-256', data);
-    return btoa(String.fromCharCode(...new Uint8Array(digest)))
-      .replace(/\+/g, '-')
-      .replace(/\//g, '_')
-      .replace(/=+$/, '');
-  }
-
-  private generateRandomString(length: number = 128): string {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
-    let randomString = '';
-    for (let i = 0; i < length; i++) {
-      const randomChar = characters.charAt(Math.floor(Math.random() * characters.length));
-      randomString += randomChar;
-    }
-    return randomString;
-  }
-
-  testRandomString(): void {
-    console.log(this.generateRandomString());
   }
 }
