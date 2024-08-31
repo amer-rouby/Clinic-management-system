@@ -12,14 +12,16 @@ import { Router } from '@angular/router';
 export class AuthService {
   private restAPIURL = 'https://identitytoolkit.googleapis.com/v1/accounts:';
   private APIKey = environment.firebaseConfig.apiKey;
-  
+
   private signUpURL = `${this.restAPIURL}signUp?key=${this.APIKey}`;
   private signInURL = `${this.restAPIURL}signInWithPassword?key=${this.APIKey}`;
 
-  private isLoggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn()); // متابعة حالة تسجيل الدخول
+  private isLoggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
-  constructor(private http: HttpClient, private localStorageService: LocalStorageService, private router: Router) { }
+  constructor(private http: HttpClient, private localStorageService: LocalStorageService, private router: Router) {
+    this.checkSessionExpiration(); // Check session expiration on startup
+  }
 
   private post(url: string, body: any, headers: HttpHeaders): Observable<any> {
     return this.http.post<any>(url, body, { headers }).pipe(
@@ -32,25 +34,28 @@ export class AuthService {
     const body = { email, password, returnSecureToken: true };
     return this.post(this.signUpURL, body, headers);
   }
-  
+
   signIn(email: string, password: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = { email, password, returnSecureToken: true };
     return this.post(this.signInURL, body, headers).pipe(
       tap(response => {
         this.setToken(response.idToken);
-        this.isLoggedInSubject.next(true); // تحديث حالة تسجيل الدخول
-        this.router.navigate(['/home']); // توجيه المستخدم إلى الشاشة الرئيسية بعد تسجيل الدخول
+        this.startSessionTimer(); // Start session timer on login
+        this.isLoggedInSubject.next(true);
+        this.router.navigate(['/home']);
       })
     );
   }
-  
+
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
 
   setToken(token: string): void {
     this.localStorageService.setItem('token', token);
+    this.localStorageService.setItem('sessionStart', Date.now().toString()); // Store session start time
+    this.isLoggedInSubject.next(true); // Update logged in state
   }
 
   getToken(): string | null {
@@ -59,8 +64,9 @@ export class AuthService {
 
   logout(): void {
     this.localStorageService.removeItem('token');
-    this.isLoggedInSubject.next(false); // تحديث حالة تسجيل الدخول بعد تسجيل الخروج
-    this.router.navigate(['/login']); // توجيه المستخدم إلى شاشة تسجيل الدخول بعد تسجيل الخروج
+    this.localStorageService.removeItem('sessionStart'); // Remove session start time on logout
+    this.isLoggedInSubject.next(false);
+    this.router.navigate(['/login']);
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -71,5 +77,26 @@ export class AuthService {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     return throwError(errorMessage);
+  }
+
+  private startSessionTimer() {
+    // Set session duration (30 minutes)
+    const sessionDuration = 30 * 60 * 1000;
+    setTimeout(() => {
+      this.logout(); // Log out after the specified time
+    }, sessionDuration);
+  }
+
+  private checkSessionExpiration() {
+    const sessionStart = this.localStorageService.getItem('sessionStart');
+    if (sessionStart) {
+      const now = Date.now();
+      const sessionDuration = 30 * 60 * 1000; // 30 minutes
+      if (now - parseInt(sessionStart) > sessionDuration) {
+        this.logout(); // Log out if session duration has expired
+      } else {
+        this.startSessionTimer(); // Start timer if session is still valid
+      }
+    }
   }
 }
